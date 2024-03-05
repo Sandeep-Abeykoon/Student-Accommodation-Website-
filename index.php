@@ -18,6 +18,18 @@
     .h-font {
       font-family: 'Merienda', cursive;
     }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
   </style>
 </head>
 
@@ -72,7 +84,7 @@
     </div>
   </nav>
 
-  <!-- Modal -->
+  <!-- Login Modal -->
   <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -104,7 +116,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Register Modal -->
   <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -118,31 +130,45 @@
             <span class="badge text-bg-light mb-3 text-wrap lh-base">Note: Your details will be verified after entered</span>
             <div class="container-fluid">
               <div class="row">
-                <div class="col-md-6 ps-0">
+                <div class="col-md-6 ps-0 mb-3">
                   <label class="form-label">Name</label>
                   <input type="text" class="form-control shadow-none">
                 </div>
 
-                <div class="col-md-6 p-0">
+                <div class="col-md-6 p-0 mb-3">
                   <label class="form-label">Email</label>
                   <input type="email" class="form-control shadow-none">
                 </div>
+
+                <div class="col-md-6 ps-0 mb-3">
+                  <label class="form-label">Phone Number</label>
+                  <input type="number" class="form-control shadow-none">
+                </div>
+
+                <div class="col-md-6 ps-0 mb-3">
+                  <label class="form-label">Secondary Phone Number</label>
+                  <input type="number" class="form-control shadow-none">
+                </div>
+
+                <div class="col-md-12 p-0 mb-3">
+                  <label class="form-label">Address</label>
+                  <textarea class="form-control shadow-none" rows="1"></textarea>
+                </div>
+
+                <div class="col-md-6 ps-0 mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" class="form-control shadow-none">
+                </div>
+
+                <div class="col-md-6 ps-0 mb-3">
+                  <label class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control shadow-none">
+                </div>
               </div>
             </div>
-            <!-- <div class="mb-3">
-              <label class="form-label">Email address</label>
-              <input type="email" class="form-control shadow-none">
+            <div class="text-center my-1">
+              <button type="submit" class="btn btn-dark shadow-none">Register</button>
             </div>
-
-            <div class="mb-4">
-              <label class="form-label">password</label>
-              <input type="password" class="form-control shadow-none">
-            </div>
-
-            <div class="d-flex align-items-center justify-content-between mb-2">
-              <button type="submit" class="btn btn-dark shadow-none">Login</button>
-              <a href="javascript: void(0)" class="text-secondary text-decoration-none">Forgot password?</a>
-            </div> -->
           </div>
 
         </form>
