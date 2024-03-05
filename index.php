@@ -34,7 +34,7 @@
   </style>
 </head>
 
-<body>
+<body class="bg-light">
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
@@ -128,7 +128,7 @@
             <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <span class="badge text-bg-light mb-3 text-wrap lh-base">Note: Your details will be verified after entered</span>
+            <span class="badge text-bg-light mb-3 text-wrap lh-base">Note: Your details will be verified after entered </span>
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-6 ps-0 mb-3">
@@ -178,14 +178,14 @@
   </div>
 
   <!-- Swiper -->
-  <div class="container-fluid">
+  <div class="container-fluid px-lg-4 mt-4">
     <div class="swiper swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="./images/sliderImage.jpg" class="w-100 d-block"/>
+          <img src="./images/sliderImage.jpg" class="w-100 d-block" />
         </div>
         <div class="swiper-slide">
-          <img src="./images/sliderImage.jpg" class="w-100 d-block"/>
+          <img src="./images/sliderImage.jpg" class="w-100 d-block" />
         </div>
       </div>
       <div class="swiper-button-next"></div>
@@ -193,6 +193,66 @@
       <div class="swiper-pagination"></div>
     </div>
   </div>
+
+  <!-- Reach Us -->
+  <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Reach Us</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 p-4 mb-lg-0 mb-3 bg-white rounded">
+        <iframe height="320px" class="w-100 rounded" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15846.303361252902!2d80.0415729!3d6.8213291!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2523b05555555%3A0x546c34cd99f6f488!2sNSBM%20Green%20University!5e0!3m2!1sen!2slk!4v1709637123008!5m2!1sen!2slk" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="col-lg-4 col-md-4">
+        <div class="bg-white p-4 rounded mb-4">
+          <h5>Call Us</h5>
+          <a href="tel: +94 115445000" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +94 115445000</a>
+          <br>
+          <a href="tel: +94 115445000" class="d-inline-block text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +94 115445000</a>
+        </div>
+        <div class="bg-white p-4 rounded mb-4">
+          <h5>Follow Us</h5>
+          <a href="#" class="d-inline-block mb-3"><span class="badge bg-light text-dark fs-6 p-2"> <i class="bi bi-twitter me-1"></i>Twitter</span></a>
+          <br>
+          <a href="#" class="d-inline-block mb-3"><span class="badge bg-light text-dark fs-6 p-2"> <i class="bi bi-facebook me-1"></i>Facebook</span></a>
+          <br>
+          <a href="#" class="d-inline-block"><span class="badge bg-light text-dark fs-6 p-2"> <i class="bi bi-instagram me-1"></i>Instagram</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="container-fluid bg-white mt-5">
+    <div class="row">
+      <div class="col-lg-4 p-4">
+        <h3 class="h-font fw-bold fs-3 mb-2">NSBM</h3>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Deserunt, corporis odit a possimus, voluptas fugiat tenetur
+          quaerat ex, rerum quos voluptate omnis voluptates aliquam ab
+          consequatur aspernatur repellat debitis libero!</p>
+      </div>
+      <div class="col-lg-4 p-4">
+        <h5 class="mb-3">Links</h5>
+        <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Home</a><br>
+        <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Accomodations</a><br>
+        <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Contact Us</a><br>
+        <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">About Us</a>
+      </div>
+      <div class="col-lg-4 p-4">
+        <h5 class="mb-3">Follow Us</h5>
+        <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">
+          <i class="bi bi-twitter me-1"></i>Twitter
+        </a><br>
+        <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">
+          <i class="bi bi-facebook me-1"></i>Facebook
+        </a><br>
+        <a href="#" class="d-inline-block text-dark text-decoration-none">
+          <i class="bi bi-instagram me-1"></i>Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By ...</h6>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
   </script>
@@ -203,6 +263,10 @@
     var swiper = new Swiper(".swiper-container", {
       spaceBetween: 30,
       effect: "fade",
+      loop: true,
+      autoplay: {
+        delay: 3500
+      },
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
