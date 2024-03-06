@@ -11,27 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <style>
-    * {
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .h-font {
-      font-family: 'Merienda', cursive;
-    }
-
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-  </style>
+  
+  <?php include 'includes/styles.php'; ?>
 </head>
 
 <body class="bg-light">
@@ -65,7 +46,7 @@
       </div>
       <div class="col-lg-4 col-md-4">
         <div class="bg-white p-4 rounded mb-4 d-flex flex-column justify-content-center align-items-center">
-          <h5 class="mb-3">Call Us</h5>
+          <h5>Call Us</h5>
           <a href="tel:+94115445000" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +94 115445000</a>
           <a href="tel:+94115445000" class="d-inline-block text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +94 115445000</a>
         </div>
