@@ -9,8 +9,7 @@
     <?php include 'includes/styles.php'; ?>
 </head>
 
-<body>
-    <!-- Header -->
+<body class="bg-light">
     <?php include './includes/header.php'; ?>
 
     <div class="my-5 px-4">
@@ -43,11 +42,28 @@
             </div>
             <div class="col-lg-6 col-md-6 px-4">
                 <div class="bg-white rounded shadow p-4">
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="" alt="">
-                        <h5 class="m-0 ms-3">Wifi</h5>
-                    </div>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius autem velit nesciunt! A ipsa quasi voluptate soluta odio explicabo officia?</p>
+                    <form action="">
+                        <h5>Send a message</h5>
+                        <div class="mt-3">
+                            <label class="form-label" style="font-weight: 500;">Name</label>
+                            <input type="text" class="form-control shadow-none">
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label" style="font-weight: 500;">Email</label>
+                            <input type="email" class="form-control shadow-none">
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label" style="font-weight: 500;">Subject</label>
+                            <input type="text" class="form-control shadow-none">
+                        </div>
+                        <div class="col-md-12 p-0 mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control shadow-none" rows="5" style="resize: none;"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn text-white btn-dark mt-3 shadow-none">Send</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
