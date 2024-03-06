@@ -38,101 +38,8 @@
 
 <body class="bg-light">
 
-  <!-- Navar -->
-  <?php include 'includes/navbar.php'; ?>
-
-
-  <!-- Login Modal -->
-  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form>
-          <div class="modal-header">
-            <i class="bi bi-person-circle fs-3 me-2"></i>
-            <h5 class="modal-title d-flex align-items-center">User Login</h5>
-            <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Email address</label>
-              <input type="email" class="form-control shadow-none">
-            </div>
-
-            <div class="mb-4">
-              <label class="form-label">password</label>
-              <input type="password" class="form-control shadow-none">
-            </div>
-
-            <div class="d-flex align-items-center justify-content-between mb-2">
-              <button type="submit" class="btn btn-dark shadow-none">Login</button>
-              <a href="javascript: void(0)" class="text-secondary text-decoration-none">Forgot password?</a>
-            </div>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Register Modal -->
-  <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <form>
-          <div class="modal-header">
-            <i class="bi bi-person-vcard-fill fs-3 me-2"></i>
-            <h5 class="modal-title d-flex align-items-center">User Registration</h5>
-            <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <span class="badge text-bg-light mb-3 text-wrap lh-base">Note: Your details will be verified after entered </span>
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Name</label>
-                  <input type="text" class="form-control shadow-none">
-                </div>
-
-                <div class="col-md-6 p-0 mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control shadow-none">
-                </div>
-
-                <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Phone Number</label>
-                  <input type="number" class="form-control shadow-none">
-                </div>
-
-                <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Secondary Phone Number</label>
-                  <input type="number" class="form-control shadow-none">
-                </div>
-
-                <div class="col-md-12 p-0 mb-3">
-                  <label class="form-label">Address</label>
-                  <textarea class="form-control shadow-none" rows="1"></textarea>
-                </div>
-
-                <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Password</label>
-                  <input type="password" class="form-control shadow-none">
-                </div>
-
-                <div class="col-md-6 ps-0 mb-3">
-                  <label class="form-label">Confirm Password</label>
-                  <input type="password" class="form-control shadow-none">
-                </div>
-              </div>
-            </div>
-            <div class="text-center my-1">
-              <button type="submit" class="btn btn-dark shadow-none">Register</button>
-            </div>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  </div>
+  <!-- Header -->
+  <?php include 'includes/header.php'; ?>
 
   <!-- Swiper -->
   <div class="container-fluid px-lg-4 mt-4">
@@ -178,7 +85,7 @@
   <!-- Footer -->
   <?php include 'includes/footer.php'; ?>
 
-  <h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By ...</h6>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
   </script>

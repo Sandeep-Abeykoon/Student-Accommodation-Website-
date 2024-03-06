@@ -28,3 +28,5 @@
         </div>
     </div>
 </footer>
+
+<h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By ...</h6>
