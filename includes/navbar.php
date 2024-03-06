@@ -36,8 +36,39 @@
 
             <div class="d-flex" role="search">
                 <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                <button type="button" class="btn btn-outline-dark shadow-none" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
+
             </div>
         </div>
     </div>
 </nav>
+
+<!-- Confirmation dialog modal -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you a landlord?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function confirmRegistration() {
+        if (confirm("Are you a landlord?")) {
+            $('#registerModal').modal('show');
+        } else {
+            // Show a message indicating that student and warden accounts will be created by the university IT department
+            alert("Student and warden accounts will be created by the university IT department.");
+        }
+    }
+</script>
