@@ -44,10 +44,15 @@
     <?php
     if (isset($_POST['login'])) {
         $form_data = filteration($_POST);
-        echo("<h1>$form_data[admin_username]</h1>");
-        echo("<h1>$form_data[admin_password]</h1>");
-        //print_r($form_data);
+
+        $query = "SELECT * FROM `admin_credentials` WHERE `admin_username` =? AND `admin_password` =?";
+        $values = [$form_data['admin_username'], $form_data['admin_password']];
+        $data_types = "ss";
+
+        $result = select($query, $values, $data_types);
+        print_r($result);
     }
+
     ?>
 
     <?php include 'scripts.php'; ?>
