@@ -15,9 +15,9 @@ adminLogin();
 
 <body class="bg-light">
 
-    <div class="container-fluid bg-dark text-light p-3">
+    <div class="container-fluid bg-dark text-light p-3 d-flex align-items-center justify-content-between">
         <h3 class="mb-0">ADMIN PANEL</h3>
-        <a class="btn btn-light btn-sm" href="">Logout</a>
+        <a class="btn btn-light btn-sm" href="logout.php">Logout</a>
     </div>
 
     <?php include 'scripts.php'; ?>
