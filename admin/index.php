@@ -1,4 +1,7 @@
-<?php include 'db_config.php'; ?>
+<?php
+include 'db_config.php';
+include 'essentials.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +12,6 @@
     <title>Admin Panel Login</title>
 
     <?php include 'links.php'; ?>
-    <?php include 'styles.php'; ?>
 
     <style>
         div.login-form {
@@ -50,7 +52,15 @@
         $data_types = "ss";
 
         $result = select($query, $values, $data_types);
-        print_r($result);
+        if ($result->num_rows == 1) {
+            $row = mysqli_fetch_assoc($result);
+            session_start();
+            $_SESSION['adminLogin'] = true;
+            $_SESSION['admin_id'] = $row['id_no'];
+            redirect('dashboard.php');
+        } else {
+            alert("Login Failed", "Invalid Credentials!");
+        }
     }
 
     ?>

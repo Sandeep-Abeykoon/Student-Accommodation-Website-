@@ -7,7 +7,6 @@
   <title>NSBM Accomodation</title>
 
   <?php include 'includes/links.php'; ?>
-  <?php include 'includes/styles.php'; ?>
 </head>
 
 <body class="bg-light">
