@@ -1,10 +1,12 @@
 <?php
 
-function adminLogin() {
+function adminLogin()
+{
     session_start();
-    if(!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true)) {
-       redirect("index.php");
+    if (!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true)) {
+        redirect("index.php");
     }
+    session_regenerate_id(true);
 }
 
 function redirect($url)
