@@ -24,15 +24,15 @@
 
 <body class="bg-light">
     <div class="login-form text-center rounded bg-white shadow overflow-hidden">
-        <form>
+        <form method="POST">
             <h4 class="bg-dark text-white py-3">Admin Panel Login</h4>
             <div class="p-4">
                 <div class="mb-3">
-                    <input name="admin_username" type="text" class="form-control shadow-none text-center" placeholder="Admin Username">
+                    <input name="admin_username" required type="text" class="form-control shadow-none text-center" placeholder="Admin Username">
                 </div>
 
                 <div class="mb-4">
-                    <input name="admin_password" type="password" class="form-control shadow-none text-center" placeholder="Password">
+                    <input name="admin_password" required type="password" class="form-control shadow-none text-center" placeholder="Password">
                 </div>
 
                 <button name="login" type="submit" class="btn text-white btn-dark shadow-none">Login</button>
@@ -40,6 +40,16 @@
             </div>
         </form>
     </div>
+
+    <?php
+    if (isset($_POST['login'])) {
+        $form_data = filteration($_POST);
+        echo("<h1>$form_data[admin_username]</h1>");
+        echo("<h1>$form_data[admin_password]</h1>");
+        //print_r($form_data);
+    }
+    ?>
+
     <?php include 'scripts.php'; ?>
 </body>
 
