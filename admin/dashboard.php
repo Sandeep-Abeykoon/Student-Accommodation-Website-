@@ -15,7 +15,7 @@ adminLogin();
 
 <body class="bg-light">
 
-<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <div class="container-fluid" id="main-content">
         <div class="row">

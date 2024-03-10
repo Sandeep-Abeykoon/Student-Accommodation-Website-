@@ -16,7 +16,7 @@ function redirect($url)
 
 function alert($title, $message, $type = "")
 {
-    $bs_class = ($type == "sucess") ? "alert-sucess" : "alert-danger";
+    $bs_class = ($type == "success") ? "alert-success" : "alert-danger";
 
     echo <<<alert
     <div class="alert $bs_class alert-dismissible fade show custom-alert" role="alert">

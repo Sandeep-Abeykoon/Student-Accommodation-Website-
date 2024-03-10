@@ -111,21 +111,22 @@ adminLogin();
                 var modal = bootstrap.Modal.getInstance(modalReference);
                 modal.hide();
 
-                if(this.responseText == 1) {
-                    console.log("data updated");
+                if (this.responseText == 1) {
+                    alert("Success", "Changes saved", "success")
                     get_general_data();
                 } else {
-                    console.log("No changes made")
+                    alert("Attention", "No Changes saved", "error")
                 }
             }
 
-            xhr.send('site_title='+site_title_value+'&site_about='+site_about_value+'&update_general_data');
+            xhr.send('site_title=' + site_title_value + '&site_about=' + site_about_value + '&update_general_data');
         }
 
         window.onload = function() {
             get_general_data();
         }
     </script>
+
 </body>
 
 </html>
