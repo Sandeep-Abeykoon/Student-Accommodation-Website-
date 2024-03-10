@@ -33,9 +33,9 @@ adminLogin();
                             </button>
                         </div>
                         <h6 class="card-subtitle mb-1 fw-bold">Site Title</h6>
-                        <p class="card-text" id="site-title"></p>
+                        <p class="card_text" id="site_title"></p>
                         <h6 class="card-subtitle mb-1 fw-bold">Site About Us</h6>
-                        <p class="card-text" id="site-about"></p>
+                        <p class="card-text" id="site_about"></p>
                     </div>
                 </div>
 
@@ -50,17 +50,17 @@ adminLogin();
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">Site Title</label>
-                                        <input type="text" name="site-title" id="site-title-inp" class="form-control shadow-none">
+                                        <input type="text" name="site_title" id="site_title_inp" class="form-control shadow-none">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">About us</label>
-                                        <textarea name="site-about" id="site-about-inp" class="form-control shadow-none" rows="5"></textarea>
+                                        <textarea name="site_about" id="site_about_inp" class="form-control shadow-none" rows="5"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary">Submit</button>
+                                    <button type="button" onclick="site_title.value = general_data.site_title, site_about.value = general_data.site_about" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" onclick="update_general_data(site_title.value, site_about.value)" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -76,11 +76,11 @@ adminLogin();
 
         function get_general_data() {
             // Getting the inner text
-            let site_title = document.getElementById('site-title');
-            let site_about = document.getElementById('site-about');
+            let site_title = document.getElementById('site_title');
+            let site_about = document.getElementById('site_about');
 
-            let site_title_inp = document.getElementById('site-title-inp');
-            let site_about_inp = document.getElementById('site-about-inp');
+            let site_title_inp = document.getElementById('site_title_inp');
+            let site_about_inp = document.getElementById('site_about_inp');
 
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/settings_crud.php", true);
@@ -98,6 +98,28 @@ adminLogin();
             }
 
             xhr.send('get_general_data');
+        }
+
+        function update_general_data(site_title_value, site_about_value) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/settings_crud.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+
+                var modalReference = document.getElementById('general-settings');
+                var modal = bootstrap.Modal.getInstance(modalReference);
+                modal.hide();
+
+                if(this.responseText == 1) {
+                    console.log("data updated");
+                    get_general_data();
+                } else {
+                    console.log("No changes made")
+                }
+            }
+
+            xhr.send('site_title='+site_title_value+'&site_about='+site_about_value+'&update_general_data');
         }
 
         window.onload = function() {
