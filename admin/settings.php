@@ -23,7 +23,7 @@ adminLogin();
                 <h3 class="mb-4">SETTINGS</h3>
 
                 <!-- General Settings Section -->
-                <div class="card">
+                <div class="card border-0 shadow mb-4">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="card-title m-0">General Settings</h5>
@@ -66,6 +66,26 @@ adminLogin();
                         </form>
                     </div>
                 </div>
+
+                <!-- Shutdown Section -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="card-title m-0">Shutdown Website</h5>
+                            <div class="form-check form-switch">
+                                <form>
+                                    <input onchange="updateShutdown(this.value)" class="form-check-input" type="checkbox" id="shutdown-toggle">
+                                </form>
+
+                            </div>
+                        </div>
+                        <p class="card-text">
+                            No member can interact with the website when the shutdown mode is on.
+                        </p>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -82,6 +102,8 @@ adminLogin();
             let site_title_inp = document.getElementById('site_title_inp');
             let site_about_inp = document.getElementById('site_about_inp');
 
+            let shutdown_toggle = document.getElementById("shutdown-toggle");
+
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/settings_crud.php", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -95,6 +117,10 @@ adminLogin();
 
                 site_title_inp.value = general_data.site_title;
                 site_about_inp.value = general_data.site_about
+
+                if (general_data.shutdown == 0) {
+                    shutdown_toggle.checked = false;
+                }
             }
 
             xhr.send('get_general_data');
