@@ -11,6 +11,10 @@
         border-top-color: green !important;
     }
 
+    body {
+        background-color: red;
+    }
+
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -27,4 +31,9 @@
         position: fixed;
         top: 25px;
         right: 25px;
+    }
+
+    #dashboard-menu {
+        position: fixed;
+        height: 100%;
     }

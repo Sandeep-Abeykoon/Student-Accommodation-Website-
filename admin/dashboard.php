@@ -15,11 +15,12 @@ adminLogin();
 
 <body class="bg-light">
 
-    <div class="container-fluid bg-dark text-light p-3 d-flex align-items-center justify-content-between">
+    <div class="container-fluid bg-dark text-light p-3 d-flex align-items-center justify-content-between sticky-top">
         <h3 class="mb-0">ADMIN PANEL</h3>
         <a class="btn btn-light btn-sm" href="logout.php">Logout</a>
     </div>
-    <div class="col-lg-2 bg-dark border-top border-3 border-secondary" id="dashboard-menu">
+
+    <div class="col-lg-2 border-top border-3 border-secondary bg-dark" id="dashboard-menu">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid flex-lg-column align-items-stretch">
                 <h4 class="mt-2 text-light">ADMIN PANEL</h4>
