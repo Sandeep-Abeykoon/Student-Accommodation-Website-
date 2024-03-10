@@ -33,13 +33,13 @@ adminLogin();
                             </button>
                         </div>
                         <h6 class="card-subtitle mb-1 fw-bold">Site Title</h6>
-                        <p class="card-text">content</p>
+                        <p class="card-text" id="site-title"></p>
                         <h6 class="card-subtitle mb-1 fw-bold">Site About Us</h6>
-                        <p class="card-text">content</p>
+                        <p class="card-text" id="site-about"></p>
                     </div>
                 </div>
 
-                <!-- Modal -->
+                <!-- General Settings Modal -->
                 <div class="modal fade" id="general-settings" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <form>
@@ -54,7 +54,7 @@ adminLogin();
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Address</label>
+                                        <label class="form-label">About us</label>
                                         <textarea name="site-about" class="form-control shadow-none" rows="5"></textarea>
                                     </div>
                                 </div>
@@ -70,6 +70,34 @@ adminLogin();
         </div>
     </div>
     <?php include 'scripts.php'; ?>
+
+    <script>
+        let general_data;
+
+        function get_general_data() {
+            // Getting the inner text
+            let site_title = document.getElementById('site-title');
+            let site_about = document.getElementById('site-about');
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/settings_crud.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                general_data = JSON.parse(this.responseText);
+
+                // Setting the inner text
+                site_title.innerText = general_data.site_title;
+                site_about.innerText = general_data.site_about;
+            }
+
+            xhr.send('get_general_data');
+        }
+
+        window.onload = function() {
+            get_general_data();
+        }
+    </script>
 </body>
 
 </html>

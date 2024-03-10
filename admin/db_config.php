@@ -8,8 +8,6 @@ $connection = mysqli_connect($hostName, $username, $password, $database);
 
 if (!$connection) {
     die("Cannot Connect to Database" . mysqli_connect_error());
-} else {
-    echo '<script>console.log("Connected to database successfully");</script>';
 }
 
 function filteration($data)
