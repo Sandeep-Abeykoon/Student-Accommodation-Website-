@@ -50,12 +50,12 @@ adminLogin();
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">Site Title</label>
-                                        <input type="text" name="site-title" class="form-control shadow-none">
+                                        <input type="text" name="site-title" id="site-title-inp" class="form-control shadow-none">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">About us</label>
-                                        <textarea name="site-about" class="form-control shadow-none" rows="5"></textarea>
+                                        <textarea name="site-about" id="site-about-inp" class="form-control shadow-none" rows="5"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -79,6 +79,9 @@ adminLogin();
             let site_title = document.getElementById('site-title');
             let site_about = document.getElementById('site-about');
 
+            let site_title_inp = document.getElementById('site-title-inp');
+            let site_about_inp = document.getElementById('site-about-inp');
+
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/settings_crud.php", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -89,6 +92,9 @@ adminLogin();
                 // Setting the inner text
                 site_title.innerText = general_data.site_title;
                 site_about.innerText = general_data.site_about;
+
+                site_title_inp.value = general_data.site_title;
+                site_about_inp.value = general_data.site_about
             }
 
             xhr.send('get_general_data');
