@@ -19,3 +19,11 @@ if (isset($_POST['update_general_data'])) {
     $res = update($query, $values, 'ssi');
     echo $res;
 }
+
+if (isset($_POST['update_shutdown'])) {
+    $form_data = ($_POST['update_shutdown'] == 0) ? 1 : 0 ;
+    $query = "UPDATE `settings` SET `shutdown`=? WHERE `id_no`=?";
+    $values = [$form_data, 1];
+    $res = update($query, $values, 'ii');
+    echo $res;
+}
