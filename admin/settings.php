@@ -107,7 +107,35 @@ adminLogin();
                                 </div>
                                 <div class="mb-4">
                                     <h6 class="card-subtitle mb-1 fw-bold">Phone Numbers</h6>
-                                    <p class="card_text"><i class="bi bi-telephone-fill"></i></p>
+                                    <p class="card_text mb-1">
+                                        <i class="bi bi-telephone-fill"></i>
+                                        <span id="pn1"></span>
+                                    </p>
+                                    <p class="card_text">
+                                        <i class="bi bi-telephone-fill"></i>
+                                        <span id="pn2"></span>
+                                    </p>
+                                </div>
+                                <div class="mb-4">
+                                    <h6 class="card-subtitle mb-1 fw-bold">Email</h6>
+                                    <p class="card_text" id="email"></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <h6 class="card-subtitle mb-1 fw-bold">Social Links</h6>
+                                    <p class="card_text mb-1">
+                                        <i class="bi bi-facebook me-1"></i>
+                                        <span id="fb"></span>
+                                    </p>
+                                    <p class="card_text">
+                                        <i class="bi bi-instagram me-1"></i>
+                                        <span id="ig"></span>
+                                    </p>
+                                    <p class="card_text">
+                                        <i class="bi bi-twitter me-1"></i>
+                                        <span id="ig"></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
