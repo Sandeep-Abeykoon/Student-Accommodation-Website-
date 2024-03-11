@@ -148,21 +148,44 @@ adminLogin();
 
                 <!-- Contact Us detail Modal -->
                 <div class="modal fade" id="contacts-settings" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <form id="general_settings_form">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Contacts Settings</h5>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Site Title</label>
-                                        <input type="text" name="site_title" id="site_title_input" class="form-control shadow-none" required>
-                                    </div>
+                                    <div class="container-fluid p-0">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">Address</label>
+                                                    <input type="text" name="address" id="address_input" class="form-control shadow-none" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">Google Map Link</label>
+                                                    <input type="text" name="googleMap" id="googleMap_input" class="form-control shadow-none" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">Phone Numbers</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                                                        <input type="text" name="phone_number_1" is="phone_number_1_input" class="form-control shadow-none" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                                                        <input type="text" name="phone_number_2" is="phone_number_2_input" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">Email</label>
+                                                    <input type="text" name="email" id="email_input" class="form-control shadow-none" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
 
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">About us</label>
-                                        <textarea name="site_about" id="site_about_input" class="form-control shadow-none" rows="5" required></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
