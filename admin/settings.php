@@ -149,7 +149,7 @@ adminLogin();
                 <!-- Contact Us detail Modal -->
                 <div class="modal fade" id="contacts-settings" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                        <form id="general_settings_form">
+                        <form id="contacts_settings_form">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Contacts Settings</h5>
@@ -170,11 +170,11 @@ adminLogin();
                                                     <label class="form-label fw-bold">Phone Numbers</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                                                        <input type="text" name="phone_number_1" is="phone_number_1_input" class="form-control shadow-none" required>
+                                                        <input type="text" name="phone_number_1" id="phone_number_1_input" class="form-control shadow-none" required>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                                                        <input type="text" name="phone_number_2" is="phone_number_2_input" class="form-control shadow-none">
+                                                        <input type="text" name="phone_number_2" id="phone_number_2_input" class="form-control shadow-none">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
@@ -183,7 +183,25 @@ adminLogin();
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">Social Links</label>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text"><i class="bi bi-facebook"></i></span>
+                                                        <input type="text" name="facebook" id="facebook_input" class="form-control shadow-none" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+                                                        <input type="text" name="instagram" id="instagram_input" class="form-control shadow-none" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <span class="input-group-text"><i class="bi bi-twitter"></i></span>
+                                                        <input type="text" name="twitter" id="twitter_input" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">iFrame Src</label>
+                                                    <input type="text" name="iframe" id="iframe_input" class="form-control shadow-none" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -289,7 +307,7 @@ adminLogin();
 
         function get_contacts_data() {
 
-            let contacts_id = ['address', 'googleMap', 'phone_number_1', 'phone_number_2', 'email', 'facebook', 'instagram', 'twitter']
+            let contacts_ids = ['address', 'googleMap', 'phone_number_1', 'phone_number_2', 'email', 'facebook', 'instagram', 'twitter']
             let iframe = document.getElementById('iframe');
 
             let xhr = new XMLHttpRequest();
@@ -300,13 +318,23 @@ adminLogin();
                 contacts_data = JSON.parse(this.responseText);
                 contacts_data = Object.values(contacts_data)
 
-                for (i = 0; i < contacts_id.length; i++) {
-                    document.getElementById(contacts_id[i]).innerText = contacts_data[i + 1];
+                for (i = 0; i < contacts_ids.length; i++) {
+                    document.getElementById(contacts_ids[i]).innerText = contacts_data[i + 1];
                 }
                 iframe.src = contacts_data[9];
+                contacts_inputs(contacts_data)
             }
 
             xhr.send('get_contacts_data');
+        }
+
+        function contacts_inputs(data) {
+            console.log(data)
+            let contacts_input_ids = ['address_input', 'googleMap_input', 'phone_number_1_input', 'phone_number_2_input', 'email_input', 'facebook_input', 'instagram_input', 'twitter_input', 'iframe_input'];
+
+            for (i = 0; i < contacts_input_ids.length; i++) {
+                document.getElementById(contacts_input_ids[i]).value = data[i + 1];
+            }
         }
 
         window.onload = function() {
