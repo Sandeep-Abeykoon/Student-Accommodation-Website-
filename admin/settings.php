@@ -207,7 +207,7 @@ adminLogin();
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" onclick="site_title.value = general_data.site_title, site_about.value = general_data.site_about" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" onclick="contacts_inputs(contacts_data)" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
@@ -329,7 +329,6 @@ adminLogin();
         }
 
         function contacts_inputs(data) {
-            console.log(data)
             let contacts_input_ids = ['address_input', 'googleMap_input', 'phone_number_1_input', 'phone_number_2_input', 'email_input', 'facebook_input', 'instagram_input', 'twitter_input', 'iframe_input'];
 
             for (i = 0; i < contacts_input_ids.length; i++) {
