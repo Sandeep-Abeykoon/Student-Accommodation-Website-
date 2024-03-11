@@ -45,7 +45,7 @@ adminLogin();
                         <form id="general_settings_form">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title">General Settings</h1>
+                                    <h5 class="modal-title">General Settings</h5>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
@@ -68,7 +68,7 @@ adminLogin();
                 </div>
 
                 <!-- Shutdown Section -->
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="card-title m-0">Shutdown Website</h5>
@@ -90,7 +90,7 @@ adminLogin();
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="card-title m-0">Contact Us Settings</h5>
-                            <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#contactUs-settings">
+                            <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#contacts-settings">
                                 <i class="bi bi-pencil-square"></i>
                                 Edit
                             </button>
@@ -145,6 +145,35 @@ adminLogin();
                         </div>
                     </div>
                 </div>
+
+                <!-- Contact Us detail Modal -->
+                <div class="modal fade" id="contacts-settings" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="general_settings_form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Contacts Settings</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Site Title</label>
+                                        <input type="text" name="site_title" id="site_title_input" class="form-control shadow-none" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">About us</label>
+                                        <textarea name="site_about" id="site_about_input" class="form-control shadow-none" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="site_title.value = general_data.site_title, site_about.value = general_data.site_about" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
 
             </div>
         </div>
