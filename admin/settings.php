@@ -228,6 +228,8 @@ adminLogin();
         let site_title_input = document.getElementById('site_title_input');
         let site_about_input = document.getElementById('site_about_input');
 
+        let contacts_settings_form = document.getElementById('contacts_settings_form');
+
         function get_general_data() {
             // Getting the inner text
             let site_title = document.getElementById('site_title');
@@ -307,7 +309,7 @@ adminLogin();
 
         function get_contacts_data() {
 
-            let contacts_ids = ['address', 'googleMap', 'phone_number_1', 'phone_number_2', 'email', 'facebook', 'instagram', 'twitter']
+            let contacts_ids = ['address', 'googleMap', 'phone_number_1', 'phone_number_2', 'email', 'facebook', 'instagram', 'twitter'];
             let iframe = document.getElementById('iframe');
 
             let xhr = new XMLHttpRequest();
@@ -334,6 +336,23 @@ adminLogin();
             for (i = 0; i < contacts_input_ids.length; i++) {
                 document.getElementById(contacts_input_ids[i]).value = data[i + 1];
             }
+        }
+
+        contacts_settings_form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            update_contacts_data();
+        })
+
+        function update_contacts_data() {
+            let contacts_ids = ['address', 'googleMap', 'phone_number_1', 'phone_number_2', 'email', 'facebook', 'instagram', 'twitter', 'iframe'];
+            let contacts_input_ids = ['address_input', 'googleMap_input', 'phone_number_1_input', 'phone_number_2_input', 'email_input', 'facebook_input', 'instagram_input', 'twitter_input', 'iframe_input'];
+
+            let data_str = "";
+
+            for (i = 0; i < contacts_ids.length; i++) {
+                data_str += contacts_ids[i] + "=" + document.getElementById(contacts_input_ids[i]).value + '&'
+            }
+            console.log(data_str);
         }
 
         window.onload = function() {
