@@ -126,16 +126,20 @@ adminLogin();
                                     <h6 class="card-subtitle mb-1 fw-bold">Social Links</h6>
                                     <p class="card_text mb-1">
                                         <i class="bi bi-facebook me-1"></i>
-                                        <span id="fb"></span>
+                                        <span id="facebook"></span>
                                     </p>
                                     <p class="card_text">
                                         <i class="bi bi-instagram me-1"></i>
-                                        <span id="ig"></span>
+                                        <span id="instagram"></span>
                                     </p>
                                     <p class="card_text">
                                         <i class="bi bi-twitter me-1"></i>
-                                        <span id="ig"></span>
+                                        <span id="twitter"></span>
                                     </p>
+                                </div>
+                                <div class="mb-4">
+                                    <h6 class="card-subtitle mb-1 fw-bold">iFrame</h6>
+                                    <iframe id="iframe" class="border p-2 w-100" loading="lazy"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +152,7 @@ adminLogin();
     <?php include 'scripts.php'; ?>
 
     <script>
-        let general_data;
+        let general_data, contacts_data;
 
         let general_settings_form = document.getElementById('general_settings_form');
         let site_title_input = document.getElementById('site_title_input');
