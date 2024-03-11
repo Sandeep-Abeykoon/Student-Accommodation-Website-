@@ -31,6 +31,42 @@
     </div>
   </div>
 
+
+  <!-- Articles Section -->
+  <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Articles</h2>
+  <div class="container read-more-container">
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <p class="card-text">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, facere? Quae distinctio reprehenderit soluta fugiat, alias, doloremque similique tenetur magni voluptate a, perspiciatis quaerat! Necessitatibus velit consectetur expedita consequatur assumenda!
+              <span class="read-more-text d-none">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio quasi quaerat, amet explicabo magnam, nulla porro dolorem itaque
+              </span>
+            </p>
+            <button class="read-more-btn btn btn btn-primary">Read More...</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, facere? Quae distinctio reprehenderit soluta fugiat, alias, doloremque similique tenetur magni voluptate a, perspiciatis quaerat! Necessitatibus velit consectetur expedita consequatur assumenda!
+              <span class="read-more-text d-none">
+                fafdsdsfdsffsdf
+              </span>
+            </p>
+            <button class="read-more-btn btn btn btn-primary">Read More...</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Reach Us -->
   <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Reach Us</h2>
   <div class="container">
@@ -57,8 +93,8 @@
 
   <!-- Footer -->
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/scripts.php'; ?>
 
+  <?php include 'includes/scripts.php'; ?>
 </body>
 
 </html>

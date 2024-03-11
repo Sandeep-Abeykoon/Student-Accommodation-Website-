@@ -297,7 +297,7 @@ adminLogin();
 
             xhr.onload = function() {
                 if (this.responseText == 1 && general_data.shutdown == 0) {
-                    alert("Attention", "Site has been shutdown!")
+                    alert("Attention", "Site has been shutdowned!")
                 } else {
                     alert("Attention", "Site is Live!")
                 }
