@@ -36,3 +36,12 @@ if (isset($_POST['get_contacts_data'])) {
     $json_data = json_encode($data);
     echo $json_data;
 }
+
+if (isset($_POST['update_contacts_data'])) {
+    $form_data = filteration($_POST);
+    $query = "UPDATE `contact_details` SET `address`=?,`googleMap`=?,`phone_number_1`=?,`phone_number_2`=?,`email`=?,`facebook`=?,`instagram`=?,`twitter`=?,`iframe`=? WHERE `id_no`=?";
+    $values = [$form_data['address'], $form_data['googleMap'], $form_data['phone_number_1'], $form_data['phone_number_2'], $form_data['email'], $form_data['facebook'], $form_data['instagram'], $form_data['twitter'], $form_data['iframe'], 1];
+    $res = update($query, $values, 'sssssssssi');
+    echo $res;
+}
+

@@ -352,7 +352,27 @@ adminLogin();
             for (i = 0; i < contacts_ids.length; i++) {
                 data_str += contacts_ids[i] + "=" + document.getElementById(contacts_input_ids[i]).value + '&'
             }
-            console.log(data_str);
+            data_str += "update_contacts_data";
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/settings_crud.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+
+                var modalReference = document.getElementById('contacts-settings');
+                var modal = bootstrap.Modal.getInstance(modalReference);
+                modal.hide();
+
+                if (this.responseText == 1) {
+                    alert("Success", "Changes saved", "success")
+                    get_contacts_data();
+                } else {
+                    alert("Attention", "No Changes saved")
+                }
+            }
+
+            xhr.send(data_str);
         }
 
         window.onload = function() {

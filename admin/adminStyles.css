@@ -44,4 +44,8 @@
         #main-content {
             margin-top: 60px;
         }
+
+        .custom-alert {
+            top: 140px;
+        }
     }
