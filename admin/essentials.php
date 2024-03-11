@@ -5,13 +5,14 @@ function adminLogin()
     session_start();
     if (!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true)) {
         redirect("index.php");
+        exit;
     }
-    session_regenerate_id(true);
 }
 
 function redirect($url)
 {
     echo ("<script>window.location.href='$url';</script>");
+    exit;
 }
 
 function alert($title, $message, $type = "")

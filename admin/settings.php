@@ -109,11 +109,11 @@ adminLogin();
                                     <h6 class="card-subtitle mb-1 fw-bold">Phone Numbers</h6>
                                     <p class="card_text mb-1">
                                         <i class="bi bi-telephone-fill"></i>
-                                        <span id="pn1"></span>
+                                        <span id="phone_number_1"></span>
                                     </p>
                                     <p class="card_text">
                                         <i class="bi bi-telephone-fill"></i>
-                                        <span id="pn2"></span>
+                                        <span id="phone_number_2"></span>
                                     </p>
                                 </div>
                                 <div class="mb-4">
@@ -128,7 +128,7 @@ adminLogin();
                                         <i class="bi bi-facebook me-1"></i>
                                         <span id="facebook"></span>
                                     </p>
-                                    <p class="card_text">
+                                    <p class="card_text mb-1">
                                         <i class="bi bi-instagram me-1"></i>
                                         <span id="instagram"></span>
                                     </p>
@@ -235,8 +235,31 @@ adminLogin();
             xhr.send('update_shutdown=' + val);
         }
 
+        function get_contacts_data() {
+
+            let contacts_id = ['address', 'googleMap', 'phone_number_1', 'phone_number_2', 'email', 'facebook', 'instagram', 'twitter']
+            let iframe = document.getElementById('iframe');
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/settings_crud.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                contacts_data = JSON.parse(this.responseText);
+                contacts_data = Object.values(contacts_data)
+
+                for (i = 0; i < contacts_id.length; i++) {
+                    document.getElementById(contacts_id[i]).innerText = contacts_data[i + 1];
+                }
+                iframe.src = contacts_data[9];
+            }
+
+            xhr.send('get_contacts_data');
+        }
+
         window.onload = function() {
             get_general_data();
+            get_contacts_data();
         }
     </script>
 
