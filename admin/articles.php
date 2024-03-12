@@ -58,7 +58,7 @@ adminLogin();
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" onclick="update_article_data(article_id.value, article_title_input.value, article_content_input.value)">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </div>
                         </form>
@@ -87,7 +87,7 @@ adminLogin();
                                 </div>
                                 <div class="modal-footer">
                                     <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -100,10 +100,20 @@ adminLogin();
 
     <script>
         let add_article_form = document.getElementById('add_article_form');
+        let edit_article_form = document.getElementById('edit_article_form');
+
+        let article_id = document.getElementById('article_id');
+        let article_title_input = document.getElementById('article_title_input');
+        let article_content_input = document.getElementById('article_content_input');
 
         add_article_form.addEventListener('submit', function(e) {
             e.preventDefault();
             add_new_article()
+        });
+
+        edit_article_form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            update_article_data(article_id.value, article_title_input.value, article_content_input.value)
         });
 
 
@@ -127,7 +137,7 @@ adminLogin();
                     <p class="card-text">${article.article_content}</p>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-primary btn-sm edit_button me-2" onclick="populateModal(${article.id_no},'${article.article_title}','${article.article_content}')" data-bs-toggle="modal" data-bs-target="#editArticleModal">Edit</button>
-                        <button class="btn btn-outline-danger btn-sm delete_button">Delete</button>
+                        <button class="btn btn-outline-danger btn-sm delete_button" onclick="deleteArticle(${article.id_no})">Delete</button>
                     </div>
                 </div>
             </div>
@@ -183,6 +193,26 @@ adminLogin();
             }
 
             xhr.send('article_title=' + title + '&article_content=' + content + '&add_new_article');
+        }
+
+        function deleteArticle(articleId) {
+            if (confirm("Are you sure you want to delete this article?")) {
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "ajax/articles_crud.php", true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                xhr.onload = function() {
+                    if (this.responseText == 1) {
+                        alert("Success", "Article deleted successfully", "success")
+                        get_article_data();
+                    } else {
+                        alert("Attention", "Failed to delete article")
+                    }
+                }
+
+                xhr.send('id_no=' + articleId + '&delete_article');
+            }
         }
 
         function populateModal(id, title, content) {

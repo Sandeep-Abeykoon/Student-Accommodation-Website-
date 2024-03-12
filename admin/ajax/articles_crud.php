@@ -31,3 +31,11 @@ if (isset($_POST['add_new_article'])) {
     $res = update($query, $values, 'ss');
     echo $res;
 }
+
+if (isset($_POST['delete_article'])) {
+    $form_data = filteration($_POST);
+    $query = "DELETE FROM `articles` WHERE `id_no`=?";
+    $values = [$form_data['id_no']];
+    $res = update($query, $values, 'i');
+    echo $res;
+}
