@@ -39,7 +39,7 @@ adminLogin();
                                     <h5 class="card-title">Article 1</h5>
                                     <p class="card-text">Content for article 1</p>
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-outline-primary btn-sm edit_button" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
+                                        <button class="btn btn-outline-primary btn-sm edit_button me-2" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
                                         <button class="btn btn-outline-danger btn-sm delete_button">Delete</button>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@ adminLogin();
                                     <h5 class="card-title">Article 2</h5>
                                     <p class="card-text">Content for article 2</p>
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-outline-primary btn-sm edit_button" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
+                                        <button class="btn btn-outline-primary btn-sm edit_button me-2" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
                                         <button class="btn btn-outline-danger btn-sm delete_button">Delete</button>
                                     </div>
                                 </div>
