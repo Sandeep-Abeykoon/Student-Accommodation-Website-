@@ -65,10 +65,10 @@ adminLogin();
                     </div>
                 </div>
 
-                 <!-- Add Article Modal -->
-                 <div class="modal fade" id="addArticleModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!-- Add Article Modal -->
+                <div class="modal fade" id="addArticleModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <form id="article_form">
+                        <form id="add_article_form">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Add/Edit Article</h5>
@@ -78,16 +78,16 @@ adminLogin();
                                     <input type="hidden" id="article_id">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Title</label>
-                                        <input type="text" id="article_title_input" class="form-control shadow-none" required>
+                                        <input type="text" id="add_article_title_input" class="form-control shadow-none" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Content</label>
-                                        <textarea id="article_content_input" class="form-control shadow-none" rows="5" required></textarea>
+                                        <textarea id="add_article_content_input" class="form-control shadow-none" rows="5" required></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" onclick="update_article_data(article_id.value, article_title_input.value, article_content_input.value)">Save Changes</button>
+                                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </div>
                         </form>
@@ -99,6 +99,14 @@ adminLogin();
     <?php include 'scripts.php'; ?>
 
     <script>
+        let cadd_article_form = document.getElementById('add_article_form');
+
+        add_article_form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            add_new_article()
+        });
+
+
         function get_article_data() {
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/articles_crud.php", true);
@@ -150,6 +158,31 @@ adminLogin();
                 }
             }
             xhr.send('id_no=' + article_id + '&article_title=' + article_title_value + '&article_content=' + article_content_value + '&update_article_data');
+        }
+
+        function add_new_article() {
+            let title = document.getElementById('add_article_title_input').value;
+            let content = document.getElementById('add_article_content_input').value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/articles_crud.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                console.log(this.response);
+                var modalReference = document.getElementById('addArticleModal');
+                var modal = bootstrap.Modal.getInstance(modalReference);
+                modal.hide();
+
+                if (this.responseText == 1) {
+                    alert("Success", "Article added successfully", "success")
+                    get_article_data();
+                } else {
+                    alert("Attention", "Failed to add article")
+                }
+            }
+
+            xhr.send('article_title=' + title + '&article_content=' + content + '&add_new_article');
         }
 
         function populateModal(id, title, content) {
