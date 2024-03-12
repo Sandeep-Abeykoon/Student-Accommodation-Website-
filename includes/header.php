@@ -19,7 +19,7 @@ $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
                     <a class="nav-link me-2" href="../../sta/index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link me-2" href="#">Accomodations</a>
+                    <a class="nav-link me-2" href="accomodations.php">Accomodations</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link me-2" href="contactUs.php">Contact Us</a>

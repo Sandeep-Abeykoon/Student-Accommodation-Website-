@@ -69,23 +69,23 @@
             </div>
             <div class="col-lg-6 col-md-6 px-4">
                 <div class="bg-white rounded shadow p-4">
-                    <form action="">
+                    <form method="get" action="mailto:recipient@example.com">
                         <h5>Send a message</h5>
                         <div class="mt-3">
                             <label class="form-label" style="font-weight: 500;">Name</label>
-                            <input type="text" class="form-control shadow-none">
+                            <input type="text" name="name" class="form-control shadow-none" required>
                         </div>
                         <div class="mt-3">
                             <label class="form-label" style="font-weight: 500;">Email</label>
-                            <input type="email" class="form-control shadow-none">
+                            <input type="email" name="email" class="form-control shadow-none" required>
                         </div>
                         <div class="mt-3">
                             <label class="form-label" style="font-weight: 500;">Subject</label>
-                            <input type="text" class="form-control shadow-none">
+                            <input type="text" name="subject" class="form-control shadow-none" required>
                         </div>
                         <div class="col-md-12 p-0 mb-3">
                             <label class="form-label">Message</label>
-                            <textarea class="form-control shadow-none" rows="5" style="resize: none;"></textarea>
+                            <textarea name="body" class="form-control shadow-none" rows="5" style="resize: none;" required></textarea>
                         </div>
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn text-white btn-dark mt-3 shadow-none">Send</button>
