@@ -37,9 +37,9 @@ adminLogin();
                     </div>
                 </div>
                 <!-- Article Modal -->
-                <div class="modal fade" id="articleModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="editArticleModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <form id="article_form">
+                        <form id="edit_article_form">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Add/Edit Article</h5>
@@ -99,7 +99,7 @@ adminLogin();
     <?php include 'scripts.php'; ?>
 
     <script>
-        let cadd_article_form = document.getElementById('add_article_form');
+        let add_article_form = document.getElementById('add_article_form');
 
         add_article_form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -126,7 +126,7 @@ adminLogin();
                     <h5 class="card-title">${article.article_title}</h5>
                     <p class="card-text">${article.article_content}</p>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-primary btn-sm edit_button me-2" onclick="populateModal(${article.id_no},'${article.article_title}','${article.article_content}')" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
+                        <button class="btn btn-outline-primary btn-sm edit_button me-2" onclick="populateModal(${article.id_no},'${article.article_title}','${article.article_content}')" data-bs-toggle="modal" data-bs-target="#editArticleModal">Edit</button>
                         <button class="btn btn-outline-danger btn-sm delete_button">Delete</button>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ adminLogin();
 
             xhr.onload = function() {
                 console.log(this.response);
-                var modalReference = document.getElementById('articleModal');
+                var modalReference = document.getElementById('editArticleModal');
                 var modal = bootstrap.Modal.getInstance(modalReference);
                 modal.hide();
 
