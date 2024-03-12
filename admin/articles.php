@@ -27,38 +27,46 @@ adminLogin();
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h5 class="card-title m-0">Articles</h5>
-                            <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#articleModal">
+                            <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#addArticleModal">
                                 <i class="bi bi-plus"></i>
                                 Add New Article
                             </button>
                         </div>
                         <div id="articles_list">
-                            <!-- Dummy articles -->
-                            <div class="article card border-0 shadow mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Article 1</h5>
-                                    <p class="card-text">Content for article 1</p>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-outline-primary btn-sm edit_button me-2" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
-                                        <button class="btn btn-outline-danger btn-sm delete_button">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="article card border-0 shadow mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Article 2</h5>
-                                    <p class="card-text">Content for article 2</p>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-outline-primary btn-sm edit_button me-2" data-bs-toggle="modal" data-bs-target="#articleModal">Edit</button>
-                                        <button class="btn btn-outline-danger btn-sm delete_button">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Article Modal -->
                 <div class="modal fade" id="articleModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="article_form">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Add/Edit Article</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="article_id">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Title</label>
+                                        <input type="text" id="article_title_input" class="form-control shadow-none" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Content</label>
+                                        <textarea id="article_content_input" class="form-control shadow-none" rows="5" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" onclick="update_article_data(article_id.value, article_title_input.value, article_content_input.value)">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                 <!-- Add Article Modal -->
+                 <div class="modal fade" id="addArticleModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <form id="article_form">
                             <div class="modal-content">
