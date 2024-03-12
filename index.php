@@ -72,7 +72,6 @@
   $contact_query = "SELECT * FROM `contact_details` WHERE `id_no`=?";
   $values = [1];
   $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
-  print_r($contacts_result);
   ?>
 
   <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Reach Us</h2>

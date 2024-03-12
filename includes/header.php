@@ -5,10 +5,9 @@ require('admin/essentials.php');
 $contact_query = "SELECT * FROM `contact_details` WHERE `id_no`=?";
 $values = [1];
 $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
-print_r($contacts_result);
 ?>
 
-<nav class="navbar navbar-expand-lg bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
+<nav id="nav-bar" class="navbar navbar-expand-lg bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php">NSBM</a>
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +16,7 @@ print_r($contacts_result);
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active me-2" aria-current="page" href="../../sta/index.php">Home</a>
+                    <a class="nav-link me-2" href="../../sta/index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link me-2" href="#">Accomodations</a>
@@ -27,20 +26,6 @@ print_r($contacts_result);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link me-2" href="aboutUs.php">About Us</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Settings
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
                 </li>
             </ul>
 
