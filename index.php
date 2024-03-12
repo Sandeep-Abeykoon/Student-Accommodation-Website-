@@ -68,7 +68,6 @@
   </div>
 
   <!-- Reach Us -->
-
   <?php
   $contact_query = "SELECT * FROM `contact_details` WHERE `id_no`=?";
   $values = [1];
