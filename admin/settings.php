@@ -170,11 +170,11 @@ adminLogin();
                                                     <label class="form-label fw-bold">Phone Numbers</label>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                                                        <input type="text" name="phone_number_1" id="phone_number_1_input" class="form-control shadow-none" required>
+                                                        <input type="number" name="phone_number_1" id="phone_number_1_input" class="form-control shadow-none" required>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
-                                                        <input type="text" name="phone_number_2" id="phone_number_2_input" class="form-control shadow-none">
+                                                        <input type="number" name="phone_number_2" id="phone_number_2_input" class="form-control shadow-none">
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
