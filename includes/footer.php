@@ -9,22 +9,33 @@
         </div>
         <div class="col-lg-4 p-4">
             <h5 class="mb-3">Links</h5>
-            <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Home</a><br>
+            <a href="index.php" class="d-inline-block mb-2 text-dark text-decoration-none">Home</a><br>
             <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Accomodations</a><br>
-            <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Contact Us</a><br>
-            <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">About Us</a>
+            <a href="contactUs.php" class="d-inline-block mb-2 text-dark text-decoration-none">Contact Us</a><br>
+            <a href="aboutUs.php" class="d-inline-block mb-2 text-dark text-decoration-none">About Us</a>
         </div>
         <div class="col-lg-4 p-4">
             <h5 class="mb-3">Follow Us</h5>
-            <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">
-                <i class="bi bi-twitter me-1"></i>Twitter
-            </a><br>
-            <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">
-                <i class="bi bi-facebook me-1"></i>Facebook
-            </a><br>
-            <a href="#" class="d-inline-block text-dark text-decoration-none">
-                <i class="bi bi-instagram me-1"></i>Instagram
-            </a>
+
+            <?php
+            if ($contacts_result['twitter'] != '') {
+                echo <<<data
+            <a target="_blank" href="$contacts_result[twitter]" class="d-inline-block mb-2 text-dark text-decoration-none"><span class="badge bg-light text-dark fs-6 p-2"> <i class="bi bi-twitter me-1"></i>Twitter</span></a><br>
+            data;
+            }
+
+            if ($contacts_result['facebook'] != '') {
+                echo <<<data
+              <a target="_blank" href="$contacts_result[facebook]" class="d-inline-block mb-2 text-dark text-decoration-none"><span class="badge bg-light text-dark fs-6 p-2"> <i class="bi bi-facebook me-1"></i>Facebook</span></a><br>
+              data;
+            }
+
+            if ($contacts_result['instagram'] != '') {
+                echo <<<data
+              <a target="_blank" href="$contacts_result[instagram]" class="d-inline-block mb-2 text-dark text-decoration-none"><span class="badge bg-light text-dark fs-6 p-2"> <i class="bi bi-instagram me-1"></i>Instagram</span></a>
+              data;
+            }
+            ?>
         </div>
     </div>
 </footer>
