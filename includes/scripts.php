@@ -86,6 +86,18 @@
         }
     }
 
+    function alert(title, message, type = "warning") {
+        let bs_class = "alert-" + type;
+        let element = document.createElement('div');
+        element.innerHTML = `
+        <div class="alert ${bs_class} alert-dismissible fade show custom-alert" role="alert">
+            <strong>${title} !</strong> ${message}.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        `;
+        document.body.appendChild(element);
+    }
+
     // User Registration
     let register_form = document.getElementById('register-form');
 
@@ -107,12 +119,19 @@
         xhr.open("POST", "ajax/login_register.php", true);
 
         xhr.onload = function() {
-
-            var modalReference = document.getElementById('registerModal');
-            var modal = bootstrap.Modal.getInstance(modalReference);
-            modal.hide();
-
-            console.log(this.response);
+            if (this.responseText == 'password_mismatch') {
+                alert("Error", "Pawword Mismatch", "danger")
+            } else if (this.responseText == 'already_exits') {
+                alert("Error", "User Already Registered", "danger");
+            } else if (this.responseText == 'register_failed') {
+                alert("Error", "Server Error (Registration Failed)", "danger");
+            } else {
+                alert("Success", "User registered successfully", "success");
+                var modalReference = document.getElementById('registerModal');
+                var modal = bootstrap.Modal.getInstance(modalReference);
+                modal.hide();
+                register_form.reset();
+            }
         }
         xhr.send(data);
     });

@@ -22,3 +22,10 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+
+    .custom-alert {
+        position: fixed;
+        top: 50px;
+        right: 25px;
+        z-index: 1111;
+    }
