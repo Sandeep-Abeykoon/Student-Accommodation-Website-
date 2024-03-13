@@ -92,30 +92,29 @@
     register_form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        var modalReference = document.getElementById('registerModal');
-        var modal = bootstrap.Modal.getInstance(modalReference);
-        modal.hide();
+        let data = new FormData();
 
+        data.append('name', register_form.elements['name'].value);
+        data.append('email', register_form.elements['email'].value);
+        data.append('phone_number', register_form.elements['phone_number'].value);
+        data.append('secondary_phone_number', register_form.elements['secondary_phone_number'].value);
+        data.append('address', register_form.elements['address'].value);
+        data.append('password', register_form.elements['password'].value);
+        data.append('confirm_password', register_form.elements['confirm_password'].value);
+        data.append('register', '');
 
-        // let data = new FormData();
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/login_register.php", true);
 
-        // data.append('name', register_form.elements['name'].value);
-        // data.append('email', register_form.elements['email'].value);
-        // data.append('phone_number', register_form.elements['phone_number'].value);
-        // data.append('secondary_phone_number', register_form.elements['secondary_phone_number'].value);
-        // data.append('address', register_form.elements['address'].value);
-        // data.append('password', register_form.elements['password'].value);
-        // data.append('confirm_password', register_form.elements['confirm_password'].value);
-        // data.append('register', '');
+        xhr.onload = function() {
 
+            var modalReference = document.getElementById('registerModal');
+            var modal = bootstrap.Modal.getInstance(modalReference);
+            modal.hide();
 
-        // let xhr = new XMLHttpRequest();
-        // xhr.open("POST", "ajax/login_register.php", true);
-
-        // xhr.onload = function() {
-        //     console.log(this.response);
-        // }
-        // xhr.send(data);
+            console.log(this.response);
+        }
+        xhr.send(data);
     });
 
     setActive();
