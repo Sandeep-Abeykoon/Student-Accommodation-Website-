@@ -25,10 +25,7 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-md-1 order-2">
                 <h3 class="mb-3">Lorem ipsum dolor sit</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Possimus, illum sequi ipsum natus unde vel quis.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Possimus, illum sequi ipsum natus unde vel quis.</p>
+                <p><?php echo $settings_result['site_title']?></p>
             </div>
             <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-1">
                 <img src="https://www.maga.lk/wp-content/uploads/2018/03/4-NSBM.jpg" alt="" class="w-100">

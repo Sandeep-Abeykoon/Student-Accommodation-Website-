@@ -3,6 +3,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<script>
+    function alert(title, message, type = "warning") {
+        let bs_class = "alert-" + type;
+        let element = document.createElement('div');
+        element.innerHTML = `
+        <div class="alert ${bs_class} alert-dismissible fade show custom-alert" role="alert">
+            <strong>${title} !</strong> ${message}.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        `;
+        document.body.appendChild(element);
+    }
+</script>
+
 <!-- Initialize Swiper -->
 <script>
     var swiper = new Swiper(".swiper-container", {
@@ -86,18 +100,6 @@
         }
     }
 
-    function alert(title, message, type = "warning") {
-        let bs_class = "alert-" + type;
-        let element = document.createElement('div');
-        element.innerHTML = `
-        <div class="alert ${bs_class} alert-dismissible fade show custom-alert" role="alert">
-            <strong>${title} !</strong> ${message}.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        `;
-        document.body.appendChild(element);
-    }
-
     // User Registration
     let register_form = document.getElementById('register-form');
 
@@ -120,7 +122,7 @@
 
         xhr.onload = function() {
             if (this.responseText == 'password_mismatch') {
-                alert("Error", "Pawword Mismatch", "danger")
+                alert("Error", "Password Mismatch", "danger")
             } else if (this.responseText == 'already_exits') {
                 alert("Error", "User Already Registered", "danger");
             } else if (this.responseText == 'register_failed') {

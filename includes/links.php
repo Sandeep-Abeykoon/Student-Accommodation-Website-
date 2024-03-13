@@ -4,3 +4,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="includes/clientStyles.css">
+
+<?php
+require('admin/db_config.php');
+require('admin/essentials.php');
+
+$contact_query = "SELECT * FROM `contact_details` WHERE `id_no`=?";
+$values = [1];
+$contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
+
+$settings_query = "SELECT * FROM `settings` WHERE `id_no`=?";
+$values = [1];
+$settings_result = mysqli_fetch_assoc(select($settings_query, $values, 'i'));
+?>

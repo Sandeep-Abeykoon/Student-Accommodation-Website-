@@ -1,15 +1,6 @@
-<?php
-require('admin/db_config.php');
-require('admin/essentials.php');
-
-$contact_query = "SELECT * FROM `contact_details` WHERE `id_no`=?";
-$values = [1];
-$contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
-?>
-
 <nav id="nav-bar" class="navbar navbar-expand-lg bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php">NSBM</a>
+        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php"><?php echo $settings_result['site_title']?></a>
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -138,7 +129,7 @@ $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <span class="badge text-bg-light text-wrap lh-base d-block w-100" style="text-align: left; margin-bottom: 0.5rem;">Note: This registration through the website is only for landlords. If you are related to the university, please contact the university to create your account.</span>
+                <span class="badge text-bg-light text-wrap lh-base d-block w-100" style="text-align: left; margin-bottom: 0.5rem;">Note: This registration through the website is only for landlords. If you are not a landlord, please contact the university to create your account.</span>
 
                 <p>Are you a landlord?</p>
             </div>

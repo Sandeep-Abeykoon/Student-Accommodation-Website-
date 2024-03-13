@@ -1,11 +1,8 @@
 <footer class="container-fluid bg-white mt-5">
     <div class="row">
         <div class="col-lg-4 p-4">
-            <h3 class="h-font fw-bold fs-3 mb-2">NSBM</h3>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Deserunt, corporis odit a possimus, voluptas fugiat tenetur
-                quaerat ex, rerum quos voluptate omnis voluptates aliquam ab
-                consequatur aspernatur repellat debitis libero!</p>
+            <h3 class="h-font fw-bold fs-3 mb-2"><?php echo $settings_result['site_title']?></h3>
+            <p><?php echo $settings_result['site_about']?></p>
         </div>
         <div class="col-lg-4 p-4">
             <h5 class="mb-3">Links</h5>
