@@ -96,12 +96,12 @@ $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
 
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label">Phone Number</label>
-                                <input name="phone_number_1" type="number" class="form-control shadow-none" required>
+                                <input name="phone_number" type="number" class="form-control shadow-none" required>
                             </div>
 
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label">Secondary Phone Number</label>
-                                <input name="phone_number_2" type="number" class="form-control shadow-none">
+                                <input name="secondary_phone_number" type="number" class="form-control shadow-none">
                             </div>
 
                             <div class="col-md-12 p-0 mb-3">
@@ -116,7 +116,7 @@ $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
 
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label">Confirm Password</label>
-                                <input name="confirmPassword" type="password" class="form-control shadow-none" required>
+                                <input name="confirm_password" type="password" class="form-control shadow-none" required>
                             </div>
                         </div>
                     </div>

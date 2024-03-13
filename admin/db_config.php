@@ -62,3 +62,22 @@ function update($sql, $values, $data_types)
         die("Query cannot be prepared - UPDATE");
     }
 }
+
+function insert($sql, $values, $data_types)
+{
+    $con = $GLOBALS['connection'];
+
+    if ($stmt = mysqli_prepare($con, $sql)) {
+        mysqli_stmt_bind_param($stmt, $data_types, ...$values);
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_affected_rows($stmt);
+            mysqli_stmt_close($stmt);
+            return $result;
+        } else {
+            mysqli_stmt_close($stmt);
+            die("Query cannot be executed - INSERT");
+        }
+    } else {
+        die("Query cannot be prepared - INSERT");
+    }
+}
