@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <?php include 'includes/links.php'; ?>
-  <title><?php echo $settings_result['site_title'] ?></title>
+  <title><?php echo $settings_result['site_title'] ?> : Home</title>
 </head>
 
 <body class="bg-light">
