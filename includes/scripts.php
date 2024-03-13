@@ -85,5 +85,27 @@
             }
         }
     }
+
+    let register_form = document.getElementById('register-form');
+
+    register_form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let data = new FormData();
+
+        data.append('name', register_form.elements['name'].value);
+        data.append('email', register_form.elements['name'].value);
+        data.append('phone_number_1', register_form.elements['name'].value);
+        data.append('phone_number_2', register_form.elements['name'].value);
+        data.append('address', register_form.elements['name'].value);
+        data.append('password', register_form.elements['name'].value);
+        data.append('confirm_password', register_form.elements['name'].value);
+        data.append('register', '');
+
+        var myModal = document.getElementById('registerModal');
+        var modal = bootstrap.Modal.getInstance(myModal);
+        modal.hide();
+    });
+
     setActive();
 </script>
