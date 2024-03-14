@@ -134,6 +134,7 @@
                 alert("Error", "Server Error (Registration Failed)", "danger");
             } else {
                 alert("Success", "User registered successfully", "success");
+
                 var modalReference = document.getElementById('registerModal');
                 var modal = bootstrap.Modal.getInstance(modalReference);
                 modal.hide();
@@ -143,7 +144,7 @@
         xhr.send(data);
     });
 
-    // User Registration
+    // User Login
     let login_form = document.getElementById('login-form');
 
     login_form.addEventListener('submit', (e) => {
@@ -151,7 +152,6 @@
 
         let data = new FormData();
 
-       
         data.append('email', login_form.elements['email'].value);
         data.append('password', login_form.elements['password'].value);
         data.append('login', '');
@@ -160,22 +160,24 @@
         xhr.open("POST", "ajax/login_register.php", true);
 
         xhr.onload = function() {
-            // if (this.responseText == 'password_mismatch') {
-            //     alert("Error", "Password Mismatch", "danger")
-            // } else if (this.responseText == 'already_exits') {
-            //     alert("Error", "User Already Registered", "danger");
-            // } else if (this.responseText == 'register_failed') {
-            //     alert("Error", "Server Error (Registration Failed)", "danger");
-            // } else {
-            //     alert("Success", "User registered successfully", "success");
-            //     var modalReference = document.getElementById('loginModal');
-            //     var modal = bootstrap.Modal.getInstance(modalReference);
-            //     modal.hide();
-            //     register_form.reset();
-            // }
+            if (this.responseText == 'user-not-found') {
+                alert("Error", "User cannot be found", "danger");
+            } else if (this.responseText == 'inactive') {
+                alert("Attention", "User is Inactive, Please Contact the Admin");
+            } else if (this.responseText == 'invalid-password') {
+                alert("Error", "Password is incorrect", "danger");
+            } else {
+                window.location = window.location.pathname;
+
+                var modalReference = document.getElementById('loginModal');
+                var modal = bootstrap.Modal.getInstance(modalReference);
+                modal.hide();
+            }
+
         }
         xhr.send(data);
     });
+
 
 
     setActive();

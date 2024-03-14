@@ -1,6 +1,6 @@
 <nav id="nav-bar" class="navbar navbar-expand-lg bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php"><?php echo $settings_result['site_title']?></a>
+        <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php"><?php echo $settings_result['site_title'] ?></a>
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,7 +20,11 @@
                 </li>
             </ul>
 
-            <div class="d-flex" role="search">
+            <div class="d-flex">
+                <?php
+                session_start();
+                print_r($_SESSION);
+                ?>
                 <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
 

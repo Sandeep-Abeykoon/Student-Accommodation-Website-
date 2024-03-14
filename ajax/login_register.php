@@ -48,7 +48,7 @@ if (isset($_POST['login'])) {
             echo 'inactive';
             exit;
         }
-        else if (password_verify($data['password'], $user['password'])) {
+        else if (!password_verify($data['password'], $user['password'])) {
             echo 'invalid-password';
             exit;
         }
