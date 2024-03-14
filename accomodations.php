@@ -26,28 +26,69 @@
         <h2 class="fw-bold h-font text-center">Accommodations</h2>
     </div>
     <div class="container">
-        <div class="row mb-5 bg-white rounded shadow p-4">
-            <div class="col-lg-3">
-                <div class="card mb-3">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Accommodation 1</h5>
-                        <p class="card-text">Description of accommodation 1.</p>
+        <div class="row mb-5 bg-white rounded shadow p-4 mb-5">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3 mb-3" style="overflow-y: auto; height: 400px;">
+
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-7">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This</p>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
+                        </div>
                     </div>
                 </div>
-                <div class="card mb-3">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Accommodation 2</h5>
-                        <p class="card-text">Description of accommodation 2.</p>
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-7">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This</p>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-7">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This</p>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-7">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This</p>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9">
-                <div id="map"></div>
+            <div class="col-12 col-md-7 col-lg-8 col-xl-9 d-flex flex-column justify-content-center align-items-center">
+                <div id="map" style="height: 400px; width: 100%;"></div>
             </div>
         </div>
     </div>
+
+
 
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
