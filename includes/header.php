@@ -33,7 +33,7 @@
 <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form id="login-form">
                 <div class="modal-header">
                     <i class="bi bi-person-circle fs-3 me-2"></i>
                     <h5 class="modal-title d-flex align-items-center">User Login</h5>
@@ -42,12 +42,12 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" class="form-control shadow-none">
+                        <input type="email" name="email" class="form-control shadow-none" required>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label">password</label>
-                        <input type="password" class="form-control shadow-none">
+                        <input type="password" name="password" class="form-control shadow-none" required>
                     </div>
 
                     <div class="d-flex align-items-center justify-content-between mb-2">

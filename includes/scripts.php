@@ -143,5 +143,40 @@
         xhr.send(data);
     });
 
+    // User Registration
+    let login_form = document.getElementById('login-form');
+
+    login_form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let data = new FormData();
+
+       
+        data.append('email', login_form.elements['email'].value);
+        data.append('password', login_form.elements['password'].value);
+        data.append('login', '');
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/login_register.php", true);
+
+        xhr.onload = function() {
+            // if (this.responseText == 'password_mismatch') {
+            //     alert("Error", "Password Mismatch", "danger")
+            // } else if (this.responseText == 'already_exits') {
+            //     alert("Error", "User Already Registered", "danger");
+            // } else if (this.responseText == 'register_failed') {
+            //     alert("Error", "Server Error (Registration Failed)", "danger");
+            // } else {
+            //     alert("Success", "User registered successfully", "success");
+            //     var modalReference = document.getElementById('loginModal');
+            //     var modal = bootstrap.Modal.getInstance(modalReference);
+            //     modal.hide();
+            //     register_form.reset();
+            // }
+        }
+        xhr.send(data);
+    });
+
+
     setActive();
 </script>
