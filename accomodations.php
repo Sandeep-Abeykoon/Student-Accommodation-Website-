@@ -12,6 +12,10 @@
             height: 100%;
             width: 100%;
             border-radius: 10px;
+            transition: all;
+        }
+        .card:hover {
+            transform: scale(1.01);
         }
 
         @media (min-width: 992px) {}
@@ -29,7 +33,7 @@
         <div class="row mb-5 bg-white rounded shadow p-4 mb-5">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 mb-3" style="overflow-y: auto; height: 400px;">
 
-                <div class="card mb-3" style="max-width: 540px;">
+                <div class="card mb-3 shadow-sm" style="max-width: 540px; cursor:pointer;">
                     <div class="row g-0">
                         <div class="col-7">
                             <div class="card-body">
@@ -42,7 +46,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 540px;">
+
+                <div class="card mb-3 shadow-sm" style="max-width: 540px; cursor:pointer;">
                     <div class="row g-0">
                         <div class="col-7">
                             <div class="card-body">
@@ -55,7 +60,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 540px;">
+
+                <div class="card mb-3  shadow-sm" style="max-width: 540px; cursor:pointer;">
                     <div class="row g-0">
                         <div class="col-7">
                             <div class="card-body">
@@ -68,7 +74,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 540px;">
+
+                <div class="card mb-3 shadow-sm" style="max-width: 540px; cursor:pointer;">
                     <div class="row g-0">
                         <div class="col-7">
                             <div class="card-body">
@@ -81,6 +88,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="col-12 col-md-7 col-lg-8 col-xl-9 d-flex flex-column justify-content-center align-items-center">
                 <div id="map" style="height: 400px; width: 100%;"></div>
