@@ -14,8 +14,9 @@
             border-radius: 10px;
             transition: all;
         }
+
         .card:hover {
-            transform: scale(1.01);
+            border: 1px solid gray;
         }
 
         @media (min-width: 992px) {}
@@ -26,6 +27,8 @@
 <?php include 'includes/header.php'; ?>
 
 <body class="bg-light">
+    <button class="btn btn-primary position-fixed translate-middle-y m-3" style="z-index: 1000; top: 110px; right: 0px">Add +</button>
+
     <div class="my-5 px-4">
         <h2 class="fw-bold h-font text-center">Accommodations</h2>
     </div>
@@ -96,11 +99,8 @@
         </div>
     </div>
 
-
-
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
-
     <?php include 'includes/scripts.php'; ?>
 
     <!-- Google Maps JavaScript API -->

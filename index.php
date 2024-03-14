@@ -49,7 +49,7 @@
           $truncated_content = strlen($content) > 100 ? substr($content, 0, 100) . '...' : $content;
         ?>
           <div class="col-md-12">
-            <div class="card mb-3">
+            <div class="card mb-1">
               <div class="card-body">
                 <h5 class="card-title"><strong><?php echo $article['article_title']; ?></strong></h5>
                 <p class="card-text truncated-text">
