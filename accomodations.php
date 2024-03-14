@@ -26,7 +26,7 @@
         <h2 class="fw-bold h-font text-center">Accommodations</h2>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="row mb-5 bg-white rounded shadow p-4">
             <div class="col-lg-3">
                 <div class="card mb-3">
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
@@ -42,7 +42,6 @@
                         <p class="card-text">Description of accommodation 2.</p>
                     </div>
                 </div>
-                <!-- Add more cards for other accommodations -->
             </div>
             <div class="col-lg-9">
                 <div id="map"></div>
@@ -65,10 +64,35 @@
                 },
                 zoom: 8,
             });
+
+            // Dummy locations
+            const locations = [{
+                    lat: -34.5,
+                    lng: 150.7,
+                    name: "Location 1"
+                },
+                {
+                    lat: -34.6,
+                    lng: 150.8,
+                    name: "Location 2"
+                }
+            ];
+
+            // Add markers to the map
+            locations.forEach(location => {
+                new google.maps.Marker({
+                    position: {
+                        lat: location.lat,
+                        lng: location.lng
+                    },
+                    map: map,
+                    title: location.name
+                });
+            });
         }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
 </body>
 
 </html>
