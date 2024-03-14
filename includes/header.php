@@ -23,7 +23,6 @@
             <div class="d-flex">
                 <?php
                 session_start();
-                print_r($_SESSION);
                 ?>
                 <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
