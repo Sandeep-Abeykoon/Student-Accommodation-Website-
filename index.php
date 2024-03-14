@@ -32,39 +32,46 @@
 
 
   <!-- Articles Section -->
-  <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Articles</h2>
-  <div class="container read-more-container">
-    <div class="row">
+  <?php
+  $articles_query = "SELECT * FROM `articles`";
+  $articles_result = select($articles_query);
 
-      <div class="col-md-12">
-        <div class="card mb-3">
-          <div class="card-body">
-            <p class="card-text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, facere? Quae distinctio reprehenderit soluta fugiat, alias, doloremque similique tenetur magni voluptate a, perspiciatis quaerat! Necessitatibus velit consectetur expedita consequatur assumenda!
-              <span class="read-more-text d-none">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio quasi quaerat, amet explicabo magnam, nulla porro dolorem itaque
-              </span>
-            </p>
-            <button class="read-more-btn btn btn btn-primary">Read More...</button>
+  // Check if there are any articles
+  if (mysqli_num_rows($articles_result) > 0) {
+  ?>
+    <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Articles</h2>
+    <div class="container read-more-container">
+      <div class="row gap-3">
+        <?php
+        while ($article = mysqli_fetch_assoc($articles_result)) {
+          $content = $article['article_content'];
+          // Truncate the content to 100 characters
+          $truncated_content = strlen($content) > 100 ? substr($content, 0, 100) . '...' : $content;
+        ?>
+          <div class="col-md-12">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title"><strong><?php echo $article['article_title']; ?></strong></h5>
+                <p class="card-text truncated-text">
+                  <?php echo $truncated_content; ?>
+                </p>
+                <?php if ($truncated_content !== $content) { ?>
+                  <p class="card-text full-text d-none">
+                    <?php echo $content; ?>
+                  </p>
+                  <button class="read-more-btn btn btn-primary">Show More</button>
+                <?php } ?>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body">
-            <p class="card-text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde, facere? Quae distinctio reprehenderit soluta fugiat, alias, doloremque similique tenetur magni voluptate a, perspiciatis quaerat! Necessitatibus velit consectetur expedita consequatur assumenda!
-              <span class="read-more-text d-none">
-                fafdsdsfdsffsdf
-              </span>
-            </p>
-            <button class="read-more-btn btn btn btn-primary">Read More...</button>
-          </div>
-        </div>
+        <?php
+        }
+        ?>
       </div>
     </div>
-  </div>
+  <?php
+  } // End if there are articles
+  ?>
 
   <!-- Reach Us -->
   <?php

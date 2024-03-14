@@ -68,20 +68,25 @@
 </script>
 
 <script>
-    const parentContainer = document.querySelector('.read-more-container');
-
-    parentContainer.addEventListener('click', event => {
+    document.addEventListener('click', event => {
         const current = event.target;
-        const isReadMoreBtn = current.className.includes('read-more-btn');
+        const isReadMoreBtn = current.classList.contains('read-more-btn');
 
         if (!isReadMoreBtn) return;
 
-        const currentText = event.target.parentNode.querySelector('.read-more-text');
+        const container = current.closest('.card-body');
+        const truncatedText = container.querySelector('.truncated-text');
+        const fullText = container.querySelector('.full-text');
 
-        currentText.classList.toggle('d-none');
-        currentText.classList.toggle('read-more-text--show');
-
-        current.textContent = currentText.classList.contains('read-more-text--show') ? "Read Less..." : "Read More...";
+        if (truncatedText.classList.contains('d-none')) {
+            truncatedText.classList.remove('d-none');
+            fullText.classList.add('d-none');
+            current.textContent = "Show More";
+        } else {
+            truncatedText.classList.add('d-none');
+            fullText.classList.remove('d-none');
+            current.textContent = "Show Less";
+        }
     });
 </script>
 
