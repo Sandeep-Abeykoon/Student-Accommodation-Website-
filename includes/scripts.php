@@ -226,8 +226,22 @@
             let xhr = new XMLHttpRequest();
             xhr.open('POST', 'ajax/accommodations.php', true);
             xhr.onload = function() {
-                console.log(this.responseText);
-                // Handle the response as needed
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Request was successful
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert("Success", "Accommodation added successfully!", "success");
+                        var modalReference = document.getElementById('addAccommodationModal');
+                        var modal = bootstrap.Modal.getInstance(modalReference);
+                        modal.hide();
+                    } else {
+                        // Show an error message
+                        alert("Error", "Error adding accommodation", "danger");
+                    }
+                } else {
+                    // Request failed
+                    alert("Attention", "Server error. Please try again later.", "danger");
+                }
             };
             xhr.send(formData);
         });
