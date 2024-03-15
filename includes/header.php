@@ -23,25 +23,26 @@
             <div class="d-flex">
                 <?php
                 if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
-                    echo <<<data
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                            $_SESSION[uName]
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a href="profile.php" class="dropdown-item" type="button">Profile</a></li>
-                            <li><a href="myAccommodations.php" class="dropdown-item" type="button">My Accommodations</a></li>
-                            <li><a href="logout.php" class="dropdown-item" type="button">Logout</a></li>
-                            </ul>
-                    </div>
-                    data;
+                    echo '<div class="btn-group">';
+                    echo '<button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">';
+                    echo $_SESSION['uName'];
+                    echo '</button>';
+                    echo '<ul class="dropdown-menu dropdown-menu-lg-end">';
+                    echo '<li><a href="profile.php" class="dropdown-item" type="button">Profile</a></li>';
+                    if ($_SESSION['uRole'] === 'warden') {
+                        echo '<li><a href="pendingAccommodations.php" class="dropdown-item" type="button">Pending Accommodations</a></li>';
+                    } else {
+                        echo '<li><a href="myAccommodations.php" class="dropdown-item" type="button">My Accommodations</a></li>';
+                    }
+                    echo '<li><a href="logout.php" class="dropdown-item" type="button">Logout</a></li>';
+                    echo '</ul>';
+                    echo '</div>';
                 } else {
-                    echo <<<data
-                    <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                    <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
-                    data;
+                    echo '<button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>';
+                    echo '<button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>';
                 }
                 ?>
+
             </div>
         </div>
     </div>
