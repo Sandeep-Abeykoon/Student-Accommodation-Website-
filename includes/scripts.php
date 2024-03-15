@@ -127,18 +127,18 @@
 
         xhr.onload = function() {
             if (this.responseText == 'password_mismatch') {
-                alert("Error", "Password Mismatch", "danger")
+                alert("Error", "Password Mismatch", "danger");
             } else if (this.responseText == 'already_exits') {
                 alert("Error", "User Already Registered", "danger");
-            } else if (this.responseText == 'register_failed') {
-                alert("Error", "Server Error (Registration Failed)", "danger");
-            } else {
+            } else if (this.responseText == '1') {
                 alert("Success", "User registered successfully", "success");
 
                 var modalReference = document.getElementById('registerModal');
                 var modal = bootstrap.Modal.getInstance(modalReference);
                 modal.hide();
                 register_form.reset();
+            } else {
+                alert("Error", "Server Error (Registration Failed)", "danger");
             }
         }
         xhr.send(data);

@@ -44,8 +44,16 @@
 <!-- Header -->
 <?php include 'includes/header.php'; ?>
 
+<?php
+$add_accommodation_btn = "";
+if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRole'] == 'landlord') {
+    $add_accommodation_btn = '<button data-bs-toggle="modal" data-bs-target="#addAccommodationModal" class="btn btn-primary position-fixed translate-middle-y m-3 glow-button" style="z-index: 1000; top: 110px; right: 0px">Add +</button>';
+}
+?>
+
 <body class="bg-light">
-    <button data-bs-toggle="modal" data-bs-target="#addAccommodationModal" class="btn btn-primary position-fixed translate-middle-y m-3 glow-button" style="z-index: 1000; top: 110px; right: 0px">Add +</button>
+
+    <?php echo ($add_accommodation_btn) ?>
 
     <!-- Add Accommodation Modal -->
     <div class="modal fade" id="addAccommodationModal" tabindex="-1" aria-labelledby="addAccommodationModalLabel" aria-hidden="true">

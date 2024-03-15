@@ -17,4 +17,13 @@ $contacts_result = mysqli_fetch_assoc(select($contact_query, $values, 'i'));
 $settings_query = "SELECT * FROM `settings` WHERE `id_no`=?";
 $values = [1];
 $settings_result = mysqli_fetch_assoc(select($settings_query, $values, 'i'));
+
+if ($settings_result['shutdown']) {
+    echo <<<alertbar
+        <div class='bg-danger text-center p-2 fw-bold'>
+        <i class="bi bi-exclamation-triangle-fill"></i>
+            Site is curruntly disabled. Cannot add or book accommodations at the moment!
+        </div>
+    alertbar;
+}
 ?>
