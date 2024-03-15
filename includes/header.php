@@ -22,11 +22,27 @@
 
             <div class="d-flex">
                 <?php
-                session_start();
+                if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+                    echo <<<data
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            $_SESSION[uName]
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><a href="profile.php" class="dropdown-item" type="button">Profile</a></li>
+                            <li><a href="myAccommodations.php" class="dropdown-item" type="button">My Accommodations</a></li>
+                            <li><a href="logout.php" class="dropdown-item" type="button">My Logout</a></li>
+                            </ul>
+                    </div>
+                    data;
+                }
+                else {
+                    echo <<<data
+                    <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
+                    data;
+                }
                 ?>
-                <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
-
             </div>
         </div>
     </div>

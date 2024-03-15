@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="includes/clientStyles.css">
 
 <?php
+session_start();
 require('admin/db_config.php');
 require('admin/essentials.php');
 
