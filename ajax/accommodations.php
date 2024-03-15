@@ -3,19 +3,18 @@ include '../admin/db_config.php';
 include '../admin/essentials.php';
 
 if (isset($_POST['add_accommodation'])) {
-    $form_data = filteration($_POST);
-    $name = $form_data['name'];
-    $description = $form_data['description'];
-    $location = $form_data['location'];
-    $address = $form_data['address'];
-    $thumbnail = $form_data['thumbnail'];
-    $images = $form_data['images'];
-    $bathrooms = $form_data['bathrooms'];
-    $kitchens = $form_data['kitchens'];
-    $rooms = $form_data['rooms'];
-    $beds = $form_data['beds'];
-    $price = $form_data['price'];
-    $capacity = $form_data['capacity'];
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $location = $_POST['location'];
+    $address = $_POST['address'];
+    $thumbnail = $_FILES['thumbnail'];
+    $images = $_FILES['images'];
+    $bathrooms = $_POST['bathrooms'];
+    $kitchens = $_POST['kitchens'];
+    $rooms = $_POST['rooms'];
+    $beds = $_POST['beds'];
+    $price = $_POST['price'];
+    $capacity = $_POST['capacity'];
 
     $thumbnailName = uploadImage($thumbnail, '');
     $imageNames = [];
@@ -23,10 +22,19 @@ if (isset($_POST['add_accommodation'])) {
         $imageNames[] = uploadImage(['tmp_name' => $tmp_name, 'name' => $images['name'][$key]], '');
     }
 
-    // Store accommodation details in the database
-    // Your database connection code here
-    // Insert accommodation details into the database
-    // Your SQL query here
+    // Insert accommodation details into the accommodations table
+    $sql = "INSERT INTO accommodations (name, description, location, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $values = [$name, $description, $location, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity];
+    $data_types = "sssssiiiidi";
+    $result = insert($sql, $values, $data_types);
+
+    // Insert image names into the accommodation_images table
+    foreach ($imageNames as $imageName) {
+        $sql = "INSERT INTO accommodation_images (accommodation_id, image_path) VALUES (?, ?)";
+        $values = [$result, $imageName]; // $result is the ID of the newly inserted accommodation
+        $data_types = "is";
+        insert($sql, $values, $data_types);
+    }
 
     echo json_encode(['success' => true]);
 } else {
