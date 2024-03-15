@@ -10,7 +10,7 @@
 
 <!-- Header -->
 <?php include 'includes/header.php'; ?>
-<?php include('ajax/accommodations.php'); ?>
+<?php include('ajax/get_pending_accommodations.php'); ?>
 
 <body class="bg-light">
     <div class="container my-5">
