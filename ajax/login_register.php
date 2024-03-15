@@ -37,22 +37,19 @@ if (isset($_POST['login'])) {
     // checking whether user exists
     $query = select("SELECT * FROM `users` WHERE `email` = ? LIMIT 1", [$data['email']], "s");
 
-    if (mysqli_num_rows($query) == 0){
+    if (mysqli_num_rows($query) == 0) {
         echo 'user-not-found';
         exit;
-    }
-    else {
+    } else {
         $user = mysqli_fetch_assoc($query);
 
         if ($user['status'] == 0) {
             echo 'inactive';
             exit;
-        }
-        else if (!password_verify($data['password'], $user['password'])) {
+        } else if (!password_verify($data['password'], $user['password'])) {
             echo 'invalid-password';
             exit;
-        }
-        else {
+        } else {
             session_start();
             $_SESSION['login'] = true;
             $_SESSION['uId'] = $user['id_no'];

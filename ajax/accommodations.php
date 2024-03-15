@@ -3,18 +3,19 @@ include '../admin/db_config.php';
 include '../admin/essentials.php';
 
 if (isset($_POST['add_accommodation'])) {
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $location = $_POST['location'];
-    $address = $_POST['address'];
-    $thumbnail = $_FILES['thumbnail'];
-    $images = $_FILES['images'];
-    $bathrooms = $_POST['bathrooms'];
-    $kitchens = $_POST['kitchens'];
-    $rooms = $_POST['rooms'];
-    $beds = $_POST['beds'];
-    $price = $_POST['price'];
-    $capacity = $_POST['capacity'];
+    $form_data = filteration($_POST);
+    $name = $form_data['name'];
+    $description = $form_data['description'];
+    $location = $form_data['location'];
+    $address = $form_data['address'];
+    $thumbnail = $form_data['thumbnail'];
+    $images = $form_data['images'];
+    $bathrooms = $form_data['bathrooms'];
+    $kitchens = $form_data['kitchens'];
+    $rooms = $form_data['rooms'];
+    $beds = $form_data['beds'];
+    $price = $form_data['price'];
+    $capacity = $form_data['capacity'];
 
     $thumbnailName = uploadImage($thumbnail, '');
     $imageNames = [];
