@@ -1,6 +1,6 @@
 <?php
-include '../admin/db_config.php';
-include '../admin/essentials.php';
+// include '../admin/db_config.php';
+// include '../admin/essentials.php';
 
 if (isset($_POST['add_accommodation'])) {
     $name = $_POST['name'];
@@ -22,25 +22,27 @@ if (isset($_POST['add_accommodation'])) {
         $imageNames[] = uploadImage(['tmp_name' => $tmp_name, 'name' => $images['name'][$key]], '');
     }
 
-    $uId = $_SESSION["uId"];
+    // $uId = $_SESSION["uId"];
+
+    // print_r($uId);
 
     // Insert accommodation details into the accommodations table
     $sql = "INSERT INTO accommodations (name, description, location, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $values = [$name, $description, $location, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity];
-    $data_types = "sssssiiiidi";
+    $values = [$name, $description, $location, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity, 22];
+    $data_types = "sssssiiiidii";
     $result = insert($sql, $values, $data_types);
 
     // Insert image names into the accommodation_images table
     foreach ($imageNames as $imageName) {
-        $sql = "INSERT INTO accommodation_images (accommodation_id, image_path) VALUES (?, ?)";
-        $values = [$result, $imageName]; // $result is the ID of the newly inserted accommodation
-        $data_types = "is";
+        $sql = "INSERT INTO accommodation_images (image_path, accommodation_id) VALUES (?, ?)";
+        $values = [$imageName, 10]; // $result is the ID of the newly inserted accommodation
+        $data_types = "si";
         insert($sql, $values, $data_types);
     }
 
-    echo json_encode(['success' => true]);
+    echo 'success';
 } else {
-    echo json_encode(['success' => false, 'message' => 'Invalid request']);
+    echo 'failed';
 }
 
 
@@ -75,5 +77,35 @@ function uploadImage($file)
         return $uniqueName;
     } else {
         return null;
+    }
+}
+
+function getPendingAccommodations()
+{
+    // Check if uRole session is 'warden'
+    if (isset($_SESSION['uRole']) && $_SESSION['uRole'] == 'warden') {
+        $sql = "SELECT a.*, GROUP_CONCAT(ai.image_path) AS image_paths
+                FROM accommodations a
+                LEFT JOIN accommodation_images ai ON a.id_no = ai.accommodation_id
+                WHERE a.status = '0'
+                GROUP BY a.id_no";
+        $result = select($sql);
+
+        $pendingAccommodations = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $images = explode(",", $row['image_paths']);
+            $pendingAccommodations[] = [
+                'id_no' => $row['id_no'],
+                'name' => $row['name'],
+                'description' => $row['description'],
+                'images' => $images
+            ];
+        }
+        return $pendingAccommodations;
+    } else {
+        // Redirect to index.php and destroy session
+        header("Location: index.php");
+        session_destroy();
+        exit();
     }
 }

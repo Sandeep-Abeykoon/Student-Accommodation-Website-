@@ -3,27 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'includes/links.php'; ?>
     <title><?php echo $settings_result['site_title'] ?> : Pending Accommodations</title>
-    <style>
-        /* Add your custom styles here */
-    </style>
 </head>
 
 <!-- Header -->
 <?php include 'includes/header.php'; ?>
+<?php include('ajax/accommodations.php'); ?>
 
 <body class="bg-light">
-
     <div class="container my-5">
         <h2 class="fw-bold h-font text-center">Pending Accommodations</h2>
 
         <!-- List of Pending Accommodations -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <?php
-            // Example loop for pending accommodations
             for ($i = 0; $i < 6; $i++) {
                 echo '
         <div class="col">
@@ -41,6 +36,10 @@
             </div>
         </div>';
             }
+
+            $pendingAccommodations = getPendingAccommodations();
+            print_r($pendingAccommodations);
+
             ?>
         </div>
     </div>
