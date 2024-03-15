@@ -35,8 +35,7 @@
                             </ul>
                     </div>
                     data;
-                }
-                else {
+                } else {
                     echo <<<data
                     <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     <button type="button" class="btn btn-outline-dark shadow-none me-2" data-bs-toggle="modal" data-bs-target="#confirmationModal">Register</button>
@@ -71,7 +70,7 @@
 
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <button type="submit" class="btn btn-dark shadow-none">Login</button>
-                        <a href="javascript: void(0)" class="text-secondary text-decoration-none">Forgot password?</a>
+                        <span onclick="forgot_password()" class="text-secondary text-decoration-none" style="cursor: pointer;">Forgot password?</span>
                     </div>
                 </div>
 
@@ -159,3 +158,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function forgot_password() {
+        alert('Attention', "Contact Admin to reset your password");
+    }
+</script>
