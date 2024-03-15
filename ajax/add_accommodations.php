@@ -16,34 +16,39 @@ if (isset($_POST['add_accommodation'])) {
     $price = $_POST['price'];
     $capacity = $_POST['capacity'];
 
+    $uId = $_POST['uId'];
+
     $thumbnailName = uploadImage($thumbnail, '');
     $imageNames = [];
     foreach ($images['tmp_name'] as $key => $tmp_name) {
         $imageNames[] = uploadImage(['tmp_name' => $tmp_name, 'name' => $images['name'][$key]], '');
     }
 
-    $uId = $_POST['uId'];
-
- 
     // Insert accommodation details into the accommodations table
     $sql = "INSERT INTO accommodations (name, description, location, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $values = [$name, $description, $location, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity, $uId];
     $data_types = "sssssiiiidii";
     $result = insert($sql, $values, $data_types);
 
-    // Insert image names into the accommodation_images table
-    foreach ($imageNames as $imageName) {
-        $sql = "INSERT INTO accommodation_images (image_path, accommodation_id) VALUES (?, ?)";
-        $values = [$imageName, 17]; // $result is the ID of the newly inserted accommodation
-        $data_types = "si";
-        insert($sql, $values, $data_types);
-    }
+    if ($result) {
+        // Get the ID of the newly inserted accommodation
+        $accommodation_id = mysqli_insert_id($connection); // Assuming $connection is your database connection variable
 
-    echo 'success';
+        // Insert image names into the accommodation_images table
+        foreach ($imageNames as $imageName) {
+            $sql = "INSERT INTO accommodation_images (image_path, accommodation_id) VALUES (?, ?)";
+            $values = [$imageName, $accommodation_id]; // Use the accommodation ID from the first insert
+            $data_types = "si";
+            insert($sql, $values, $data_types);
+        }
+
+        echo 'success';
+    } else {
+        echo 'failed';
+    }
 } else {
     echo 'failed';
 }
-
 
 function uploadImage($file)
 {
