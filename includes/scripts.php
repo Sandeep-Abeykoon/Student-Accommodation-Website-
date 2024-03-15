@@ -182,3 +182,54 @@
 
     setActive();
 </script>
+
+
+<script>
+    // Add Accommodation
+    document.addEventListener('DOMContentLoaded', function() {
+        let addAccommodationForm = document.querySelector('#addAccommodationModal form');
+        addAccommodationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(addAccommodationForm);
+            formData.append('add_accommodation', '');
+
+            // Retrieve specific form field values and append to formData
+            let name = document.getElementById('name').value;
+            let description = document.getElementById('description').value;
+            let location = document.getElementById('location').value;
+            let address = document.getElementById('address').value;
+            let thumbnail = document.getElementById('thumbnail').files[0];
+            let images = document.getElementById('images').files;
+            let bathrooms = document.getElementById('bathrooms').value;
+            let kitchens = document.getElementById('kitchens').value;
+            let rooms = document.getElementById('rooms').value;
+            let beds = document.getElementById('beds').value;
+            let price = document.getElementById('price').value;
+            let capacity = document.getElementById('capacity').value;
+
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('location', location);
+            formData.append('address', address);
+            formData.append('thumbnail', thumbnail);
+            for (let i = 0; i < images.length; i++) {
+                formData.append('images[]', images[i]);
+            }
+            formData.append('bathrooms', bathrooms);
+            formData.append('kitchens', kitchens);
+            formData.append('rooms', rooms);
+            formData.append('beds', beds);
+            formData.append('price', price);
+            formData.append('capacity', capacity);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'ajax/accommodations.php', true);
+            xhr.onload = function() {
+                console.log(this.responseText);
+                // Handle the response as needed
+            };
+            xhr.send(formData);
+        });
+    });
+</script>
