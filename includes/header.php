@@ -31,7 +31,7 @@
                             <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li><a href="profile.php" class="dropdown-item" type="button">Profile</a></li>
                             <li><a href="myAccommodations.php" class="dropdown-item" type="button">My Accommodations</a></li>
-                            <li><a href="logout.php" class="dropdown-item" type="button">My Logout</a></li>
+                            <li><a href="logout.php" class="dropdown-item" type="button">Logout</a></li>
                             </ul>
                     </div>
                     data;
