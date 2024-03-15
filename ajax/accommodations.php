@@ -22,8 +22,10 @@ if (isset($_POST['add_accommodation'])) {
         $imageNames[] = uploadImage(['tmp_name' => $tmp_name, 'name' => $images['name'][$key]], '');
     }
 
+    $uId = $_SESSION["uId"];
+
     // Insert accommodation details into the accommodations table
-    $sql = "INSERT INTO accommodations (name, description, location, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO accommodations (name, description, location, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $values = [$name, $description, $location, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity];
     $data_types = "sssssiiiidi";
     $result = insert($sql, $values, $data_types);
