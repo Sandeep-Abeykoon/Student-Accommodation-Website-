@@ -19,6 +19,22 @@
             border: 1px solid gray;
         }
 
+        @keyframes glow {
+        0% {
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+        }
+        50% {
+            box-shadow: 0 0 20px rgba(0, 0, 255, 0.8);
+        }
+        100% {
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+        }
+    }
+
+    .glow-button {
+        animation: glow 1s infinite;
+    }
+
         @media (min-width: 992px) {}
     </style>
 </head>
@@ -27,7 +43,7 @@
 <?php include 'includes/header.php'; ?>
 
 <body class="bg-light">
-    <button class="btn btn-primary position-fixed translate-middle-y m-3" style="z-index: 1000; top: 110px; right: 0px">Add +</button>
+    <button class="btn btn-primary position-fixed translate-middle-y m-3 glow-button" style="z-index: 1000; top: 110px; right: 0px">Add +</button>
 
     <div class="my-5 px-4">
         <h2 class="fw-bold h-font text-center">Accommodations</h2>
