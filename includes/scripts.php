@@ -182,4 +182,101 @@
     setActive();
 </script>
 
+<script>
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: {
+                lat: -34.397,
+                lng: 150.644
+            },
+            zoom: 8,
+        });
 
+        // Dummy locations
+        const locations = [{
+                lat: -34.5,
+                lng: 150.7,
+                name: "Location 1"
+            },
+            {
+                lat: -34.6,
+                lng: 150.8,
+                name: "Location 2"
+            }
+        ];
+
+        // Add markers to the map
+        locations.forEach(location => {
+            new google.maps.Marker({
+                position: {
+                    lat: location.lat,
+                    lng: location.lng
+                },
+                map: map,
+                title: location.name
+            });
+        });
+    }
+</script>
+
+<script>
+    // Add Accommodation
+    document.addEventListener('DOMContentLoaded', function() {
+        let addAccommodationForm = document.querySelector('#addAccommodationModal form');
+        addAccommodationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(addAccommodationForm);
+            let uId = document.getElementById('uId').value;
+            formData.append('add_accommodation', '');
+
+            // Retrieve specific form field values and append to formData
+            let name = document.getElementById('name').value;
+            let description = document.getElementById('description').value;
+            let location = document.getElementById('location').value;
+            let address = document.getElementById('address').value;
+            let thumbnail = document.getElementById('thumbnail').files[0];
+            let images = document.getElementById('images').files;
+            let bathrooms = document.getElementById('bathrooms').value;
+            let kitchens = document.getElementById('kitchens').value;
+            let rooms = document.getElementById('rooms').value;
+            let beds = document.getElementById('beds').value;
+            let price = document.getElementById('price').value;
+            let capacity = document.getElementById('capacity').value;
+
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('location', location);
+            formData.append('address', address);
+            formData.append('thumbnail', thumbnail);
+            for (let i = 0; i < images.length; i++) {
+                formData.append('images[]', images[i]);
+            }
+            formData.append('bathrooms', bathrooms);
+            formData.append('kitchens', kitchens);
+            formData.append('rooms', rooms);
+            formData.append('beds', beds);
+            formData.append('price', price);
+            formData.append('capacity', capacity);
+            formData.append('uId', uId);
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'ajax/add_accommodations.php', true);
+            xhr.onload = function() {
+                console.log(this.response);
+
+                if (this.responseText == 'success') {
+                    alert("Success", "Accommodation added successfully!", "success");
+                    var modalReference = document.getElementById('addAccommodationModal');
+                    var modal = bootstrap.Modal.getInstance(modalReference);
+                    modal.hide();
+
+                } else {
+                    // Request failed
+                    alert("Attention", "Server error. Please try again later.", "danger");
+                }
+            }
+            xhr.send(formData);
+        });
+    });
+</script>

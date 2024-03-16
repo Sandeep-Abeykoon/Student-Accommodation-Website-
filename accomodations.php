@@ -8,41 +8,12 @@
     <?php include 'includes/links.php'; ?>
     <title><?php echo $settings_result['site_title'] ?> : Accommodations</title>
     <style>
-        #map {
-            height: 100%;
-            width: 100%;
-            border-radius: 10px;
-            transition: all;
-        }
-
-        .card:hover {
-            border: 1px solid gray;
-        }
-
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 20px rgba(0, 0, 255, 0.8);
-            }
-
-            100% {
-                box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
-            }
-        }
-
-        .glow-button {
-            animation: glow 1s infinite;
-        }
-
-        @media (min-width: 992px) {}
     </style>
 </head>
 
 <!-- Header -->
 <?php include 'includes/header.php'; ?>
+<?php include('ajax/get_accommodations.php'); ?>
 
 <?php
 $add_accommodation_btn = "";
@@ -132,10 +103,52 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         <h2 class="fw-bold h-font text-center">Accommodations</h2>
     </div>
 
+    <?php
+    $accommodations = getAccommodations()
+    ?>
+
+    <!-- List of Accommodations -->
     <div class="container">
         <div class="row mb-5 bg-white rounded shadow p-4 mb-5" id="cardContainer">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 mb-3" style="overflow-y: auto; height: 400px;">
-                <!-- Cards will be dynamically added here -->
+                <?php
+                foreach ($accommodations as $accommodation) {
+                    $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
+                    echo '
+    <div class="col">
+        <div class="card h-100 d-flex flex-column justify-content-center align-items-center"
+            data-name="' . $accommodation['name'] . '"
+            data-description="' . $accommodation['description'] . '"
+            data-thumbnail="' . $thumbnailPath . '"
+            data-location="' . $accommodation['location'] . '"
+            data-address="' . $accommodation['address'] . '"
+            data-bathrooms="' . $accommodation['bathrooms'] . '"
+            data-kitchens="' . $accommodation['kitchens'] . '"
+            data-rooms="' . $accommodation['rooms'] . '"
+            data-beds="' . $accommodation['beds'] . '"
+            data-price="' . $accommodation['price'] . '"
+            data-capacity="' . $accommodation['capacity'] . '"
+            data-id_no="' . $accommodation['id_no'] . '"
+            ';
+
+                    // Add data attributes for each image URL
+                    foreach ($accommodation['images'] as $index => $image) {
+                        echo 'data-image-' . $index . '="' . $image . '" ';
+                    }
+
+                    echo '>
+            <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
+            <div class="card-body text-center">
+                <h5 class="card-title">' . $accommodation['name'] . '</h5>
+                <p class="card-text">' . $accommodation['description'] . '</p>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-primary mt-1 view-more-btn">View Details</a>
+            </div>
+        </div>
+    </div>';
+                }
+                ?>
             </div>
             <div class="col-12 col-md-7 col-lg-8 col-xl-9 d-flex flex-column justify-content-center align-items-center">
                 <div id="map" style="height: 400px; width: 100%;"></div>
@@ -143,109 +156,52 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         </div>
     </div>
 
+
+    <!-- Accommodation Details Modal -->
+    <div class="modal fade" id="accommodationModal" tabindex="-1" aria-labelledby="accommodationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accommodationModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="accommodationCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Carousel items will be dynamically added here -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <p id="accommodationDescription"></p>
+                    <!-- Add other details here -->
+                    <p><strong>Location:</strong> <a id="accommodationLocation" target="_blank"></a></p>
+                    <p><strong>Address:</strong> <span id="accommodationAddress"></span></p>
+                    <p><strong>Bathrooms:</strong> <span id="accommodationBathrooms"></span></p>
+                    <p><strong>Kitchens:</strong> <span id="accommodationKitchens"></span></p>
+                    <p><strong>Rooms:</strong> <span id="accommodationRooms"></span></p>
+                    <p><strong>Beds:</strong> <span id="accommodationBeds"></span></p>
+                    <p><strong>Price:</strong> <span id="accommodationPrice"></span></p>
+                    <p><strong>Capacity:</strong> <span id="accommodationCapacity"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="decline_accommodation()" class="btn btn-danger" id="declineButton">Decline</button>
+                    <button type="button" onclick="accept_accommodation()" class="btn btn-success" id="acceptButton">Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
-
-    <script>
-        // Add Accommodation
-        document.addEventListener('DOMContentLoaded', function() {
-            let addAccommodationForm = document.querySelector('#addAccommodationModal form');
-            addAccommodationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                let formData = new FormData(addAccommodationForm);
-                let uId = document.getElementById('uId').value;
-                formData.append('add_accommodation', '');
-
-                // Retrieve specific form field values and append to formData
-                let name = document.getElementById('name').value;
-                let description = document.getElementById('description').value;
-                let location = document.getElementById('location').value;
-                let address = document.getElementById('address').value;
-                let thumbnail = document.getElementById('thumbnail').files[0];
-                let images = document.getElementById('images').files;
-                let bathrooms = document.getElementById('bathrooms').value;
-                let kitchens = document.getElementById('kitchens').value;
-                let rooms = document.getElementById('rooms').value;
-                let beds = document.getElementById('beds').value;
-                let price = document.getElementById('price').value;
-                let capacity = document.getElementById('capacity').value;
-
-                formData.append('name', name);
-                formData.append('description', description);
-                formData.append('location', location);
-                formData.append('address', address);
-                formData.append('thumbnail', thumbnail);
-                for (let i = 0; i < images.length; i++) {
-                    formData.append('images[]', images[i]);
-                }
-                formData.append('bathrooms', bathrooms);
-                formData.append('kitchens', kitchens);
-                formData.append('rooms', rooms);
-                formData.append('beds', beds);
-                formData.append('price', price);
-                formData.append('capacity', capacity);
-                formData.append('uId', uId);
-
-                let xhr = new XMLHttpRequest();
-                xhr.open('POST', 'ajax/add_accommodations.php', true);
-                xhr.onload = function() {
-                    console.log(this.response);
-
-                    if (this.responseText == 'success') {
-                        alert("Success", "Accommodation added successfully!", "success");
-                        var modalReference = document.getElementById('addAccommodationModal');
-                        var modal = bootstrap.Modal.getInstance(modalReference);
-                        modal.hide();
-
-                    } else {
-                        // Request failed
-                        alert("Attention", "Server error. Please try again later.", "danger");
-                    }
-                }
-                xhr.send(formData);
-            });
-        });
-    </script>
-
-    <!-- Google Maps JavaScript API -->
-    <script>
-        function initMap() {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: {
-                    lat: -34.397,
-                    lng: 150.644
-                },
-                zoom: 8,
-            });
-
-            // Dummy locations
-            const locations = [{
-                    lat: -34.5,
-                    lng: 150.7,
-                    name: "Location 1"
-                },
-                {
-                    lat: -34.6,
-                    lng: 150.8,
-                    name: "Location 2"
-                }
-            ];
-
-            // Add markers to the map
-            locations.forEach(location => {
-                new google.maps.Marker({
-                    position: {
-                        lat: location.lat,
-                        lng: location.lng
-                    },
-                    map: map,
-                    title: location.name
-                });
-            });
-        }
-    </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
 
@@ -273,15 +229,27 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             });
         }
 
-        function createCard(name, description, thumbnail) {
+        function createCard(name, description, thumbnail, location, address, bathrooms, kitchens, rooms, beds, price, capacity, id_no) {
             const card = document.createElement('div');
             card.className = 'card mb-3 shadow-sm';
             card.style.maxWidth = '540px';
             card.style.cursor = 'pointer';
+            card.setAttribute('data-name', name);
+            card.setAttribute('data-description', description);
+            card.setAttribute('data-thumbnail', thumbnail);
+            card.setAttribute('data-location', location);
+            card.setAttribute('data-address', address);
+            card.setAttribute('data-bathrooms', bathrooms);
+            card.setAttribute('data-kitchens', kitchens);
+            card.setAttribute('data-rooms', rooms);
+            card.setAttribute('data-beds', beds);
+            card.setAttribute('data-price', price);
+            card.setAttribute('data-capacity', capacity);
+            card.setAttribute('data-id_no', id_no);
 
             card.innerHTML = `
         <div class="row g-0">
-            <div class="col-7">
+            <div class="col-7 click-card">
                 <div class="card-body">
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">${description}</p>
@@ -306,9 +274,18 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     name,
                     description,
                     thumbnail,
+                    location,
+                    address,
+                    bathrooms,
+                    kitchens,
+                    rooms,
+                    beds,
+                    price,
+                    capacity,
+                    id_no,
                     images
                 }) => {
-                    const card = createCard(name, description, thumbnail, images);
+                    const card = createCard(name, description, thumbnail, location, address, bathrooms, kitchens, rooms, beds, price, capacity, id_no, images);
                     cardWrapper.appendChild(card);
                 });
             } catch (error) {
@@ -316,7 +293,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             }
         }
 
-        // Call renderCards function to fetch and display cards
         renderCards();
     </script>
 </body>
