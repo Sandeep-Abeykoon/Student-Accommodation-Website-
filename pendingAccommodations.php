@@ -170,7 +170,7 @@
                 var card = document.querySelector('.card');
                 var id_no = card.dataset.id_no;
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "ajax/a.php", true);
+                xhr.open("POST", "ajax/pending_accommodations.php", true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                 xhr.onload = function() {
@@ -194,7 +194,7 @@
 
                 if (reason !== null) {
                     let xhr = new XMLHttpRequest();
-                    xhr.open("POST", "ajax/a.php", true);
+                    xhr.open("POST", "ajax/pending_accommodations.php", true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
                     xhr.onload = function() {

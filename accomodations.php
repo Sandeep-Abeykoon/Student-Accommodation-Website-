@@ -131,66 +131,11 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <div class="my-5 px-4">
         <h2 class="fw-bold h-font text-center">Accommodations</h2>
     </div>
+
     <div class="container">
-        <div class="row mb-5 bg-white rounded shadow p-4 mb-5">
+        <div class="row mb-5 bg-white rounded shadow p-4 mb-5" id="cardContainer">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 mb-3" style="overflow-y: auto; height: 400px;">
-
-                <div class="card mb-3 shadow-sm" style="max-width: 540px; cursor:pointer;">
-                    <div class="row g-0">
-                        <div class="col-7">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This</p>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-3 shadow-sm" style="max-width: 540px; cursor:pointer;">
-                    <div class="row g-0">
-                        <div class="col-7">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This</p>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-3  shadow-sm" style="max-width: 540px; cursor:pointer;">
-                    <div class="row g-0">
-                        <div class="col-7">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This</p>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-3 shadow-sm" style="max-width: 540px; cursor:pointer;">
-                    <div class="row g-0">
-                        <div class="col-7">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This</p>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F5f40c35e-a438-11e7-8955-1ad2a9a7928d.jpg?crop=1900%2C1069%2C14%2C289&resize=1200" style="height: 100px;" alt="...">
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Cards will be dynamically added here -->
             </div>
             <div class="col-12 col-md-7 col-lg-8 col-xl-9 d-flex flex-column justify-content-center align-items-center">
                 <div id="map" style="height: 400px; width: 100%;"></div>
@@ -303,6 +248,69 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
+
+    <script>
+        // Function to fetch card data from the database
+        function fetchCardData() {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'ajax/get_accommodations.php', true);
+                xhr.onload = function() {
+                    console.log(this.responseText);
+                }
+                xhr.onerror = function() {
+                    reject('Failed to fetch card data');
+                };
+                xhr.send();
+            });
+        }
+
+        // Function to create a card element
+        function createCard(title, text, imgUrl) {
+            const card = document.createElement('div');
+            card.className = 'card mb-3 shadow-sm';
+            card.style.maxWidth = '540px';
+            card.style.cursor = 'pointer';
+
+            card.innerHTML = `
+            <div class="row g-0">
+                <div class="col-7">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${text}</p>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <img src="${imgUrl}" style="height: 100px;" alt="...">
+                </div>
+            </div>
+        `;
+
+            return card;
+        }
+
+        // Function to append cards to the container
+        async function renderCards() {
+            const cardContainer = document.getElementById('cardContainer');
+            const cardWrapper = cardContainer.querySelector('.col-12');
+            try {
+                const cardData = await fetchCardData();
+                cardData.forEach(({
+                    title,
+                    text,
+                    imgUrl
+                }) => {
+                    const card = createCard(title, text, imgUrl);
+                    cardWrapper.appendChild(card);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Call renderCards function to fetch and display cards
+        renderCards();
+    </script>
 </body>
 
 </html>
