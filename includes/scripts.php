@@ -183,43 +183,6 @@
 </script>
 
 <script>
-    function initMap() {
-        const map = new google.maps.Map(document.getElementById("map"), {
-            center: {
-                lat: -34.397,
-                lng: 150.644
-            },
-            zoom: 8,
-        });
-
-        // Dummy locations
-        const locations = [{
-                lat: -34.5,
-                lng: 150.7,
-                name: "Location 1"
-            },
-            {
-                lat: -34.6,
-                lng: 150.8,
-                name: "Location 2"
-            }
-        ];
-
-        // Add markers to the map
-        locations.forEach(location => {
-            new google.maps.Marker({
-                position: {
-                    lat: location.lat,
-                    lng: location.lng
-                },
-                map: map,
-                title: location.name
-            });
-        });
-    }
-</script>
-
-<script>
     // Add Accommodation
     document.addEventListener('DOMContentLoaded', function() {
         let addAccommodationForm = document.querySelector('#addAccommodationModal form');
@@ -233,7 +196,8 @@
             // Retrieve specific form field values and append to formData
             let name = document.getElementById('name').value;
             let description = document.getElementById('description').value;
-            let location = document.getElementById('location').value;
+            let lon = document.getElementById('lon').value;
+            let lat = document.getElementById('lat').value;
             let address = document.getElementById('address').value;
             let thumbnail = document.getElementById('thumbnail').files[0];
             let images = document.getElementById('images').files;
@@ -246,7 +210,8 @@
 
             formData.append('name', name);
             formData.append('description', description);
-            formData.append('location', location);
+            formData.append('lon', lon);
+            formData.append('lat', lat);
             formData.append('address', address);
             formData.append('thumbnail', thumbnail);
             for (let i = 0; i < images.length; i++) {

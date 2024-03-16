@@ -30,7 +30,8 @@
             data-name="' . $accommodation['name'] . '"
             data-description="' . $accommodation['description'] . '"
             data-thumbnail="' . $thumbnailPath . '"
-            data-location="' . $accommodation['location'] . '"
+            data-lat="' . $accommodation['lat'] . '"
+            data-lon="' . $accommodation['lon'] . '"
             data-address="' . $accommodation['address'] . '"
             data-bathrooms="' . $accommodation['bathrooms'] . '"
             data-kitchens="' . $accommodation['kitchens'] . '"
@@ -85,7 +86,6 @@
                         </div>
                         <p id="accommodationDescription"></p>
                         <!-- Add other details here -->
-                        <p><strong>Location:</strong> <a id="accommodationLocation" target="_blank"></a></p>
                         <p><strong>Address:</strong> <span id="accommodationAddress"></span></p>
                         <p><strong>Bathrooms:</strong> <span id="accommodationBathrooms"></span></p>
                         <p><strong>Kitchens:</strong> <span id="accommodationKitchens"></span></p>
@@ -111,7 +111,8 @@
                     var name = card.dataset.name;
                     var description = card.dataset.description;
                     var thumbnailPath = card.dataset.thumbnail;
-                    var location = card.dataset.location;
+                    var lon= card.dataset.lon;
+                    var lat= card.dataset.lat;
                     var address = card.dataset.address;
                     var bathrooms = card.dataset.bathrooms;
                     var kitchens = card.dataset.kitchens;
@@ -129,7 +130,6 @@
 
                     var modalTitle = document.getElementById('accommodationModalLabel');
                     var modalDescription = document.getElementById('accommodationDescription');
-                    var modalLocation = document.getElementById('accommodationLocation');
                     var modalAddress = document.getElementById('accommodationAddress');
                     var modalBathrooms = document.getElementById('accommodationBathrooms');
                     var modalKitchens = document.getElementById('accommodationKitchens');
@@ -142,7 +142,6 @@
                     modalTitle.textContent = name;
                     modalDescription.textContent = description;
                     modalLocation.href = location;
-                    modalLocation.textContent = 'View Location';
                     modalAddress.textContent = address;
                     modalBathrooms.textContent = bathrooms;
                     modalKitchens.textContent = kitchens;

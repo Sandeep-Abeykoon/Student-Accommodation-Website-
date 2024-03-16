@@ -8,6 +8,34 @@
     <?php include 'includes/links.php'; ?>
     <title><?php echo $settings_result['site_title'] ?> : Accommodations</title>
     <style>
+        #map {
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
+            transition: all;
+        }
+
+        .card:hover {
+            border: 1px solid gray;
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(0, 0, 255, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+            }
+        }
+
+        .glow-button {
+            animation: glow 1s infinite;
+        }
     </style>
 </head>
 
@@ -45,8 +73,12 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                             <textarea class="form-control" id="description" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="location" class="form-label">Google Maps Share Location Link</label>
-                            <input type="text" class="form-control" id="location" required>
+                            <label for="lon" class="form-label">Location Longitude</label>
+                            <input type="text" class="form-control" id="lon" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lat" class="form-label">Location Latitude</label>
+                            <input type="text" class="form-control" id="lat" required>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Address</label>
@@ -120,7 +152,8 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             data-name="' . $accommodation['name'] . '"
             data-description="' . $accommodation['description'] . '"
             data-thumbnail="' . $thumbnailPath . '"
-            data-location="' . $accommodation['location'] . '"
+            data-lon="' . $accommodation['lon'] . '"
+            data-lat="' . $accommodation['lat'] . '"
             data-address="' . $accommodation['address'] . '"
             data-bathrooms="' . $accommodation['bathrooms'] . '"
             data-kitchens="' . $accommodation['kitchens'] . '"
@@ -178,7 +211,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     </div>
                     <p id="accommodationDescription"></p>
                     <!-- Add other details here -->
-                    <p><strong>Location:</strong> <a id="accommodationLocation" target="_blank"></a></p>
                     <p><strong>Address:</strong> <span id="accommodationAddress"></span></p>
                     <p><strong>Bathrooms:</strong> <span id="accommodationBathrooms"></span></p>
                     <p><strong>Kitchens:</strong> <span id="accommodationKitchens"></span></p>
@@ -199,7 +231,9 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
+</script>
 
     <script>
         document.querySelectorAll('.card').forEach(function(button) {
@@ -209,7 +243,8 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 var name = card.dataset.name;
                 var description = card.dataset.description;
                 var thumbnailPath = card.dataset.thumbnail;
-                var location = card.dataset.location;
+                var lon = card.dataset.lon;
+                var lat = card.dataset.lat;
                 var address = card.dataset.address;
                 var bathrooms = card.dataset.bathrooms;
                 var kitchens = card.dataset.kitchens;
@@ -227,8 +262,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
 
                 var modalTitle = document.getElementById('accommodationModalLabel');
                 var modalDescription = document.getElementById('accommodationDescription');
-                var modalLocation = document.getElementById('accommodationLocation');
-                var modalAddress = document.getElementById('accommodationAddress');
+                var modalAddress = document.getElementById('accommodationLon');
                 var modalBathrooms = document.getElementById('accommodationBathrooms');
                 var modalKitchens = document.getElementById('accommodationKitchens');
                 var modalRooms = document.getElementById('accommodationRooms');
@@ -240,7 +274,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 modalTitle.textContent = name;
                 modalDescription.textContent = description;
                 modalLocation.href = location;
-                modalLocation.textContent = 'View Location';
                 modalAddress.textContent = address;
                 modalBathrooms.textContent = bathrooms;
                 modalKitchens.textContent = kitchens;
@@ -263,6 +296,59 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             });
         });
     </script>
+
+    <script>
+        function initMap() {
+            const locations = [
+    { name: 'Location 1', lat: 40.7128, lng: -74.006 },
+    { name: 'Location 2', lat: 34.0522, lng: -118.2437 },
+    { name: 'Location 3', lat: 41.8781, lng: -87.6298 },
+    // Add more locations as needed
+];
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: -34.397,
+                    lng: 150.644
+                },
+                zoom: 8,
+            });
+
+            // Add markers to the map
+            locations.forEach(location => {
+                const lat = parseFloat(location.lat);
+                const lng = parseFloat(location.lon);
+
+                new google.maps.Marker({
+                    position: {
+                        lat: lat,
+                        lng: lng
+                    },
+                    map: map,
+                    title: location.name
+                });
+            });
+        }
+    </script>
+
+    <script>
+        const locations = [];
+        document.querySelectorAll('.card').forEach(function(button) {
+            var card = button.closest('.card');
+            var lat = parseFloat(card.dataset.lat);
+            var lon = parseFloat(card.dataset.lon);
+            var name = card.dataset.name;
+
+            locations.push({
+                name: name,
+                lat: lat,
+                lon: lon
+            });
+        });
+        console.log(locations);
+
+        initMap(locations);
+    </script>
+
 </body>
 
 </html>

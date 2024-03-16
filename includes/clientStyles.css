@@ -30,31 +30,3 @@
         z-index: 1111;
     }
 
-    #map {
-        height: 100%;
-        width: 100%;
-        border-radius: 10px;
-        transition: all;
-    }
-
-    .card:hover {
-        border: 1px solid gray;
-    }
-
-    @keyframes glow {
-        0% {
-            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
-        }
-
-        50% {
-            box-shadow: 0 0 20px rgba(0, 0, 255, 0.8);
-        }
-
-        100% {
-            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
-        }
-    }
-
-    .glow-button {
-        animation: glow 1s infinite;
-    }
