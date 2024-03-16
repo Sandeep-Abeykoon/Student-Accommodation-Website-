@@ -96,7 +96,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger" id="declineButton">Decline</button>
+                        <button type="button" onclick="decline_accommodation()" class="btn btn-danger" id="declineButton">Decline</button>
                         <button type="button" onclick="accept_accommodation()" class="btn btn-success" id="acceptButton">Accept</button>
                     </div>
                 </div>
@@ -166,33 +166,6 @@
             });
 
 
-            // AJAX for Decline
-            document.getElementById('declineButton').addEventListener('click', function() {
-                var reason = prompt("Enter the reason for declining:");
-                if (reason !== null) {
-                    var formData = new FormData();
-                    formData.append('accommodation_id', id_no);
-                    formData.append('reason', reason);
-
-                    fetch('ajax/accommodation_status.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                location.reload(); // Reload the page after declining
-                            } else {
-                                alert('Failed to decline accommodation.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to decline accommodation.');
-                        });
-                }
-            });
-
             function accept_accommodation() {
                 var card = document.querySelector('.card');
                 var id_no = card.dataset.id_no;
@@ -212,6 +185,31 @@
                 }
 
                 xhr.send('id_no=' + id_no + '&action=accept');
+            }
+
+            function decline_accommodation() {
+                var card = document.querySelector('.card');
+                var id_no = card.dataset.id_no;
+                var reason = prompt("Enter the reason for declining:");
+
+                if (reason !== null) {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", "ajax/a.php", true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                    xhr.onload = function() {
+                        console.log(this.response);
+
+                        if (this.responseText == 1) {
+                            alert("Success", "Accommodation declined", "success");
+                            location.reload(); // Reload the page after declining
+                        } else {
+                            alert("Attention", "Failed to decline accommodation");
+                        }
+                    }
+
+                    xhr.send('id_no=' + id_no + '&action=decline&reason=' + encodeURIComponent(reason));
+                }
             }
         </script>
 

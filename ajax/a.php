@@ -11,3 +11,15 @@ if (isset($_POST['action']) && $_POST['action'] === 'accept') {
 
     echo $res;
 }
+
+if ($_POST['action'] == 'decline') {
+    $id_no = $_POST['id_no'];
+    $reason = $_POST['reason'];
+
+    // Perform database update
+    $query = "UPDATE accommodations SET status = -1, message = ? WHERE id_no = ?";
+    $values = [$reason, $id_no];
+    $res = update($query, $values, 'si');
+
+    echo $res;
+}
