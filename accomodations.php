@@ -116,7 +116,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
                     echo '
     <div class="col">
-        <div class="card h-100 d-flex flex-column justify-content-center align-items-center"
+        <div class="card h-100 d-flex flex-column justify-content-center align-items-center" style="cursor:pointer"
             data-name="' . $accommodation['name'] . '"
             data-description="' . $accommodation['description'] . '"
             data-thumbnail="' . $thumbnailPath . '"
@@ -141,9 +141,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             <div class="card-body text-center">
                 <h5 class="card-title">' . $accommodation['name'] . '</h5>
                 <p class="card-text">' . $accommodation['description'] . '</p>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="btn btn-primary mt-1 view-more-btn">View Details</a>
             </div>
         </div>
     </div>';
@@ -205,7 +202,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
 
     <script>
-        document.querySelectorAll('.view-more-btn').forEach(function(button) {
+        document.querySelectorAll('.card').forEach(function(button) {
             button.addEventListener('click', function() {
                 var card = button.closest('.card');
                 var id_no = card.dataset.id_no;
