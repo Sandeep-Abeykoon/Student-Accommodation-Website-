@@ -250,14 +250,18 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
 
     <script>
-        // Function to fetch card data from the database
         function fetchCardData() {
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 xhr.open('GET', 'ajax/get_accommodations.php', true);
                 xhr.onload = function() {
-                    console.log(this.responseText);
-                }
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        resolve(data);
+                    } else {
+                        reject('Failed to fetch card data');
+                    }
+                };
                 xhr.onerror = function() {
                     reject('Failed to fetch card data');
                 };
@@ -266,25 +270,25 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         }
 
         // Function to create a card element
-        function createCard(title, text, imgUrl) {
+        function createCard(title, description, thumbnail) {
             const card = document.createElement('div');
             card.className = 'card mb-3 shadow-sm';
             card.style.maxWidth = '540px';
             card.style.cursor = 'pointer';
 
             card.innerHTML = `
-            <div class="row g-0">
-                <div class="col-7">
-                    <div class="card-body">
-                        <h5 class="card-title">${title}</h5>
-                        <p class="card-text">${text}</p>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <img src="${imgUrl}" style="height: 100px;" alt="...">
+        <div class="row g-0">
+            <div class="col-7">
+                <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${description}</p>
                 </div>
             </div>
-        `;
+            <div class="col-5">
+                <img src="ajax/uploads/${thumbnail}" style="height: 100px;" alt="...">
+            </div>
+        </div>
+    `;
 
             return card;
         }
@@ -296,11 +300,11 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             try {
                 const cardData = await fetchCardData();
                 cardData.forEach(({
-                    title,
-                    text,
-                    imgUrl
+                    name,
+                    description,
+                    thumbnail
                 }) => {
-                    const card = createCard(title, text, imgUrl);
+                    const card = createCard(name, description, thumbnail);
                     cardWrapper.appendChild(card);
                 });
             } catch (error) {

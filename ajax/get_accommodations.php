@@ -4,12 +4,16 @@ include '../admin/essentials.php';
 
 $sql = "SELECT * FROM accommodations WHERE status = ?";
 $values = [1];
-$data_types = 'i'; 
+$data_types = 'i';
 
 $result = select($sql, $values, $data_types);
 
+$rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
-    print_r($row);
+    $rows[] = $row;
 }
 
 mysqli_free_result($result);
+
+header('Content-Type: application/json');
+echo json_encode($rows);
