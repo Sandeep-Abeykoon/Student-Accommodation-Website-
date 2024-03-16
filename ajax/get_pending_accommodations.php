@@ -17,6 +17,16 @@ function getPendingAccommodations()
                 'id_no' => $row['id_no'],
                 'name' => $row['name'],
                 'description' => $row['description'],
+                'location' => $row['location'],
+                'address' => $row['address'],
+                'thumbnail' => $row['thumbnail'],
+                'bathrooms' => $row['bathrooms'],
+                'kitchens' => $row['kitchens'],
+                'rooms' => $row['rooms'],
+                'beds' => $row['beds'],
+                'price' => $row['price'],
+                'capacity' => $row['capacity'],
+                'uId' => $row['uid'],
                 'images' => $images
             ];
         }
