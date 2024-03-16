@@ -158,7 +158,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
 
 
     <!-- Accommodation Details Modal -->
-    <div class="modal fade" id="accommodationModal" tabindex="-1" aria-labelledby="accommodationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="accommodationDetailsModal" tabindex="-1" aria-labelledby="accommodationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -192,8 +192,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="decline_accommodation()" class="btn btn-danger" id="declineButton">Decline</button>
-                    <button type="button" onclick="accept_accommodation()" class="btn btn-success" id="acceptButton">Accept</button>
+                    <button type="button" onclick="" class="btn btn-success" id="acceptButton">Book</button>
                 </div>
             </div>
         </div>
@@ -206,94 +205,66 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
 
     <script>
-        function fetchCardData() {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', 'ajax/get_accommodations.php', true);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        const data = JSON.parse(xhr.responseText);
-                        if (Array.isArray(data)) {
-                            resolve(data);
-                        } else {
-                            reject('Data is not an array');
-                        }
-                    } else {
-                        reject('Failed to fetch card data');
-                    }
-                };
-                xhr.onerror = function() {
-                    reject('Failed to fetch card data');
-                };
-                xhr.send();
-            });
-        }
+        document.querySelectorAll('.view-more-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var card = button.closest('.card');
+                var id_no = card.dataset.id_no;
+                var name = card.dataset.name;
+                var description = card.dataset.description;
+                var thumbnailPath = card.dataset.thumbnail;
+                var location = card.dataset.location;
+                var address = card.dataset.address;
+                var bathrooms = card.dataset.bathrooms;
+                var kitchens = card.dataset.kitchens;
+                var rooms = card.dataset.rooms;
+                var beds = card.dataset.beds;
+                var price = card.dataset.price;
+                var capacity = card.dataset.capacity;
 
-        function createCard(name, description, thumbnail, location, address, bathrooms, kitchens, rooms, beds, price, capacity, id_no) {
-            const card = document.createElement('div');
-            card.className = 'card mb-3 shadow-sm';
-            card.style.maxWidth = '540px';
-            card.style.cursor = 'pointer';
-            card.setAttribute('data-name', name);
-            card.setAttribute('data-description', description);
-            card.setAttribute('data-thumbnail', thumbnail);
-            card.setAttribute('data-location', location);
-            card.setAttribute('data-address', address);
-            card.setAttribute('data-bathrooms', bathrooms);
-            card.setAttribute('data-kitchens', kitchens);
-            card.setAttribute('data-rooms', rooms);
-            card.setAttribute('data-beds', beds);
-            card.setAttribute('data-price', price);
-            card.setAttribute('data-capacity', capacity);
-            card.setAttribute('data-id_no', id_no);
+                var images = [];
+                var index = 0;
+                while (card.dataset['image-' + index]) {
+                    images.push(card.dataset['image-' + index]);
+                    index++;
+                }
 
-            card.innerHTML = `
-        <div class="row g-0">
-            <div class="col-7 click-card">
-                <div class="card-body">
-                    <h5 class="card-title">${name}</h5>
-                    <p class="card-text">${description}</p>
-                </div>
-            </div>
-            <div class="col-5">
-                <img src="ajax/uploads/${thumbnail}" class="d-block w-100" alt="...">
-            </div>
-        </div>
-    `;
+                var modalTitle = document.getElementById('accommodationModalLabel');
+                var modalDescription = document.getElementById('accommodationDescription');
+                var modalLocation = document.getElementById('accommodationLocation');
+                var modalAddress = document.getElementById('accommodationAddress');
+                var modalBathrooms = document.getElementById('accommodationBathrooms');
+                var modalKitchens = document.getElementById('accommodationKitchens');
+                var modalRooms = document.getElementById('accommodationRooms');
+                var modalBeds = document.getElementById('accommodationBeds');
+                var modalPrice = document.getElementById('accommodationPrice');
+                var modalCapacity = document.getElementById('accommodationCapacity');
+                var modalCarousel = document.querySelector('#accommodationCarousel .carousel-inner');
 
-            return card;
-        }
+                modalTitle.textContent = name;
+                modalDescription.textContent = description;
+                modalLocation.href = location;
+                modalLocation.textContent = 'View Location';
+                modalAddress.textContent = address;
+                modalBathrooms.textContent = bathrooms;
+                modalKitchens.textContent = kitchens;
+                modalRooms.textContent = rooms;
+                modalBeds.textContent = beds;
+                modalPrice.textContent = price;
+                modalCapacity.textContent = capacity;
 
-        async function renderCards() {
-            const cardContainer = document.getElementById('cardContainer');
-            const cardWrapper = cardContainer.querySelector('.col-12');
-            try {
-                const cardData = await fetchCardData();
-                console.log(cardData);
-                cardData.forEach(({
-                    name,
-                    description,
-                    thumbnail,
-                    location,
-                    address,
-                    bathrooms,
-                    kitchens,
-                    rooms,
-                    beds,
-                    price,
-                    capacity,
-                    id_no,
-                    images
-                }) => {
-                    const card = createCard(name, description, thumbnail, location, address, bathrooms, kitchens, rooms, beds, price, capacity, id_no, images);
-                    cardWrapper.appendChild(card);
+                modalCarousel.innerHTML = '';
+                images.forEach(function(image, index) {
+                    var activeClass = index === 0 ? 'active' : '';
+                    var carouselItem = document.createElement('div');
+                    carouselItem.className = 'carousel-item ' + activeClass;
+                    carouselItem.innerHTML = '<img src="ajax/uploads/' + image + '" class="d-block w-100" alt="Accommodation Image">';
+                    modalCarousel.appendChild(carouselItem);
                 });
-            } catch (error) {
-                console.error(error);
-            }
-        }
 
-        renderCards();
+                var modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
+                modal.show();
+            });
+        });
     </script>
 </body>
 
