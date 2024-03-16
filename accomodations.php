@@ -257,7 +257,11 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 xhr.onload = function() {
                     if (xhr.status === 200) {
                         const data = JSON.parse(xhr.responseText);
-                        resolve(data);
+                        if (Array.isArray(data)) {
+                            resolve(data);
+                        } else {
+                            reject('Data is not an array');
+                        }
                     } else {
                         reject('Failed to fetch card data');
                     }
@@ -269,8 +273,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             });
         }
 
-        // Function to create a card element
-        function createCard(title, description, thumbnail) {
+        function createCard(name, description, thumbnail) {
             const card = document.createElement('div');
             card.className = 'card mb-3 shadow-sm';
             card.style.maxWidth = '540px';
@@ -280,12 +283,12 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         <div class="row g-0">
             <div class="col-7">
                 <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
+                    <h5 class="card-title">${name}</h5>
                     <p class="card-text">${description}</p>
                 </div>
             </div>
             <div class="col-5">
-                <img src="ajax/uploads/${thumbnail}" style="height: 100px;" alt="...">
+                <img src="ajax/uploads/${thumbnail}" class="d-block w-100" alt="...">
             </div>
         </div>
     `;
@@ -293,18 +296,19 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             return card;
         }
 
-        // Function to append cards to the container
         async function renderCards() {
             const cardContainer = document.getElementById('cardContainer');
             const cardWrapper = cardContainer.querySelector('.col-12');
             try {
                 const cardData = await fetchCardData();
+                console.log(cardData);
                 cardData.forEach(({
                     name,
                     description,
-                    thumbnail
+                    thumbnail,
+                    images
                 }) => {
-                    const card = createCard(name, description, thumbnail);
+                    const card = createCard(name, description, thumbnail, images);
                     cardWrapper.appendChild(card);
                 });
             } catch (error) {
