@@ -122,7 +122,9 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                         </div>
                         <div class="mb-3">
                             <label for="thumbnail" class="form-label">Thumbnail Image</label>
-                            <input type="file" class="form-control" id="thumbnail" accept="image/*" onchange="handleFileSelect(event)" required>
+                            <input type="file" class="form-control" id="thumbnail" accept="image/*" onchange="handleThumbnailSelect(event)" required>
+                            <div id="thumbnail-preview"></div>
+                            <button type="button" class="btn btn-danger mt-2" id="remove-thumbnail" disabled>Remove Thumbnail</button>
                         </div>
                         <div id="image-preview-thumbnail" class="d-flex flex-wrap"></div>
                         <div class="mb-3">
@@ -273,6 +275,38 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
+
+    <script>
+        function handleThumbnailSelect(event) {
+            thumbnailFile = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const thumbnailPreview = document.getElementById('thumbnail-preview');
+                thumbnailPreview.innerHTML = ''; // Clear previous preview
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-thumbnail', 'mt-3');
+                img.style.width = '250px';
+
+                thumbnailPreview.appendChild(img);
+
+                // Enable the "Remove Thumbnail" button
+                document.getElementById('remove-thumbnail').removeAttribute('disabled');
+            };
+
+            reader.readAsDataURL(thumbnailFile);
+        }
+
+        document.getElementById('remove-thumbnail').addEventListener('click', function() {
+            const thumbnailPreview = document.getElementById('thumbnail-preview');
+            thumbnailPreview.innerHTML = ''; // Clear the preview
+            thumbnailFile = null; // Reset the selected file
+            document.getElementById('remove-thumbnail').setAttribute('disabled', 'disabled');
+            document.getElementById('thumbnail').value = ''; // Clear the input value
+        });
+    </script>
 
     <script>
         let selectedFiles = [];
