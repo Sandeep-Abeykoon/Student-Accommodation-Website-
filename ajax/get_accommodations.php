@@ -5,6 +5,7 @@ function getAccommodations()
     $sql = "SELECT a.*, GROUP_CONCAT(ai.image_path) AS image_paths
                 FROM accommodations a
                 LEFT JOIN accommodation_images ai ON a.id_no = ai.accommodation_id
+                WHERE a.status = 1
                 GROUP BY a.id_no";
     $result = select($sql);
 

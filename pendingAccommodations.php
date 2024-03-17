@@ -141,7 +141,6 @@
 
                     modalTitle.textContent = name;
                     modalDescription.textContent = description;
-                    modalLocation.href = location;
                     modalAddress.textContent = address;
                     modalBathrooms.textContent = bathrooms;
                     modalKitchens.textContent = kitchens;

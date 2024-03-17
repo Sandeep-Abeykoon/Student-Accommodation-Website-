@@ -5,7 +5,8 @@ include '../admin/essentials.php';
 if (isset($_POST['add_accommodation'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
-    $location = $_POST['location'];
+    $lon = $_POST['lon'];
+    $lat = $_POST['lat'];
     $address = $_POST['address'];
     $thumbnail = $_FILES['thumbnail'];
     $images = $_FILES['images'];
@@ -25,9 +26,9 @@ if (isset($_POST['add_accommodation'])) {
     }
 
     // Insert accommodation details into the accommodations table
-    $sql = "INSERT INTO accommodations (name, description, location, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $values = [$name, $description, $location, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity, $uId];
-    $data_types = "sssssiiiidii";
+    $sql = "INSERT INTO accommodations (name, description, lon, lat, address, thumbnail, bathrooms, kitchens, rooms, beds, price, capacity, uId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $values = [$name, $description, $lon, $lat, $address, $thumbnailName, $bathrooms, $kitchens, $rooms, $beds, $price, $capacity, $uId];
+    $data_types = "ssssssiiiidii";
     $result = insert($sql, $values, $data_types);
 
     if ($result) {
