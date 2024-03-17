@@ -239,3 +239,85 @@
         });
     });
 </script>
+
+<script>
+    document.querySelectorAll('.view-more-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var card = button.closest('.card');
+            var id_no = card.dataset.id_no;
+            var name = card.dataset.name;
+            var description = card.dataset.description;
+            var thumbnailPath = card.dataset.thumbnail;
+            var lon = card.dataset.lon;
+            var lat = card.dataset.lat;
+            var address = card.dataset.address;
+            var bathrooms = card.dataset.bathrooms;
+            var kitchens = card.dataset.kitchens;
+            var rooms = card.dataset.rooms;
+            var beds = card.dataset.beds;
+            var price = card.dataset.price;
+            var capacity = card.dataset.capacity;
+
+            var images = [];
+            var index = 0;
+            while (card.dataset['image-' + index]) {
+                images.push(card.dataset['image-' + index]);
+                index++;
+            }
+
+            var modalTitle = document.getElementById('accommodationModalLabel');
+            var modalDescription = document.getElementById('accommodationDescription');
+            var modalAddress = document.getElementById('accommodationAddress');
+            var modalBathrooms = document.getElementById('accommodationBathrooms');
+            var modalKitchens = document.getElementById('accommodationKitchens');
+            var modalRooms = document.getElementById('accommodationRooms');
+            var modalBeds = document.getElementById('accommodationBeds');
+            var modalPrice = document.getElementById('accommodationPrice');
+            var modalCapacity = document.getElementById('accommodationCapacity');
+            var modalCarousel = document.querySelector('#accommodationCarousel .carousel-inner');
+
+            modalTitle.textContent = name;
+            modalDescription.textContent = description;
+            modalAddress.textContent = address;
+            modalBathrooms.textContent = bathrooms;
+            modalKitchens.textContent = kitchens;
+            modalRooms.textContent = rooms;
+            modalBeds.textContent = beds;
+            modalPrice.textContent = price;
+            modalCapacity.textContent = capacity;
+
+            modalCarousel.innerHTML = '';
+            images.forEach(function(image, index) {
+                var activeClass = index === 0 ? 'active' : '';
+                var carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item ' + activeClass;
+                carouselItem.innerHTML = '<img src="ajax/uploads/' + image + '" class="d-block w-100" alt="Accommodation Image">';
+                modalCarousel.appendChild(carouselItem);
+            });
+
+            var modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
+            modal.show();
+        });
+    });
+
+    function delete_accommodation() {
+        var card = document.querySelector('.card');
+        var id_no = card.dataset.id_no;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/delete_accommodation.php", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function() {
+            console.log(this.response);
+
+            if (this.responseText == 1) {
+                alert("Success", "Accommodation deleted", "success");
+                location.reload();
+            } else {
+                alert("Attention", "Failed to delete accommodation");
+            }
+        }
+
+        xhr.send('id_no=' + id_no + '&action=delete');
+    }
+</script>

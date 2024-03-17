@@ -36,6 +36,14 @@
         .glow-button {
             animation: glow 1s infinite;
         }
+
+        .carousel-item img {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .carousel {
+            margin: 0 auto;
+        }
     </style>
 </head>
 
