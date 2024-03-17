@@ -133,7 +133,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editAccommodationForm" action="ajax/edit_accommodation.php" method="POST">
+                    <form id="editAccommodationForm" method="POST">
                         <div class="mb-3">
                             <label for="editName" class="form-label">Accommodation Name</label>
                             <input type="text" class="form-control" id="editName" name="name" required>
@@ -184,13 +184,53 @@
                         </div>
                         <input type="hidden" id="editId" name="id">
                         <div class="text-end my-1">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-primary save-accommodation-btn">Save Changes</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.save-accommodation-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = document.getElementById('editId').value;
+                var name = document.getElementById('editName').value;
+                var description = document.getElementById('editDescription').value;
+                var lon = document.getElementById('editLon').value;
+                var lat = document.getElementById('editLat').value;
+                var address = document.getElementById('editAddress').value;
+                var bathrooms = document.getElementById('editBathrooms').value;
+                var kitchens = document.getElementById('editKitchens').value;
+                var rooms = document.getElementById('editRooms').value;
+                var beds = document.getElementById('editBeds').value;
+                var price = document.getElementById('editPrice').value;
+                var capacity = document.getElementById('editCapacity').value;
+
+                var formData = new FormData();
+                formData.append('id', id);
+                formData.append('name', name);
+                formData.append('description', description);
+                formData.append('lon', lon);
+                formData.append('lat', lat);
+                formData.append('address', address);
+                formData.append('bathrooms', bathrooms);
+                formData.append('kitchens', kitchens);
+                formData.append('rooms', rooms);
+                formData.append('beds', beds);
+                formData.append('price', price);
+                formData.append('capacity', capacity);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'ajax/update_accommodation.php', true);
+                xhr.onload = function() {
+                    console.log(this.responseText)
+                };
+                xhr.send(formData);
+            });
+        });
+    </script>
 
     <script>
         document.querySelectorAll('.edit-accommodation-btn').forEach(function(button) {
@@ -202,6 +242,13 @@
                 var lon = card.dataset.lon;
                 var lat = card.dataset.lat;
                 var address = card.dataset.address;
+                var thumbnail = card.dataset.thumbnail;
+                var bathrooms = card.dataset.bathrooms;
+                var kitchens = card.dataset.kitchens;
+                var rooms = card.dataset.rooms;
+                var beds = card.dataset.beds;
+                var price = card.dataset.price;
+                var capacity = card.dataset.capacity;
 
                 document.getElementById('editId').value = id_no;
                 document.getElementById('editName').value = name;
@@ -209,6 +256,12 @@
                 document.getElementById('editLon').value = lon;
                 document.getElementById('editLat').value = lat;
                 document.getElementById('editAddress').value = address;
+                document.getElementById('editBathrooms').value = bathrooms;
+                document.getElementById('editKitchens').value = kitchens;
+                document.getElementById('editRooms').value = rooms;
+                document.getElementById('editBeds').value = beds;
+                document.getElementById('editPrice').value = price;
+                document.getElementById('editCapacity').value = capacity;
 
                 var modal = new bootstrap.Modal(document.getElementById('editAccommodationModal'));
                 modal.show();
@@ -298,48 +351,6 @@
             xhr.send('id_no=' + id_no + '&action=delete');
         }
     </script>
-
-    <script>
-        // Edit button click event listener
-        document.querySelectorAll('.edit-accommodation-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var card = button.closest('.card');
-                var id_no = card.dataset.id_no;
-                var name = card.dataset.name;
-                var description = card.dataset.description;
-                var lon = card.dataset.lon;
-                var lat = card.dataset.lat;
-                var address = card.dataset.address;
-                var thumbnail = card.dataset.thumbnail;
-                var bathrooms = card.dataset.bathrooms;
-                var kitchens = card.dataset.kitchens;
-                var rooms = card.dataset.rooms;
-                var beds = card.dataset.beds;
-                var price = card.dataset.price;
-                var capacity = card.dataset.capacity;
-
-                // Populate the modal form with the existing accommodation details
-                document.getElementById('editName').value = name;
-                document.getElementById('editDescription').value = description;
-                document.getElementById('editLon').value = lon;
-                document.getElementById('editLat').value = lat;
-                document.getElementById('editAddress').value = address;
-                document.getElementById('editBathrooms').value = bathrooms;
-                document.getElementById('editKitchens').value = kitchens;
-                document.getElementById('editRooms').value = rooms;
-                document.getElementById('editBeds').value = beds;
-                document.getElementById('editPrice').value = price;
-                document.getElementById('editCapacity').value = capacity;
-
-                // Update the form action to handle the edit functionality
-                document.getElementById('accommodationForm').action = 'ajax/edit_accommodation.php?id=' + id_no;
-
-                var modal = new bootstrap.Modal(document.getElementById('addAccommodationModal'));
-                modal.show();
-            });
-        });
-    </script>
-
     <?php include 'includes/scripts.php'; ?>
 
 </body>
