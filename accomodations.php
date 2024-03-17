@@ -231,80 +231,82 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
 
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
-</script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
+    </script>
 
     <script>
-        document.querySelectorAll('.card').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var card = button.closest('.card');
-                var id_no = card.dataset.id_no;
-                var name = card.dataset.name;
-                var description = card.dataset.description;
-                var thumbnailPath = card.dataset.thumbnail;
-                var lon = card.dataset.lon;
-                var lat = card.dataset.lat;
-                var address = card.dataset.address;
-                var bathrooms = card.dataset.bathrooms;
-                var kitchens = card.dataset.kitchens;
-                var rooms = card.dataset.rooms;
-                var beds = card.dataset.beds;
-                var price = card.dataset.price;
-                var capacity = card.dataset.capacity;
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            const modalTitle = document.getElementById('accommodationModalLabel');
+            const modalDescription = document.getElementById('accommodationDescription');
+            const modalAddress = document.getElementById('accommodationAddress');
+            const modalBathrooms = document.getElementById('accommodationBathrooms');
+            const modalKitchens = document.getElementById('accommodationKitchens');
+            const modalRooms = document.getElementById('accommodationRooms');
+            const modalBeds = document.getElementById('accommodationBeds');
+            const modalPrice = document.getElementById('accommodationPrice');
+            const modalCapacity = document.getElementById('accommodationCapacity');
+            const modalCarouselInner = document.querySelector('#accommodationCarousel .carousel-inner');
 
-                var images = [];
-                var index = 0;
-                while (card.dataset['image-' + index]) {
-                    images.push(card.dataset['image-' + index]);
-                    index++;
-                }
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    modalTitle.textContent = card.dataset.name;
+                    modalDescription.textContent = card.dataset.description;
+                    modalAddress.textContent = card.dataset.address;
+                    modalBathrooms.textContent = card.dataset.bathrooms;
+                    modalKitchens.textContent = card.dataset.kitchens;
+                    modalRooms.textContent = card.dataset.rooms;
+                    modalBeds.textContent = card.dataset.beds;
+                    modalPrice.textContent = card.dataset.price;
+                    modalCapacity.textContent = card.dataset.capacity;
 
-                var modalTitle = document.getElementById('accommodationModalLabel');
-                var modalDescription = document.getElementById('accommodationDescription');
-                var modalAddress = document.getElementById('accommodationLon');
-                var modalBathrooms = document.getElementById('accommodationBathrooms');
-                var modalKitchens = document.getElementById('accommodationKitchens');
-                var modalRooms = document.getElementById('accommodationRooms');
-                var modalBeds = document.getElementById('accommodationBeds');
-                var modalPrice = document.getElementById('accommodationPrice');
-                var modalCapacity = document.getElementById('accommodationCapacity');
-                var modalCarousel = document.querySelector('#accommodationCarousel .carousel-inner');
+                    // Clear previous carousel items
+                    modalCarouselInner.innerHTML = '';
 
-                modalTitle.textContent = name;
-                modalDescription.textContent = description;
-                modalLocation.href = location;
-                modalAddress.textContent = address;
-                modalBathrooms.textContent = bathrooms;
-                modalKitchens.textContent = kitchens;
-                modalRooms.textContent = rooms;
-                modalBeds.textContent = beds;
-                modalPrice.textContent = price;
-                modalCapacity.textContent = capacity;
+                    // Add images to the carousel
+                    for (let i = 0; i < 5; i++) {
+                        if (card.dataset['image-' + i]) {
+                            const carouselItem = document.createElement('div');
+                            carouselItem.classList.add('carousel-item');
+                            if (i === 0) {
+                                carouselItem.classList.add('active');
+                            }
+                            const image = document.createElement('img');
+                            image.src = 'ajax/uploads/' + card.dataset['image-' + i];
+                            image.classList.add('d-block', 'w-100');
+                            carouselItem.appendChild(image);
+                            modalCarouselInner.appendChild(carouselItem);
+                        }
+                    }
 
-                modalCarousel.innerHTML = '';
-                images.forEach(function(image, index) {
-                    var activeClass = index === 0 ? 'active' : '';
-                    var carouselItem = document.createElement('div');
-                    carouselItem.className = 'carousel-item ' + activeClass;
-                    carouselItem.innerHTML = '<img src="ajax/uploads/' + image + '" class="d-block w-100" alt="Accommodation Image">';
-                    modalCarousel.appendChild(carouselItem);
+                    // Show the modal
+                    const modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
+                    modal.show();
                 });
-
-                var modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
-                modal.show();
             });
         });
     </script>
 
+
     <script>
         function initMap() {
-            const locations = [
-    { name: 'Location 1', lat: 40.7128, lng: -74.006 },
-    { name: 'Location 2', lat: 34.0522, lng: -118.2437 },
-    { name: 'Location 3', lat: 41.8781, lng: -87.6298 },
-    // Add more locations as needed
-];
+            const locations = [{
+                    name: 'Location 1',
+                    lat: 40.7128,
+                    lng: -74.006
+                },
+                {
+                    name: 'Location 2',
+                    lat: 34.0522,
+                    lng: -118.2437
+                },
+                {
+                    name: 'Location 3',
+                    lat: 41.8781,
+                    lng: -87.6298
+                },
+                // Add more locations as needed
+            ];
             const map = new google.maps.Map(document.getElementById("map"), {
                 center: {
                     lat: -34.397,
