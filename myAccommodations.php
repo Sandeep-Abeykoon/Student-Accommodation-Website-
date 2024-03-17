@@ -225,7 +225,12 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'ajax/update_accommodation.php', true);
                 xhr.onload = function() {
-                    console.log(this.responseText)
+                    if(this.responseText == 1) {
+                        alert('Success', "Accommodation details updated", "success")
+                        
+                    }else {
+                        alert("Error",'Accommodation did not get updated', 'error')
+                    }
                 };
                 xhr.send(formData);
             });

@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Call the update function
         $result = update($sql, $values, $data_types);
-        echo "<script>console.log($result);</script>";
     } else {
         echo "Missing parameters in the form submission.";
     }
