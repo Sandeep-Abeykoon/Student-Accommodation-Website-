@@ -177,7 +177,48 @@
 </script>
 
 <script>
-    // Add Accommodation
+    let selectedFiles = [];
+
+    function handleFileSelect(event) {
+        const files = event.target.files;
+        if (files.length + selectedFiles.length > 5) {
+            alert("You can only select up to 5 files.");
+            event.target.value = ""; // Clear the selected files
+            return;
+        }
+        for (let i = 0; i < files.length; i++) {
+            selectedFiles.push(files[i]);
+
+            let container = document.createElement('div');
+            container.classList.add('image-preview');
+
+            let img = document.createElement('img');
+            img.src = URL.createObjectURL(files[i]);
+            img.width = 100;
+            img.height = 100;
+
+            let removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove';
+            removeBtn.addEventListener('click', function() {
+
+                let index = selectedFiles.indexOf(files[i]);
+                if (index !== -1) {
+                    selectedFiles.splice(index, 1);
+                }
+                container.remove();
+            });
+
+            container.appendChild(img);
+            container.appendChild(removeBtn);
+
+          
+            let previewContainer = document.getElementById('image-preview');
+            previewContainer.appendChild(container);
+        }
+        console.log("Selected Files:", selectedFiles);
+    }
+
+
     document.addEventListener('DOMContentLoaded', function() {
         let addAccommodationForm = document.querySelector('#addAccommodationModal form');
         addAccommodationForm.addEventListener('submit', function(e) {
@@ -194,7 +235,9 @@
             let lat = document.getElementById('lat').value;
             let address = document.getElementById('address').value;
             let thumbnail = document.getElementById('thumbnail').files[0];
-            let images = document.getElementById('images').files;
+            for (let i = 0; i < selectedFiles.length; i++) {
+                formData.append('images[]', selectedFiles[i]);
+            }
             let bathrooms = document.getElementById('bathrooms').value;
             let kitchens = document.getElementById('kitchens').value;
             let rooms = document.getElementById('rooms').value;
@@ -208,9 +251,6 @@
             formData.append('lat', lat);
             formData.append('address', address);
             formData.append('thumbnail', thumbnail);
-            for (let i = 0; i < images.length; i++) {
-                formData.append('images[]', images[i]);
-            }
             formData.append('bathrooms', bathrooms);
             formData.append('kitchens', kitchens);
             formData.append('rooms', rooms);

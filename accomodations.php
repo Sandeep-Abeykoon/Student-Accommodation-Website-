@@ -41,8 +41,36 @@
             max-width: 300px;
             margin: 0 auto;
         }
+
         .carousel {
             margin: 0 auto;
+        }
+
+        #image-preview {
+            margin-top: 10px;
+        }
+
+        .image-preview {
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .image-preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .image-preview button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 2px 6px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 0 0 0 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -94,12 +122,15 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                         </div>
                         <div class="mb-3">
                             <label for="thumbnail" class="form-label">Thumbnail Image</label>
-                            <input type="file" class="form-control" id="thumbnail" accept="image/*" required>
+                            <input type="file" class="form-control" id="thumbnail" accept="image/*" onchange="handleFileSelect(event)" required>
                         </div>
+                        <div id="image-preview-thumbnail" class="d-flex flex-wrap"></div>
                         <div class="mb-3">
-                            <label for="images" class="form-label">Images</label>
-                            <input type="file" class="form-control" id="images" accept="image/*" multiple required>
+                            <label for="images" class="form-label">Images (up to 5 files)</label>
+                            <input type="file" class="form-control" id="images" accept="image/*" onchange="handleFileSelect(event)" required>
                         </div>
+                        <div id="image-preview" class="d-flex flex-wrap"></div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="bathrooms" class="form-label">No. of Bathrooms</label>
@@ -152,9 +183,12 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         <div class="row mb-5 bg-white rounded shadow p-4 mb-5" id="cardContainer">
             <div class="col-12 col-md-5 col-lg-4 col-xl-3 mb-3" style="overflow-y: auto; height: 400px;">
                 <?php
-                foreach ($accommodations as $accommodation) {
-                    $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
-                    echo '
+                if (empty($accommodations)) {
+                    echo '<div style="height: 50vh; display: flex; justify-content:center; align-items:center" class="text-center"><span>No accommodations at the moment.</span></div>';
+                } else {
+                    foreach ($accommodations as $accommodation) {
+                        $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
+                        echo '
     <div class="col">
         <div class="card h-100 d-flex flex-column justify-content-center align-items-center" style="cursor:pointer"
             data-name="' . $accommodation['name'] . '"
@@ -172,12 +206,12 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             data-id_no="' . $accommodation['id_no'] . '"
             ';
 
-                    // Add data attributes for each image URL
-                    foreach ($accommodation['images'] as $index => $image) {
-                        echo 'data-image-' . $index . '="' . $image . '" ';
-                    }
+                        // Add data attributes for each image URL
+                        foreach ($accommodation['images'] as $index => $image) {
+                            echo 'data-image-' . $index . '="' . $image . '" ';
+                        }
 
-                    echo '>
+                        echo '>
             <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
             <div class="card-body text-center">
                 <h5 class="card-title">' . $accommodation['name'] . '</h5>
@@ -185,6 +219,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             </div>
         </div>
     </div>';
+                    }
                 }
                 ?>
             </div>
@@ -238,6 +273,23 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
+
+    <script>
+        let selectedFiles = [];
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length + selectedFiles.length > 5) {
+                alert("You can only select up to 5 files.");
+                event.target.value = ""; // Clear the selected files
+                return;
+            }
+            for (let i = 0; i < files.length; i++) {
+                selectedFiles.push(files[i]);
+            }
+            console.log("Selected Files:", selectedFiles);
+        }
+    </script>
 
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
     </script>
