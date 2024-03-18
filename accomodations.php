@@ -285,11 +285,33 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         // Load accommodation data
         <?php
         foreach ($accommodations as $accommodation) {
+            $acc_id = $accommodation['id_no'];
             $lat = $accommodation['lat'];
             $lon = $accommodation['lon'];
             $name = $accommodation['name'];
             $address = $accommodation['address'];
-            echo "locations.push({lat: $lat, lng: $lon, name: '$name', address: '$address'});";
+
+            // Create an array to hold image URLs
+            $images = [];
+            foreach ($accommodation['images'] as $index => $image) {
+                $images[] = $image;
+            }
+
+            // Add accommodation data to locations array
+            echo "locations.push({
+                lat: $lat,
+                lng: $lon,
+                name: '$name',
+                address: '$address',
+                description: '{$accommodation['description']}',
+                bathrooms: '{$accommodation['bathrooms']}',
+                kitchens: '{$accommodation['kitchens']}',
+                rooms: '{$accommodation['rooms']}',
+                beds: '{$accommodation['beds']}',
+                price: '{$accommodation['price']}',
+                capacity: '{$accommodation['capacity']}',
+                images: " . json_encode($images) . "
+            });";
         }
         ?>
 
@@ -310,18 +332,54 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 });
 
                 var infowindow = new google.maps.InfoWindow({
-                    content: ''
+                    content: '<strong>' + location.name + '</strong><br>' + location.address
                 });
 
                 marker.addListener('mouseover', function() {
-                    infowindow.setContent('<strong>' + location.name + '</strong><br>' + location.address);
                     infowindow.open(map, marker);
                 });
 
                 marker.addListener('mouseout', function() {
                     infowindow.close();
                 });
+
+                marker.addListener('click', function() {
+                    // Show the accommodation details modal
+                    var modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
+                    modal.show();
+
+                    // Set modal content
+                    document.getElementById('accommodationModalLabel').textContent = location.name;
+                    document.getElementById('accommodationDescription').textContent = location.description;
+                    document.getElementById('accommodationAddress').textContent = location.address;
+                    // Add other details here
+                    document.getElementById('accommodationBathrooms').textContent = location.bathrooms;
+                    document.getElementById('accommodationKitchens').textContent = location.kitchens;
+                    document.getElementById('accommodationRooms').textContent = location.rooms;
+                    document.getElementById('accommodationBeds').textContent = location.beds;
+                    document.getElementById('accommodationPrice').textContent = location.price;
+                    document.getElementById('accommodationCapacity').textContent = location.capacity;
+
+                    // Clear previous carousel items
+                    const modalCarouselInner = document.querySelector('#accommodationCarousel .carousel-inner');
+                    modalCarouselInner.innerHTML = '';
+
+                    // Add images to the carousel
+                    for (let i = 0; i < location.images.length; i++) {
+                        const carouselItem = document.createElement('div');
+                        carouselItem.classList.add('carousel-item');
+                        if (i === 0) {
+                            carouselItem.classList.add('active');
+                        }
+                        const image = document.createElement('img');
+                        image.src = 'ajax/uploads/' + location.images[i];
+                        image.classList.add('d-block', 'w-100');
+                        carouselItem.appendChild(image);
+                        modalCarouselInner.appendChild(carouselItem);
+                    }
+                });
             });
+
         }
 
         // Initialize the map with accommodation locations
