@@ -242,7 +242,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 </div>
                 <div class="modal-body">
                     <div id="accommodationCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner bg-dark">
                             <!-- Carousel items will be dynamically added here -->
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="prev">
@@ -280,27 +280,18 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     </script>
 
     <script>
-        var locations = [{
-                lat: 37.7749,
-                lng: -122.4194,
-                name: 'San Francisco'
-            },
-            {
-                lat: 40.7128,
-                lng: -74.0060,
-                name: 'New York City'
-            },
-            {
-                lat: 51.5074,
-                lng: -0.1278,
-                name: 'London'
-            },
-            {
-                lat: -33.8688,
-                lng: 151.2093,
-                name: 'Sydney'
-            }
-        ];
+        var locations = [];
+
+        // Load accommodation data
+        <?php
+        foreach ($accommodations as $accommodation) {
+            $lat = $accommodation['lat'];
+            $lon = $accommodation['lon'];
+            $name = $accommodation['name'];
+            $address = $accommodation['address'];
+            echo "locations.push({lat: $lat, lng: $lon, name: '$name', address: '$address'});";
+        }
+        ?>
 
         function initMap() {
             // Initialize the map
@@ -309,33 +300,33 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     lat: 6.821788505674078,
                     lng: 80.04165336626556
                 },
-                zoom: 15
+                zoom: 12
             });
 
-            // Add markers for each location
             locations.forEach(function(location) {
                 var marker = new google.maps.Marker({
-                    position: {
-                        lat: location.lat,
-                        lng: location.lng
-                    },
-                    map: map,
-                    title: location.name
+                    position: location,
+                    map: map
                 });
 
-                // Add info window to each marker
                 var infowindow = new google.maps.InfoWindow({
-                    content: location.name
+                    content: ''
                 });
 
-                marker.addListener('click', function() {
+                marker.addListener('mouseover', function() {
+                    infowindow.setContent('<strong>' + location.name + '</strong><br>' + location.address);
                     infowindow.open(map, marker);
+                });
+
+                marker.addListener('mouseout', function() {
+                    infowindow.close();
                 });
             });
         }
+
+        // Initialize the map with accommodation locations
+        initMap();
     </script>
-
-
     <script>
         function handleThumbnailSelect(event) {
             thumbnailFile = event.target.files[0];
