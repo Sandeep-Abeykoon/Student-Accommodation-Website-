@@ -16,6 +16,12 @@
         .carousel {
             margin: 0 auto;
         }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -26,19 +32,19 @@
 <body class="bg-light" style="display: flex; flex-direction: column; min-height: 100vh; ">
     <main style="flex:1">
         <div class="container-fluid my-5">
-            <h2 class="fw-bold h-font text-center">Pending Accommodations</h2>
+            <h2 class="fw-bold h-font text-center">My Accommodations</h2>
 
             <?php
-            $pendingAccommodations = getMyAccommodations();
+            $myAccommodations = getMyAccommodations();
             ?>
             <!-- Check if the array is empty -->
-            <?php if (empty($pendingAccommodations)) : ?>
+            <?php if (empty($myAccommodations)) : ?>
                 <div style="height: 50vh; display: flex; justify-content:center; align-items:center" class="text-center"><span>No accommodations found.</span></div>
             <?php else : ?>
                 <!-- List of Pending Accommodations -->
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     <?php
-                    foreach ($pendingAccommodations as $accommodation) {
+                    foreach ($myAccommodations as $accommodation) {
                         $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
                         echo '
                         <div class="col">
@@ -70,7 +76,7 @@
                                     <p class="card-text">' . $accommodation['description'] . '</p>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-primary mt-1 view-more-btn">View Details</button>
+                                    <button type="button" class="btn btn-primary mt-1 view-more">View Details</button>
                                     <button type="button" class="btn btn-secondary mt-1 edit-accommodation-btn">Edit</button>
                                 </div>
                             </div>
@@ -94,7 +100,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="accommodationCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner bg-dark">
                             <!-- Carousel items will be dynamically added here -->
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="prev">
@@ -225,11 +231,17 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'ajax/update_accommodation.php', true);
                 xhr.onload = function() {
-                    if(this.responseText == 1) {
+                    if (this.responseText == 1) {
+
+                        var modalReference = document.getElementById('editAccommodationModal');
+                        var modal = bootstrap.Modal.getInstance(modalReference);
+                        modal.hide();
+
                         alert('Success', "Accommodation details updated", "success")
-                        
-                    }else {
-                        alert("Error",'Accommodation did not get updated', 'error')
+                        location.reload();
+
+                    } else {
+                        alert("Alert", 'Accommodation did not get updated')
                     }
                 };
                 xhr.send(formData);
@@ -276,7 +288,7 @@
 
 
     <script>
-        document.querySelectorAll('.view-more-btn').forEach(function(button) {
+        document.querySelectorAll('.view-more').forEach(function(button) {
             button.addEventListener('click', function() {
                 var card = button.closest('.card');
                 var id_no = card.dataset.id_no;
@@ -326,7 +338,7 @@
                     var activeClass = index === 0 ? 'active' : '';
                     var carouselItem = document.createElement('div');
                     carouselItem.className = 'carousel-item ' + activeClass;
-                    carouselItem.innerHTML = '<img src="ajax/uploads/' + image + '" class="d-block w-100" alt="Accommodation Image">';
+                    carouselItem.innerHTML = '<img src="ajax/uploads/' + image + '" class="d-block" alt="Accommodation Image">';
                     modalCarousel.appendChild(carouselItem);
                 });
 
@@ -338,12 +350,12 @@
         function delete_accommodation() {
             var card = document.querySelector('.card');
             var id_no = card.dataset.id_no;
+            console.log(id_no);
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/delete_accommodation.php", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             xhr.onload = function() {
-                console.log(this.response);
 
                 if (this.responseText == 1) {
                     alert("Success", "Accommodation deleted", "success");
@@ -356,6 +368,7 @@
             xhr.send('id_no=' + id_no + '&action=delete');
         }
     </script>
+
     <?php include 'includes/scripts.php'; ?>
 
 </body>

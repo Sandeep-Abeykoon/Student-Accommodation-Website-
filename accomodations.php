@@ -428,6 +428,120 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
         initMap(locations);
     </script>
 
+    <script>
+        let selectedFiles = [];
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length + selectedFiles.length > 5) {
+                alert("Attention", "You can only select up to 5 files.");
+                event.target.value = ""; // Clear the selected files
+                return;
+            }
+            for (let i = 0; i < files.length; i++) {
+                selectedFiles.push(files[i]);
+
+                let container = document.createElement('div');
+                container.classList.add('image-preview');
+
+                let img = document.createElement('img');
+                img.src = URL.createObjectURL(files[i]);
+                img.width = 100;
+                img.height = 100;
+
+                let removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Remove';
+                removeBtn.addEventListener('click', function() {
+
+                    let index = selectedFiles.indexOf(files[i]);
+                    if (index !== -1) {
+                        selectedFiles.splice(index, 1);
+                    }
+                    container.remove();
+                });
+
+                container.appendChild(img);
+                container.appendChild(removeBtn);
+
+
+                let previewContainer = document.getElementById('image-preview');
+                previewContainer.appendChild(container);
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let addAccommodationForm = document.querySelector('#addAccommodationModal form');
+            addAccommodationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(addAccommodationForm);
+                let uId = document.getElementById('uId').value;
+                formData.append('add_accommodation', '');
+
+                // Retrieve specific form field values and append to formData
+                let name = document.getElementById('name').value;
+                let description = document.getElementById('description').value;
+                let lon = document.getElementById('lon').value;
+                let lat = document.getElementById('lat').value;
+                let address = document.getElementById('address').value;
+                let thumbnail = document.getElementById('thumbnail').files[0];
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    formData.append('images[]', selectedFiles[i]);
+                }
+                let bathrooms = document.getElementById('bathrooms').value;
+                let kitchens = document.getElementById('kitchens').value;
+                let rooms = document.getElementById('rooms').value;
+                let beds = document.getElementById('beds').value;
+                let price = document.getElementById('price').value;
+                let capacity = document.getElementById('capacity').value;
+
+                formData.append('name', name);
+                formData.append('description', description);
+                formData.append('lon', lon);
+                formData.append('lat', lat);
+                formData.append('address', address);
+                formData.append('thumbnail', thumbnail);
+                formData.append('bathrooms', bathrooms);
+                formData.append('kitchens', kitchens);
+                formData.append('rooms', rooms);
+                formData.append('beds', beds);
+                formData.append('price', price);
+                formData.append('capacity', capacity);
+                formData.append('uId', uId);
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', 'ajax/add_accommodations.php', true);
+                xhr.onload = function() {
+
+                    if (this.responseText == 'success') {
+                        alert("Success", "Accommodation added successfully!", "success");
+
+                        addAccommodationForm.reset();
+
+                        // Clear thumbnail preview
+                        document.getElementById('thumbnail-preview').innerHTML = '';
+                        document.getElementById('remove-thumbnail').setAttribute('disabled', 'disabled');
+                        document.getElementById('thumbnail').value = '';
+
+                        // Clear selected images preview
+                        document.getElementById('image-preview').innerHTML = '';
+                        selectedFiles = [];
+
+                        var modalReference = document.getElementById('addAccommodationModal');
+                        var modal = bootstrap.Modal.getInstance(modalReference);
+                        modal.hide();
+
+                    } else {
+                        // Request failed
+                        alert("Attention", "Server error. Please try again later.", "danger");
+                    }
+                }
+                xhr.send(formData);
+            });
+        });
+    </script>
+
 </body>
 
 </html>
