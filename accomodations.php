@@ -280,40 +280,61 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     </script>
 
     <script>
-        function initMap(locations) {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 6.821788505674078, lng:80.04165336626556 }, // Center the map on the location
-                zoom: 15,
-            });
-
-            locations.forEach(function(location) {
-                new google.maps.Marker({
-                    position: location,
-                    map: map,
-                    title: location.name
-                });
-            });
-        }
-
-        const dummyLocations = [{
-                name: "Location 1",
+        var locations = [{
+                lat: 37.7749,
+                lng: -122.4194,
+                name: 'San Francisco'
+            },
+            {
                 lat: 40.7128,
-                lng: -74.006
+                lng: -74.0060,
+                name: 'New York City'
             },
             {
-                name: "Location 2",
-                lat: 40.712,
-                lng: -74.008
+                lat: 51.5074,
+                lng: -0.1278,
+                name: 'London'
             },
             {
-                name: "Location 3",
-                lat: 40.711,
-                lng: -74.01
+                lat: -33.8688,
+                lng: 151.2093,
+                name: 'Sydney'
             }
         ];
 
-        initMap(dummyLocations);
+        function initMap() {
+            // Initialize the map
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: 6.821788505674078,
+                    lng: 80.04165336626556
+                },
+                zoom: 15
+            });
+
+            // Add markers for each location
+            locations.forEach(function(location) {
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: location.lat,
+                        lng: location.lng
+                    },
+                    map: map,
+                    title: location.name
+                });
+
+                // Add info window to each marker
+                var infowindow = new google.maps.InfoWindow({
+                    content: location.name
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+            });
+        }
     </script>
+
 
     <script>
         function handleThumbnailSelect(event) {
