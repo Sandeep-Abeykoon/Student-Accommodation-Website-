@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'includes/links.php'; ?>
     <title><?php echo $settings_result['site_title'] ?> : Pending Accommodations</title>
+
+    <style>
+        .carousel-item img {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .carousel {
+            margin: 0 auto;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <!-- Header -->
@@ -82,7 +99,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="accommodationCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner bg-dark">
                             <!-- Carousel items will be dynamically added here -->
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#accommodationCarousel" data-bs-slide="prev">
@@ -170,13 +187,19 @@
 
                 var modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
                 modal.show();
+
+                document.getElementById('acceptButton').addEventListener('click', function() {
+                    accept_accommodation(id_no);
+                });
+
+                document.getElementById('declineButton').addEventListener('click', function() {
+                    decline_accommodation(id_no);
+                });
             });
         });
 
 
-        function accept_accommodation() {
-            var card = document.querySelector('.card');
-            var id_no = card.dataset.id_no;
+        function accept_accommodation(id_no) {
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/pending_accommodations.php", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -195,9 +218,7 @@
             xhr.send('id_no=' + id_no + '&action=accept');
         }
 
-        function decline_accommodation() {
-            var card = document.querySelector('.card');
-            var id_no = card.dataset.id_no;
+        function decline_accommodation(id_no) {
             var reason = prompt("Enter the reason for declining:");
 
             if (reason !== null) {

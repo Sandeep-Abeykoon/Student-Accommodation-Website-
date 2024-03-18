@@ -176,7 +176,7 @@
     setActive();
 </script>
 
-<script>
+<!-- <script>
     document.querySelectorAll('.view-more-btn').forEach(function(button) {
         button.addEventListener('click', function() {
             var card = button.closest('.card');
@@ -235,4 +235,4 @@
             modal.show();
         });
     });
-</script>
+</script> -->

@@ -100,3 +100,15 @@ function delete($sql, $values, $data_types)
         die("Query cannot be prepared - DELETE");
     }
 }
+
+function selectSingle($query, $values, $data_types)
+{
+    global $connection;
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, $data_types, ...$values);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+    return $row;
+}
