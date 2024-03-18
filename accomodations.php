@@ -190,37 +190,42 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 } else {
                     foreach ($accommodations as $accommodation) {
                         $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
+                        $isReserved = $accommodation['reserved'] !== null;
+
                         echo '
-    <div class="col">
-        <div class="card h-100 d-flex flex-column justify-content-center align-items-center" style="cursor:pointer"
-            data-name="' . $accommodation['name'] . '"
-            data-description="' . $accommodation['description'] . '"
-            data-thumbnail="' . $thumbnailPath . '"
-            data-lon="' . $accommodation['lon'] . '"
-            data-lat="' . $accommodation['lat'] . '"
-            data-address="' . $accommodation['address'] . '"
-            data-bathrooms="' . $accommodation['bathrooms'] . '"
-            data-kitchens="' . $accommodation['kitchens'] . '"
-            data-rooms="' . $accommodation['rooms'] . '"
-            data-beds="' . $accommodation['beds'] . '"
-            data-price="' . $accommodation['price'] . '"
-            data-capacity="' . $accommodation['capacity'] . '"
-            data-id_no="' . $accommodation['id_no'] . '"
-            ';
+                        <div class="col">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center" style="cursor:pointer; position: relative;"
+                                data-name="' . $accommodation['name'] . '"
+                                data-description="' . $accommodation['description'] . '"
+                                data-thumbnail="' . $thumbnailPath . '"
+                                data-lon="' . $accommodation['lon'] . '"
+                                data-lat="' . $accommodation['lat'] . '"
+                                data-address="' . $accommodation['address'] . '"
+                                data-bathrooms="' . $accommodation['bathrooms'] . '"
+                                data-kitchens="' . $accommodation['kitchens'] . '"
+                                data-rooms="' . $accommodation['rooms'] . '"
+                                data-beds="' . $accommodation['beds'] . '"
+                                data-price="' . $accommodation['price'] . '"
+                                data-capacity="' . $accommodation['capacity'] . '"
+                                data-id_no="' . $accommodation['id_no'] . '"';
 
                         // Add data attributes for each image URL
                         foreach ($accommodation['images'] as $index => $image) {
-                            echo 'data-image-' . $index . '="' . $image . '" ';
+                            echo ' data-image-' . $index . '="' . $image . '"';
                         }
 
+                        // Add style for reserved accommodations
+                        $reservedStyle = $isReserved ? 'position: absolute; top: 0; left: 0; background-color: red; color: white; padding: 5px;' : '';
+
                         echo '>
-            <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
-            <div class="card-body text-center">
-                <h5 class="card-title">' . $accommodation['name'] . '</h5>
-                <p class="card-text">' . $accommodation['description'] . '</p>
-            </div>
-        </div>
-    </div>';
+                                <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">' . $accommodation['name'] . '</h5>
+                                    <p class="card-text">' . $accommodation['description'] . '</p>
+                                    <span style="' . $reservedStyle . '">' . ($isReserved ? 'Reserved' : '') . '</span>
+                                </div>
+                            </div>
+                        </div>';
                     }
                 }
                 ?>
@@ -230,7 +235,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             </div>
         </div>
     </div>
-
 
     <!-- Accommodation Details Modal -->
     <div class="modal fade" id="accommodationDetailsModal" tabindex="-1" aria-labelledby="accommodationModalLabel" aria-hidden="true">
@@ -287,7 +291,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             xhr.onload = function() {
-                console.log(this.responseText);
                 if (this.responseText == 1) {
                     alert("Success", "Accommodation booked", "success");
                     location.reload();
@@ -303,7 +306,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             const reserveButton = document.getElementById('reserveButton');
             reserveButton.addEventListener('click', function() {
                 const accommodationId = document.getElementById('accommodationId').value;
-                console.log('Accommodation ID:', accommodationId);
                 book_accommodation(accommodationId);
             });
         });
@@ -314,7 +316,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             const reserveButton = document.getElementById('reserveButton');
             reserveButton.addEventListener('click', function() {
                 const accommodationId = document.getElementById('accommodationId').value;
-                console.log('Accommodation ID:', accommodationId);
             });
         });
     </script>

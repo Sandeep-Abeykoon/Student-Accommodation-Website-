@@ -27,7 +27,8 @@ function getAccommodations()
             'price' => $row['price'],
             'capacity' => $row['capacity'],
             'uId' => $row['uid'],
-            'images' => $images
+            'images' => $images,
+            'reserved' => $row['reserved'],
         ];
     }
     return $accommodations;
