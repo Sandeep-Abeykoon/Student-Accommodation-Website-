@@ -154,7 +154,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
+                            <label for="price" class="form-label">Price (Per Month)</label>
                             <input type="number" class="form-control" id="price" required>
                         </div>
                         <div class="mb-3">
@@ -306,23 +306,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             document.getElementById('remove-thumbnail').setAttribute('disabled', 'disabled');
             document.getElementById('thumbnail').value = ''; // Clear the input value
         });
-    </script>
-
-    <script>
-        let selectedFiles = [];
-
-        function handleFileSelect(event) {
-            const files = event.target.files;
-            if (files.length + selectedFiles.length > 5) {
-                alert("You can only select up to 5 files.");
-                event.target.value = ""; // Clear the selected files
-                return;
-            }
-            for (let i = 0; i < files.length; i++) {
-                selectedFiles.push(files[i]);
-            }
-            console.log("Selected Files:", selectedFiles);
-        }
     </script>
 
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">

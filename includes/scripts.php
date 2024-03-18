@@ -182,7 +182,7 @@
     function handleFileSelect(event) {
         const files = event.target.files;
         if (files.length + selectedFiles.length > 5) {
-            alert("You can only select up to 5 files.");
+            alert("Attention", "You can only select up to 5 files.");
             event.target.value = ""; // Clear the selected files
             return;
         }
@@ -211,11 +211,10 @@
             container.appendChild(img);
             container.appendChild(removeBtn);
 
-          
+
             let previewContainer = document.getElementById('image-preview');
             previewContainer.appendChild(container);
         }
-        console.log("Selected Files:", selectedFiles);
     }
 
 
