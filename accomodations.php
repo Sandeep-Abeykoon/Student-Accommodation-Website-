@@ -263,10 +263,11 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     <p><strong>Beds:</strong> <span id="accommodationBeds"></span></p>
                     <p><strong>Price:</strong> <span id="accommodationPrice"></span></p>
                     <p><strong>Capacity:</strong> <span id="accommodationCapacity"></span></p>
+                    <input type="hidden" id="accommodationId" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="" class="btn btn-success" id="reserveButton">Reserve</button>
+                    <button type="button" class="btn btn-success" id="reserveButton">Reserve</button>
                 </div>
             </div>
         </div>
@@ -277,6 +278,45 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <?php include 'includes/scripts.php'; ?>
 
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
+    </script>
+
+    <script>
+        function book_accommodation(id_no) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/reserve_accommodation.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {
+                console.log(this.responseText);
+                if (this.responseText == 1) {
+                    alert("Success", "Accommodation booked", "success");
+                    location.reload();
+                } else {
+                    alert("Attention", "Failed to book accommodation");
+                }
+            };
+
+            xhr.send('id_no=' + id_no + '&action=book');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const reserveButton = document.getElementById('reserveButton');
+            reserveButton.addEventListener('click', function() {
+                const accommodationId = document.getElementById('accommodationId').value;
+                console.log('Accommodation ID:', accommodationId);
+                book_accommodation(accommodationId);
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reserveButton = document.getElementById('reserveButton');
+            reserveButton.addEventListener('click', function() {
+                const accommodationId = document.getElementById('accommodationId').value;
+                console.log('Accommodation ID:', accommodationId);
+            });
+        });
     </script>
 
     <script>
@@ -299,6 +339,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
 
             // Add accommodation data to locations array
             echo "locations.push({
+                id: $acc_id,
                 lat: $lat,
                 lng: $lon,
                 name: '$name',
@@ -355,10 +396,10 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     modal.show();
 
                     // Set modal content
+                    document.getElementById('accommodationId').value = location.id;
                     document.getElementById('accommodationModalLabel').textContent = location.name;
                     document.getElementById('accommodationDescription').textContent = location.description;
                     document.getElementById('accommodationAddress').textContent = location.address;
-                    // Add other details here
                     document.getElementById('accommodationBathrooms').textContent = location.bathrooms;
                     document.getElementById('accommodationKitchens').textContent = location.kitchens;
                     document.getElementById('accommodationRooms').textContent = location.rooms;
@@ -425,6 +466,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card');
+            const modalId = document.getElementById('accommodationId');
             const modalTitle = document.getElementById('accommodationModalLabel');
             const modalDescription = document.getElementById('accommodationDescription');
             const modalAddress = document.getElementById('accommodationAddress');
@@ -438,6 +480,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
 
             cards.forEach(card => {
                 card.addEventListener('click', function() {
+                    modalId.value = card.dataset.id_no;
                     modalTitle.textContent = card.dataset.name;
                     modalDescription.textContent = card.dataset.description;
                     modalAddress.textContent = card.dataset.address;
