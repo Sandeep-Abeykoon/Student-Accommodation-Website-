@@ -266,7 +266,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="" class="btn btn-success" id="acceptButton">Book</button>
+                    <button type="button" onclick="" class="btn btn-success" id="reserveButton">Reserve</button>
                 </div>
             </div>
         </div>
@@ -310,6 +310,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 beds: '{$accommodation['beds']}',
                 price: '{$accommodation['price']}',
                 capacity: '{$accommodation['capacity']}',
+                thumbnail: '{$accommodation['thumbnail']}',
                 images: " . json_encode($images) . "
             });";
         }
@@ -331,8 +332,13 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     map: map
                 });
 
+                var infowindowContent = '<strong>' + location.name + '</strong><br>' + location.address;
+                if (location.thumbnail) {
+                    infowindowContent += '<br><img src="' + "ajax/uploads/" + location.thumbnail + '" style="max-width: 100px; max-height: 100px; margin-top: 5px;" />';
+                }
+
                 var infowindow = new google.maps.InfoWindow({
-                    content: '<strong>' + location.name + '</strong><br>' + location.address
+                    content: infowindowContent
                 });
 
                 marker.addListener('mouseover', function() {
@@ -379,7 +385,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                     }
                 });
             });
-
         }
 
         // Initialize the map with accommodation locations

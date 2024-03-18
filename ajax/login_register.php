@@ -54,6 +54,10 @@ if (isset($_POST['login'])) {
             $_SESSION['login'] = true;
             $_SESSION['uId'] = $user['id_no'];
             $_SESSION['uName'] = $user['name'];
+            $_SESSION['uEmail'] = $user['email'];
+            $_SESSION['uAddress'] = $user['address'];
+            $_SESSION['uTelNum_1'] = $user['phone_number'];
+            $_SESSION['uTelNum_2'] = $user['secondary_phone_number'];
             $_SESSION['uRole'] = $user['role'];
             echo 1;
         }
