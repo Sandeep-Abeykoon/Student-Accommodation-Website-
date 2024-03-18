@@ -276,6 +276,50 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
 
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
+    </script>
+
+    <script>
+        function initMap() {
+            const dummyLocation = {
+                lat: 40.7128,
+                lng: -74.006
+            };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: dummyLocation,
+                zoom: 15,
+            });
+
+            new google.maps.Marker({
+                position: dummyLocation,
+                map: map,
+                title: "Dummy Location"
+            });
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
+
+    <script>
+        const locations = [];
+        document.querySelectorAll('.card').forEach(function(button) {
+            var card = button.closest('.card');
+            var lat = parseFloat(card.dataset.lat);
+            var lon = parseFloat(card.dataset.lon);
+            var name = card.dataset.name;
+
+            locations.push({
+                name: name,
+                lat: lat,
+                lon: lon
+            });
+        });
+        console.log(locations);
+
+        initMap(locations);
+    </script>
+
     <script>
         function handleThumbnailSelect(event) {
             thumbnailFile = event.target.files[0];
@@ -306,9 +350,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             document.getElementById('remove-thumbnail').setAttribute('disabled', 'disabled');
             document.getElementById('thumbnail').value = ''; // Clear the input value
         });
-    </script>
-
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&loading=async&callback=initMap">
     </script>
 
     <script>
@@ -362,70 +403,6 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 });
             });
         });
-    </script>
-
-
-    <script>
-        function initMap() {
-            const locations = [{
-                    name: 'Location 1',
-                    lat: 40.7128,
-                    lng: -74.006
-                },
-                {
-                    name: 'Location 2',
-                    lat: 34.0522,
-                    lng: -118.2437
-                },
-                {
-                    name: 'Location 3',
-                    lat: 41.8781,
-                    lng: -87.6298
-                },
-                // Add more locations as needed
-            ];
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: {
-                    lat: -34.397,
-                    lng: 150.644
-                },
-                zoom: 8,
-            });
-
-            // Add markers to the map
-            locations.forEach(location => {
-                const lat = parseFloat(location.lat);
-                const lng = parseFloat(location.lon);
-
-                new google.maps.Marker({
-                    position: {
-                        lat: lat,
-                        lng: lng
-                    },
-                    map: map,
-                    title: location.name
-                });
-            });
-        }
-    </script>
-
-    <script>
-        const locations = [];
-        document.querySelectorAll('.card').forEach(function(button) {
-            var card = button.closest('.card');
-            var lat = parseFloat(card.dataset.lat);
-            var lon = parseFloat(card.dataset.lon);
-            var name = card.dataset.name;
-
-            locations.push({
-                name: name,
-                lat: lat,
-                lon: lon
-            });
-        });
-        console.log(locations);
-
-        initMap(locations);
     </script>
 
     <script>
