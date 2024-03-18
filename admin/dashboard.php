@@ -1,6 +1,14 @@
 <?php
 include 'essentials.php';
+include 'ajax/stats.php';
 adminLogin();
+
+$studentCount = getStudentCount();
+$landlordCount = getLandlordCount();
+$wardenCount = getWardenCount();
+$totalAccommodations = getTotalAccommodations();
+$reservedAccommodations = getReservedAccommodations();
+$availableAccommodations = getAvailableAccommodations();
 ?>
 
 <!DOCTYPE html>
@@ -20,9 +28,53 @@ adminLogin();
     <div class="container-fluid" id="main-content">
         <div class="row">
             <div class="col-lg-10 ms-auto p-4 overflow-hidden">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque dicta placeat officiis eaque ratione earum, natus quod rerum voluptatem tenetur suscipit alias, recusandae fuga repudiandae, esse sunt. Autem magni excepturi assumenda harum libero repellendus tenetur cumque neque sint esse, sit, nesciunt accusantium eius. Sunt reprehenderit explicabo excepturi ipsa necessitatibus magnam eveniet sapiente aperiam quibusdam officiis. Hic numquam maiores voluptates tenetur architecto quam minus corrupti iusto? Minima iusto qui magni perspiciatis officiis. Sit illo sint molestias sapiente ducimus iure quia nostrum repellat officiis, nemo veritatis reprehenderit id? Quos non adipisci quibusdam minus ipsam, harum placeat suscipit architecto repellendus atque sit tempora maxime ducimus animi amet. Voluptatibus animi omnis reiciendis placeat eligendi alias ut enim sed molestias! Tempora eos quibusdam iste, corrupti consequatur nostrum autem nisi perferendis magnam labore deleniti, cupiditate reprehenderit corporis in. Repellat corporis praesentium repellendus optio ex voluptatem nam eos labore, dolorum fugiat? Officia ullam distinctio optio repudiandae molestiae atque maiores sint sapiente mollitia aut dolorem tempore dolores, consequuntur, dicta quae aperiam voluptatum sequi ex blanditiis earum fuga. Illo, nobis quidem vero culpa dolore id doloribus explicabo dolor quod necessitatibus, adipisci eaque fuga. Error, deserunt iure! Illum facilis eveniet ad non rem ipsam ratione doloremque, sapiente iure nemo eos dolore quibusdam corporis suscipit nesciunt molestiae recusandae necessitatibus quo dolores? Laudantium expedita velit excepturi libero omnis! Voluptate vitae debitis enim saepe dolores, tempora unde numquam doloremque omnis fugiat, laboriosam consequatur porro repudiandae 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Number of Students</h5>
+                                <p class="card-text"><?php echo $studentCount ?></p>
+                            </div>
+                        </div>
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Number of Landlords</h5>
+                                <p class="card-text"><?php echo $landlordCount  ?></p>
+                            </div>
+                        </div>
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Number of Wardens</h5>
+                                <p class="card-text"><?php echo $wardenCount  ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Accommodations</h5>
+                                <p class="card-text"><?php echo $totalAccommodations ?></p>
+                            </div>
+                        </div>
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Reserved Accommodations</h5>
+                                <p class="card-text"><?php echo $reservedAccommodations ?></p>
+                            </div>
+                        </div>
+                        <div class="card bg-dark text-white mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Available Accommodations</h5>
+                                <p class="card-text"><?php echo $availableAccommodations ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    </div>
+
     <?php include 'scripts.php'; ?>
 </body>
 
