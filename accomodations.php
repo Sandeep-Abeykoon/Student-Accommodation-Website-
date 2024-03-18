@@ -81,8 +81,16 @@
 
 <?php
 $add_accommodation_btn = "";
-if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRole'] == 'landlord') {
-    $add_accommodation_btn = '<button data-bs-toggle="modal" data-bs-target="#addAccommodationModal" class="btn btn-primary position-fixed translate-middle-y m-3 glow-button" style="z-index: 1000; top: 110px; right: 0px">Add +</button>';
+$reserve_button = "";
+if (!$settings_result['shutdown']) {
+    $reserve_button = "";
+    if (!$settings_result['shutdown'] && (!isset($_SESSION['uRole']) || ($_SESSION['uRole'] !== 'landlord' && $_SESSION['uRole'] !== 'warden'))) {
+        $reserve_button = '<button type="button" class="btn btn-success" id="reserveButton">Reserve</button>';
+    }
+
+    if (isset($_SESSION['uRole']) && $_SESSION['uRole'] == 'landlord') {
+        $add_accommodation_btn = '<button data-bs-toggle="modal" data-bs-target="#addAccommodationModal" class="btn btn-primary position-fixed translate-middle-y m-3 glow-button" style="z-index: 1000; top: 110px; right: 0px">Add +</button>';
+    }
 }
 ?>
 
@@ -271,7 +279,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="reserveButton">Reserve</button>
+                    <?php echo "$reserve_button" ?>
                 </div>
             </div>
         </div>
@@ -341,6 +349,7 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
             // Add accommodation data to locations array
             echo "locations.push({
                 id: $acc_id,
+                booked: $acc_id,
                 lat: $lat,
                 lng: $lon,
                 name: '$name',
