@@ -40,8 +40,8 @@
 <!-- Initialize Swiper -->
 <script>
     var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 2,
-        spaceBetween: 10,
+        slidesPerView: 1,
+        spaceBetween: 5,
         loop: true,
         autoplay: {
             delay: 3500
@@ -51,11 +51,17 @@
             dynamicBullets: true,
         },
         breakpoints: {
-            320: {
-                slidesPerView: 1,
-            },
             500: {
                 slidesPerView: 2,
+            },
+            800: {
+                slidesPerView: 3,
+            },
+            1000: {
+                slidesPerView: 4,
+            },
+            1400: {
+                slidesPerView: 6,
             },
         }
     });

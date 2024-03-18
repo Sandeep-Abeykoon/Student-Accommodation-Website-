@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-4 p-4">
             <h3 class="h-font fw-bold fs-3 mb-2"><?php echo $settings_result['site_title'] ?></h3>
-            <p><?php echo $settings_result['site_about'] ?></p>
+            <p>NSBM Green University is the first ever green university in South Asia and sets an example for the whole South Asia by paving the way for environmental sustainability. The university is open for both national and international student community and it has turned a new chapter in Sri Lankan higher education.</p>
         </div>
         <div class="col-lg-4 p-4">
             <h5 class="mb-3">Links</h5>
@@ -37,4 +37,4 @@
     </div>
 </footer>
 
-<h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By Chamika & </h6>
+<h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By Chamika & Jayathya</h6>
