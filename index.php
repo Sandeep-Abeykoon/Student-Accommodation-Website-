@@ -13,22 +13,26 @@
   <!-- Header -->
   <?php include 'includes/header.php'; ?>
 
-  <!-- Swiper -->
+
   <div class="container-fluid px-lg-4 mt-4">
-    <div class="swiper swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="./images/sliderImage.jpg" class="w-100 d-block" />
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Swiper -->
+        <div class="swiper swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="https://www.pottersholidays.com/static/9f60595971440199e7da18095d490bf6/57f28/accommodation-header-update.jpg" style="max-height: 400px; width:100%" />
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-pagination"></div>
         </div>
-        <div class="swiper-slide">
-          <img src="./images/sliderImage.jpg" class="w-100 d-block" />
-        </div>
+        <!-- End Swiper -->
       </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
     </div>
   </div>
+
 
 
   <!-- Articles Section -->
