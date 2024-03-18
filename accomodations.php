@@ -280,44 +280,39 @@ if (!$settings_result['shutdown'] && isset($_SESSION['uRole']) && $_SESSION['uRo
     </script>
 
     <script>
-        function initMap() {
-            const dummyLocation = {
-                lat: 40.7128,
-                lng: -74.006
-            };
-
+        function initMap(locations) {
             const map = new google.maps.Map(document.getElementById("map"), {
-                center: dummyLocation,
+                center: { lat: 6.821788505674078, lng:80.04165336626556 }, // Center the map on the location
                 zoom: 15,
             });
 
-            new google.maps.Marker({
-                position: dummyLocation,
-                map: map,
-                title: "Dummy Location"
+            locations.forEach(function(location) {
+                new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    title: location.name
+                });
             });
         }
-    </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9C3ZQP5xjNW21JgyEmpfXX5nCRASZ4XI&callback=initMap"></script>
+        const dummyLocations = [{
+                name: "Location 1",
+                lat: 40.7128,
+                lng: -74.006
+            },
+            {
+                name: "Location 2",
+                lat: 40.712,
+                lng: -74.008
+            },
+            {
+                name: "Location 3",
+                lat: 40.711,
+                lng: -74.01
+            }
+        ];
 
-    <script>
-        const locations = [];
-        document.querySelectorAll('.card').forEach(function(button) {
-            var card = button.closest('.card');
-            var lat = parseFloat(card.dataset.lat);
-            var lon = parseFloat(card.dataset.lon);
-            var name = card.dataset.name;
-
-            locations.push({
-                name: name,
-                lat: lat,
-                lon: lon
-            });
-        });
-        console.log(locations);
-
-        initMap(locations);
+        initMap(dummyLocations);
     </script>
 
     <script>
