@@ -31,6 +31,8 @@
                     echo '<li><a href="profile.php" class="dropdown-item" type="button">Profile</a></li>';
                     if ($_SESSION['uRole'] === 'warden') {
                         echo '<li><a href="pendingAccommodations.php" class="dropdown-item" type="button">Pending Accommodations</a></li>';
+                    } else if ($_SESSION['uRole'] === 'student') {
+                        echo '<li><a href="myReservedAccommodations.php" class="dropdown-item" type="button">My Accommodations</a></li>';
                     } else {
                         echo '<li><a href="myAccommodations.php" class="dropdown-item" type="button">My Accommodations</a></li>';
                     }
