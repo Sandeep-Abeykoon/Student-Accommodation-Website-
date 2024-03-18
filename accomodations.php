@@ -85,7 +85,7 @@ $reserve_button = "";
 if (!$settings_result['shutdown']) {
     $reserve_button = "";
     if (!$settings_result['shutdown'] && (!isset($_SESSION['uRole']) || ($_SESSION['uRole'] !== 'landlord' && $_SESSION['uRole'] !== 'warden'))) {
-        $reserve_button = '<button type="button" class="btn btn-success" id="reserveButton">Reserve</button>';
+        $reserve_button = '<button type="button" onclick="book_accommodation();" class="btn btn-success" id="reserveButton">Reserve</button>';
     }
 
     if (isset($_SESSION['uRole']) && $_SESSION['uRole'] == 'landlord') {
@@ -203,6 +203,7 @@ if (!$settings_result['shutdown']) {
                         echo '
                         <div class="col">
                             <div class="card h-100 d-flex flex-column justify-content-center align-items-center" style="cursor:pointer; position: relative;"
+                                data-reserved="' . $accommodation['reserved'] . '"
                                 data-name="' . $accommodation['name'] . '"
                                 data-description="' . $accommodation['description'] . '"
                                 data-thumbnail="' . $thumbnailPath . '"
@@ -279,7 +280,9 @@ if (!$settings_result['shutdown']) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <?php echo "$reserve_button" ?>
+
+                    <?php echo $reserve_button; ?>
+
                 </div>
             </div>
         </div>
@@ -293,7 +296,8 @@ if (!$settings_result['shutdown']) {
     </script>
 
     <script>
-        function book_accommodation(id_no) {
+        function book_accommodation() {
+            const accommodationId = document.getElementById('accommodationId').value;
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/reserve_accommodation.php", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -307,25 +311,8 @@ if (!$settings_result['shutdown']) {
                 }
             };
 
-            xhr.send('id_no=' + id_no + '&action=book');
+            xhr.send('id_no=' + accommodationId + '&action=book');
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const reserveButton = document.getElementById('reserveButton');
-            reserveButton.addEventListener('click', function() {
-                const accommodationId = document.getElementById('accommodationId').value;
-                book_accommodation(accommodationId);
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const reserveButton = document.getElementById('reserveButton');
-            reserveButton.addEventListener('click', function() {
-                const accommodationId = document.getElementById('accommodationId').value;
-            });
-        });
     </script>
 
     <script>
@@ -348,8 +335,8 @@ if (!$settings_result['shutdown']) {
 
             // Add accommodation data to locations array
             echo "locations.push({
+                reserved: '{$accommodation['reserved']}',
                 id: $acc_id,
-                booked: $acc_id,
                 lat: $lat,
                 lng: $lon,
                 name: '$name',
@@ -433,6 +420,13 @@ if (!$settings_result['shutdown']) {
                         image.classList.add('d-block', 'w-100');
                         carouselItem.appendChild(image);
                         modalCarouselInner.appendChild(carouselItem);
+                    }
+
+                   // Hide the reserve button if the accommodation is reserved
+                    if (location.reserved) {
+                        document.getElementById('reserveButton').style.display = 'none';
+                    } else {
+                        document.getElementById('reserveButton').style.display = 'block';
                     }
                 });
             });
@@ -518,6 +512,13 @@ if (!$settings_result['shutdown']) {
                             carouselItem.appendChild(image);
                             modalCarouselInner.appendChild(carouselItem);
                         }
+                    }
+
+                     // Hide the reserve button if the accommodation is reserved 
+                    if (card.dataset.reserved) {
+                        document.getElementById('reserveButton').style.display = 'none';
+                    } else {
+                        document.getElementById('reserveButton').style.display = 'block';
                     }
 
                     // Show the modal
