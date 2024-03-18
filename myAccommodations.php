@@ -124,7 +124,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="delete_accommodation()" class="btn btn-danger" id="deleteButton">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="delete_accommodation('<?php echo $accommodation['id_no']; ?>')">Delete</button>
                 </div>
             </div>
         </div>
@@ -347,16 +347,13 @@
             });
         });
 
-        function delete_accommodation() {
-            var card = document.querySelector('.card');
-            var id_no = card.dataset.id_no;
+        function delete_accommodation(id_no) {
             console.log(id_no);
             let xhr = new XMLHttpRequest();
             xhr.open("POST", "ajax/delete_accommodation.php", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             xhr.onload = function() {
-
                 if (this.responseText == 1) {
                     alert("Success", "Accommodation deleted", "success");
                     location.reload();
