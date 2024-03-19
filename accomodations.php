@@ -130,9 +130,9 @@ if (!$settings_result['shutdown']) {
                         </div>
                         <div class="mb-3">
                             <label for="thumbnail" class="form-label">Thumbnail Image</label>
-                            <input type="file" class="form-control" id="thumbnail" accept="image/*" onchange="handleThumbnailSelect(event)" required>
+                            <input type="file" class="form-control" id="thumbnail" accept=".jpg, .png, .jpeg, .gif" onchange="handleThumbnailSelect(event)" required>
                             <div id="thumbnail-preview"></div>
-                            <button type="button" class="btn btn-danger mt-2" id="remove-thumbnail" disabled>Remove Thumbnail</button>
+                            <button type="button" class="btn btn-danger mt-2" id="remove-thumbnail" accept=".jpg, .png, .jpeg, .gif" disabled>Remove Thumbnail</button>
                         </div>
                         <div id="image-preview-thumbnail" class="d-flex flex-wrap"></div>
                         <div class="mb-3">
@@ -198,7 +198,7 @@ if (!$settings_result['shutdown']) {
                 } else {
                     foreach ($accommodations as $accommodation) {
                         $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
-                        $isReserved = $accommodation['reserved'] !== null;
+                        $isReserved = $accommodation['reserved'] !== -1;
                         $phoneNumbers = $accommodation['phoneNumbers'];
 
                         echo '
@@ -432,7 +432,7 @@ if (!$settings_result['shutdown']) {
                         modalCarouselInner.appendChild(carouselItem);
                     }
 
-                    if (location.status !== null) {
+                    if (location.status != -1) {
                         var reserveButton = document.getElementById('reserveButton');
                         if (reserveButton) {
                             reserveButton.style.display = 'none';
@@ -508,6 +508,7 @@ if (!$settings_result['shutdown']) {
                     modalBeds.textContent = card.dataset.beds;
                     modalPrice.textContent = card.dataset.price;
                     modalCapacity.textContent = card.dataset.capacity;
+                    console.log(card.dataset.reserved);
 
                     // Clear previous carousel items
                     modalCarouselInner.innerHTML = '';
@@ -528,7 +529,7 @@ if (!$settings_result['shutdown']) {
                         }
                     }
 
-                    if (card.dataset.status !== null) {
+                    if (card.dataset.reserved != -1) {
                         var reserveButton = document.getElementById('reserveButton');
                         if (reserveButton) {
                             reserveButton.style.display = 'none';
@@ -625,11 +626,14 @@ if (!$settings_result['shutdown']) {
                 formData.append('capacity', capacity);
                 formData.append('uId', uId);
 
+                console.log("Thumbnail File : " + thumbnail);
+                console.log("Selected Files : " + selectedFiles);
+
                 let xhr = new XMLHttpRequest();
                 xhr.open('POST', 'ajax/add_accommodations.php', true);
                 xhr.onload = function() {
-
                     if (this.responseText == 1) {
+
                         alert("Success", "Accommodation added successfully!", "success");
 
                         addAccommodationForm.reset();
@@ -647,8 +651,11 @@ if (!$settings_result['shutdown']) {
                         var modal = bootstrap.Modal.getInstance(modalReference);
                         modal.hide();
 
+                    } else if (this.responseText == 'file-size-error') {
+                        alert("Attention", "Invalid Image File Sizes Found", "danger");
+                    } else if (this.responseText == 'file-type-error') {
+                        alert("Attention", "Invalid File Types Found", "danger");
                     } else {
-                        // Request failed
                         alert("Attention", "Server error. Please try again later.", "danger");
                     }
                 }

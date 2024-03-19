@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `admin_credentials` (
     `lon` varchar(250) NOT NULL,
     `lat` varchar(250) NOT NULL,
     `uid` int(11) NOT NULL,
-    `reserved` int(11) DEFAULT NULL,
+    `reserved` int(11) NOT NULL DEFAULT -1,
     PRIMARY KEY (`id_no`),
     KEY `uid` (`uid`),
     CONSTRAINT `accommodations_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`id_no`)
