@@ -475,6 +475,8 @@ if (!$settings_result['shutdown']) {
             const modalTitle = document.getElementById('accommodationModalLabel');
             const modalDescription = document.getElementById('accommodationDescription');
             const modalAddress = document.getElementById('accommodationAddress');
+            const modalPhone1 = document.getElementById('accommodationPhone1');
+            const modalPhone2 = document.getElementById('accommodationPhone2');
             const modalBathrooms = document.getElementById('accommodationBathrooms');
             const modalKitchens = document.getElementById('accommodationKitchens');
             const modalRooms = document.getElementById('accommodationRooms');
@@ -489,6 +491,8 @@ if (!$settings_result['shutdown']) {
                     modalTitle.textContent = card.dataset.name;
                     modalDescription.textContent = card.dataset.description;
                     modalAddress.textContent = card.dataset.address;
+                    modalPhone1.textContent = card.dataset.phone1;
+                    modalPhone2.textContent = card.dataset.phone2;
                     modalBathrooms.textContent = card.dataset.bathrooms;
                     modalKitchens.textContent = card.dataset.kitchens;
                     modalRooms.textContent = card.dataset.rooms;
