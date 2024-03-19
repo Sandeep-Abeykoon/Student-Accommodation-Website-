@@ -1,5 +1,3 @@
-<?php include './ajax/getUserPhoneNumbers.php' ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -201,6 +199,7 @@ if (!$settings_result['shutdown']) {
                     foreach ($accommodations as $accommodation) {
                         $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
                         $isReserved = $accommodation['reserved'] !== null;
+                        $phoneNumbers = $accommodation['phoneNumbers'];
 
                         echo '
                         <div class="col">
@@ -212,6 +211,8 @@ if (!$settings_result['shutdown']) {
                                 data-lon="' . $accommodation['lon'] . '"
                                 data-lat="' . $accommodation['lat'] . '"
                                 data-address="' . $accommodation['address'] . '"
+                                data-phone1="' . $phoneNumbers['phone_number'] . '"
+                                data-phone2="' . $phoneNumbers['secondary_phone_number'] . '"
                                 data-bathrooms="' . $accommodation['bathrooms'] . '"
                                 data-kitchens="' . $accommodation['kitchens'] . '"
                                 data-rooms="' . $accommodation['rooms'] . '"
@@ -270,16 +271,15 @@ if (!$settings_result['shutdown']) {
                         </button>
                     </div>
                     <p id="accommodationDescription"></p>
-                    <!-- Add other details here -->
                     <p><strong>Address:</strong> <span id="accommodationAddress"></span></p>
+                    <p><strong>phone 1:</strong> <span id="accommodationPhone1"></span></p>
+                    <p><strong>Phone 2:</strong> <span id="accommodationPhone2"></span></p>
                     <p><strong>Bathrooms:</strong> <span id="accommodationBathrooms"></span></p>
                     <p><strong>Kitchens:</strong> <span id="accommodationKitchens"></span></p>
                     <p><strong>Rooms:</strong> <span id="accommodationRooms"></span></p>
                     <p><strong>Beds:</strong> <span id="accommodationBeds"></span></p>
                     <p><strong>Price:</strong> <span id="accommodationPrice"></span></p>
                     <p><strong>Capacity:</strong> <span id="accommodationCapacity"></span></p>
-                    <p><strong>Phone Number:</strong> <span id="accommodationPhone"></span></p>
-                    <p><strong>Secondary phone Number:</strong> <span id="accommodationSecPhone"></span></p>
                     <input type="hidden" id="accommodationId" value="">
                 </div>
                 <div class="modal-footer">
@@ -321,17 +321,16 @@ if (!$settings_result['shutdown']) {
 
     <script>
         var locations = [];
+
         // Load accommodation data
         <?php
         foreach ($accommodations as $accommodation) {
-            $acc_uId = $accommodation['uId'];
             $acc_id = $accommodation['id_no'];
             $lat = $accommodation['lat'];
             $lon = $accommodation['lon'];
             $name = $accommodation['name'];
             $address = $accommodation['address'];
-
-            $phone_numbers = selectUserPhoneNumbers($acc_uId);
+            $phoneNumbers = $accommodation['phoneNumbers'];
 
             // Create an array to hold image URLs
             $images = [];
@@ -347,10 +346,9 @@ if (!$settings_result['shutdown']) {
                 lng: $lon,
                 name: '$name',
                 address: '$address',
-                phone_1: '{$phone_numbers['phone_number']}',
-                phone_2: '{$phone_numbers['secondary_phone_number']}',
                 description: '{$accommodation['description']}',
-                bathrooms: '{$accommodation['bathrooms']}',
+                phone1: '{$phoneNumbers['phone_number']}',
+                phone2: '{$phoneNumbers['secondary_phone_number']}',
                 kitchens: '{$accommodation['kitchens']}',
                 rooms: '{$accommodation['rooms']}',
                 beds: '{$accommodation['beds']}',
@@ -405,8 +403,8 @@ if (!$settings_result['shutdown']) {
                     document.getElementById('accommodationModalLabel').textContent = location.name;
                     document.getElementById('accommodationDescription').textContent = location.description;
                     document.getElementById('accommodationAddress').textContent = location.address;
-                    document.getElementById('accommodationPhone').textContent = location. phone_1;
-                    document.getElementById('accommodationSecPhone').textContent = location. phone_2;
+                    document.getElementById('accommodationPhone1').textContent = location.phone1;
+                    document.getElementById('accommodationPhone2').textContent = location.phone2;
                     document.getElementById('accommodationBathrooms').textContent = location.bathrooms;
                     document.getElementById('accommodationKitchens').textContent = location.kitchens;
                     document.getElementById('accommodationRooms').textContent = location.rooms;
@@ -431,13 +429,6 @@ if (!$settings_result['shutdown']) {
                         carouselItem.appendChild(image);
                         modalCarouselInner.appendChild(carouselItem);
                     }
-
-                    // Hide the reserve button if the accommodation is reserved
-                    if (location.reserved) {
-                        document.getElementById('reserveButton').style.display = 'none';
-                    } else {
-                        document.getElementById('reserveButton').style.display = 'block';
-                    }
                 });
             });
         }
@@ -445,7 +436,6 @@ if (!$settings_result['shutdown']) {
         // Initialize the map with accommodation locations
         initMap();
     </script>
-
     <script>
         function handleThumbnailSelect(event) {
             thumbnailFile = event.target.files[0];
@@ -523,13 +513,6 @@ if (!$settings_result['shutdown']) {
                             carouselItem.appendChild(image);
                             modalCarouselInner.appendChild(carouselItem);
                         }
-                    }
-
-                    // Hide the reserve button if the accommodation is reserved 
-                    if (card.dataset.reserved) {
-                        document.getElementById('reserveButton').style.display = 'none';
-                    } else {
-                        document.getElementById('reserveButton').style.display = 'block';
                     }
 
                     // Show the modal
