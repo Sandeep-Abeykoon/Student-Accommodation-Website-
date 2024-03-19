@@ -205,6 +205,7 @@ if (!$settings_result['shutdown']) {
                         <div class="col">
                             <div class="card h-100 d-flex flex-column justify-content-center align-items-center" style="cursor:pointer; position: relative;"
                                 data-reserved="' . $accommodation['reserved'] . '"
+                                data-status="' . $accommodation['status'] . '"
                                 data-name="' . $accommodation['name'] . '"
                                 data-description="' . $accommodation['description'] . '"
                                 data-thumbnail="' . $thumbnailPath . '"
@@ -341,6 +342,7 @@ if (!$settings_result['shutdown']) {
             // Add accommodation data to locations array
             echo "locations.push({
                 reserved: '{$accommodation['reserved']}',
+                status: '{$accommodation['status']}',
                 id: $acc_id,
                 lat: $lat,
                 lng: $lon,
@@ -429,6 +431,13 @@ if (!$settings_result['shutdown']) {
                         carouselItem.appendChild(image);
                         modalCarouselInner.appendChild(carouselItem);
                     }
+
+                    if (location.status !== null) {
+                        var reserveButton = document.getElementById('reserveButton');
+                        if (reserveButton) {
+                            reserveButton.style.display = 'none';
+                        }
+                    }
                 });
             });
         }
@@ -516,6 +525,13 @@ if (!$settings_result['shutdown']) {
                             image.classList.add('d-block', 'w-100');
                             carouselItem.appendChild(image);
                             modalCarouselInner.appendChild(carouselItem);
+                        }
+                    }
+
+                    if (card.dataset.status !== null) {
+                        var reserveButton = document.getElementById('reserveButton');
+                        if (reserveButton) {
+                            reserveButton.style.display = 'none';
                         }
                     }
 

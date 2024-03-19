@@ -33,6 +33,7 @@ function getAccommodations()
             'uId' => $row['uid'],
             'images' => $images,
             'reserved' => $row['reserved'],
+            'status' => $row['status'],
             'phoneNumbers' => $phoneNumbers,
         ];
     }

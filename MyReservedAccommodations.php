@@ -39,7 +39,7 @@
             ?>
             <!-- Check if the array is empty -->
             <?php if (empty($pendingAccommodations)) : ?>
-                <div style="height: 50vh; display: flex; justify-content:center; align-items:center" class="text-center"><span>No pending accommodations found.</span></div>
+                <div style="height: 50vh; display: flex; justify-content:center; align-items:center" class="text-center"><span>No accommodations found.</span></div>
             <?php else : ?>
                 <!-- List of Pending Accommodations -->
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -185,14 +185,6 @@
 
                 var modal = new bootstrap.Modal(document.getElementById('accommodationDetailsModal'));
                 modal.show();
-
-                document.getElementById('acceptButton').addEventListener('click', function() {
-                    accept_accommodation(id_no);
-                });
-
-                document.getElementById('declineButton').addEventListener('click', function() {
-                    decline_accommodation(id_no);
-                });
             });
         });
     </script>
