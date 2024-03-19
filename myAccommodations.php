@@ -47,42 +47,57 @@
                     foreach ($myAccommodations as $accommodation) {
                         $thumbnailPath = 'ajax/uploads/' . $accommodation['thumbnail'];
                         echo '
-                        <div class="col">
-                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center"
-                                data-name="' . $accommodation['name'] . '"
-                                data-description="' . $accommodation['description'] . '"
-                                data-thumbnail="' . $thumbnailPath . '"
-                                data-lat="' . $accommodation['lat'] . '"
-                                data-lon="' . $accommodation['lon'] . '"
-                                data-address="' . $accommodation['address'] . '"
-                                data-bathrooms="' . $accommodation['bathrooms'] . '"
-                                data-kitchens="' . $accommodation['kitchens'] . '"
-                                data-rooms="' . $accommodation['rooms'] . '"
-                                data-beds="' . $accommodation['beds'] . '"
-                                data-price="' . $accommodation['price'] . '"
-                                data-capacity="' . $accommodation['capacity'] . '"
-                                data-id_no="' . $accommodation['id_no'] . '"
-                                ';
+    <div class="col">
+        <div class="card h-100 d-flex flex-column justify-content-center align-items-center"
+            data-name="' . $accommodation['name'] . '"
+            data-description="' . $accommodation['description'] . '"
+            data-thumbnail="' . $thumbnailPath . '"
+            data-lat="' . $accommodation['lat'] . '"
+            data-lon="' . $accommodation['lon'] . '"
+            data-address="' . $accommodation['address'] . '"
+            data-bathrooms="' . $accommodation['bathrooms'] . '"
+            data-kitchens="' . $accommodation['kitchens'] . '"
+            data-rooms="' . $accommodation['rooms'] . '"
+            data-beds="' . $accommodation['beds'] . '"
+            data-price="' . $accommodation['price'] . '"
+            data-capacity="' . $accommodation['capacity'] . '"
+            data-id_no="' . $accommodation['id_no'] . '"
+            ';
 
                         // Add data attributes for each image URL
                         foreach ($accommodation['images'] as $index => $image) {
                             echo 'data-image-' . $index . '="' . $image . '" ';
                         }
 
+                        $decline_banner = '';
+                        $reason = '';
+
+                        if ($accommodation['status'] == -1) {
+                            $banner = "<div class='bg-danger text-light'>Declined</div>";
+                            $reason = "<p style='padding-left:20px; padding-right:20px;'>" . $accommodation['message'] . "</p>";
+                        } else if ($accommodation['status'] == 0) {
+                            $banner = "<div class='bg-warning text-light'>Pending</div>";
+                        } else {
+                            $banner = "<div class='bg-success text-light'>Approved</div>";
+                        }
+
                         echo '>
-                                <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">' . $accommodation['name'] . '</h5>
-                                    <p class="card-text">' . $accommodation['description'] . '</p>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="button" class="btn btn-primary mt-1 view-more">View Details</button>
-                                    <button type="button" class="btn btn-secondary mt-1 edit-accommodation-btn">Edit</button>
-                                </div>
-                            </div>
-                        </div>';
+            ' . $banner . '
+            <br>' . $reason . '<br>
+            <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
+            <div class="card-body text-center">
+                <h5 class="card-title">' . $accommodation['name'] . '</h5>
+                <p class="card-text">' . $accommodation['description'] . '</p>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary mt-1 view-more">View Details</button>
+                <button type="button" class="btn btn-secondary mt-1 edit-accommodation-btn">Edit</button>
+            </div>
+        </div>
+    </div>';
                     }
                     ?>
+
                 </div>
             <?php endif; ?>
         </div>
