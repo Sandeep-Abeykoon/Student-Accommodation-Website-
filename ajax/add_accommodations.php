@@ -43,7 +43,7 @@ if (isset($_POST['add_accommodation'])) {
             insert($sql, $values, $data_types);
         }
 
-        echo 'success';
+        echo 1;
     } else {
         echo 'failed';
     }

@@ -1,3 +1,5 @@
+<?php include './ajax/getUserPhoneNumbers.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -276,6 +278,8 @@ if (!$settings_result['shutdown']) {
                     <p><strong>Beds:</strong> <span id="accommodationBeds"></span></p>
                     <p><strong>Price:</strong> <span id="accommodationPrice"></span></p>
                     <p><strong>Capacity:</strong> <span id="accommodationCapacity"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="accommodationPhone"></span></p>
+                    <p><strong>Secondary phone Number:</strong> <span id="accommodationSecPhone"></span></p>
                     <input type="hidden" id="accommodationId" value="">
                 </div>
                 <div class="modal-footer">
@@ -317,15 +321,17 @@ if (!$settings_result['shutdown']) {
 
     <script>
         var locations = [];
-
         // Load accommodation data
         <?php
         foreach ($accommodations as $accommodation) {
+            $acc_uId = $accommodation['uId'];
             $acc_id = $accommodation['id_no'];
             $lat = $accommodation['lat'];
             $lon = $accommodation['lon'];
             $name = $accommodation['name'];
             $address = $accommodation['address'];
+
+            $phone_numbers = selectUserPhoneNumbers($acc_uId);
 
             // Create an array to hold image URLs
             $images = [];
@@ -341,6 +347,8 @@ if (!$settings_result['shutdown']) {
                 lng: $lon,
                 name: '$name',
                 address: '$address',
+                phone_1: '{$phone_numbers['phone_number']}',
+                phone_2: '{$phone_numbers['secondary_phone_number']}',
                 description: '{$accommodation['description']}',
                 bathrooms: '{$accommodation['bathrooms']}',
                 kitchens: '{$accommodation['kitchens']}',
@@ -397,6 +405,8 @@ if (!$settings_result['shutdown']) {
                     document.getElementById('accommodationModalLabel').textContent = location.name;
                     document.getElementById('accommodationDescription').textContent = location.description;
                     document.getElementById('accommodationAddress').textContent = location.address;
+                    document.getElementById('accommodationPhone').textContent = location. phone_1;
+                    document.getElementById('accommodationSecPhone').textContent = location. phone_2;
                     document.getElementById('accommodationBathrooms').textContent = location.bathrooms;
                     document.getElementById('accommodationKitchens').textContent = location.kitchens;
                     document.getElementById('accommodationRooms').textContent = location.rooms;
@@ -422,7 +432,7 @@ if (!$settings_result['shutdown']) {
                         modalCarouselInner.appendChild(carouselItem);
                     }
 
-                   // Hide the reserve button if the accommodation is reserved
+                    // Hide the reserve button if the accommodation is reserved
                     if (location.reserved) {
                         document.getElementById('reserveButton').style.display = 'none';
                     } else {
@@ -435,6 +445,7 @@ if (!$settings_result['shutdown']) {
         // Initialize the map with accommodation locations
         initMap();
     </script>
+
     <script>
         function handleThumbnailSelect(event) {
             thumbnailFile = event.target.files[0];
@@ -514,7 +525,7 @@ if (!$settings_result['shutdown']) {
                         }
                     }
 
-                     // Hide the reserve button if the accommodation is reserved 
+                    // Hide the reserve button if the accommodation is reserved 
                     if (card.dataset.reserved) {
                         document.getElementById('reserveButton').style.display = 'none';
                     } else {
@@ -615,7 +626,7 @@ if (!$settings_result['shutdown']) {
                 xhr.open('POST', 'ajax/add_accommodations.php', true);
                 xhr.onload = function() {
 
-                    if (this.responseText == 'success') {
+                    if (this.responseText == 1) {
                         alert("Success", "Accommodation added successfully!", "success");
 
                         addAccommodationForm.reset();
