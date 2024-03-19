@@ -193,7 +193,12 @@
                 });
 
                 document.getElementById('declineButton').addEventListener('click', function() {
+                    var reason = prompt("Enter the reason for declining:");
                     decline_accommodation(id_no);
+
+                    if (reason !== null) {
+                        decline_accommodation(id_no, reason);
+                    }
                 });
             });
         });
@@ -218,27 +223,22 @@
             xhr.send('id_no=' + id_no + '&action=accept');
         }
 
-        function decline_accommodation(id_no) {
-            var reason = prompt("Enter the reason for declining:");
+        function decline_accommodation(id_no, reason) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "ajax/pending_accommodations.php", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            if (reason !== null) {
-                let xhr = new XMLHttpRequest();
-                xhr.open("POST", "ajax/pending_accommodations.php", true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
 
-                xhr.onload = function() {
-                    console.log(this.response);
-
-                    if (this.responseText == 1) {
-                        alert("Success", "Accommodation declined", "success");
-                        location.reload(); // Reload the page after declining
-                    } else {
-                        alert("Attention", "Failed to decline accommodation");
-                    }
+                if (this.responseText == 1) {
+                    alert("Success", "Accommodation declined", "success");
+                    location.reload(); // Reload the page after declining
+                } else {
+                    alert("Attention", "Failed to decline accommodation");
                 }
-
-                xhr.send('id_no=' + id_no + '&action=decline&reason=' + encodeURIComponent(reason));
             }
+
+            xhr.send('id_no=' + id_no + '&action=decline&reason=' + encodeURIComponent(reason));
         }
     </script>
     <?php include 'includes/scripts.php'; ?>
