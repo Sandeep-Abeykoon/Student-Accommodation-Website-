@@ -132,12 +132,12 @@ if (!$settings_result['shutdown']) {
                             <label for="thumbnail" class="form-label">Thumbnail Image</label>
                             <input type="file" class="form-control" id="thumbnail" accept=".jpg, .png, .jpeg, .gif" onchange="handleThumbnailSelect(event)" required>
                             <div id="thumbnail-preview"></div>
-                            <button type="button" class="btn btn-danger mt-2" id="remove-thumbnail" accept=".jpg, .png, .jpeg, .gif" disabled>Remove Thumbnail</button>
+                            <button type="button" class="btn btn-danger mt-2" id="remove-thumbnail" disabled>Remove Thumbnail</button>
                         </div>
                         <div id="image-preview-thumbnail" class="d-flex flex-wrap"></div>
                         <div class="mb-3">
                             <label for="images" class="form-label">Images (up to 5 files)</label>
-                            <input type="file" class="form-control" id="images" accept="image/*" onchange="handleFileSelect(event)" required>
+                            <input type="file" class="form-control" id="images" accept=".jpg, .png, .jpeg, .gif" onchange="handleFileSelect(event)" required>
                         </div>
                         <div id="image-preview" class="d-flex flex-wrap"></div>
 
@@ -445,9 +445,25 @@ if (!$settings_result['shutdown']) {
         // Initialize the map with accommodation locations
         initMap();
     </script>
+
     <script>
         function handleThumbnailSelect(event) {
-            thumbnailFile = event.target.files[0];
+            const thumbnailFile = event.target.files[0];
+            const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
+            const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+            if (!acceptedTypes.includes(thumbnailFile.type)) {
+                alert("Attention", 'Unsupported file type. Please select a JPG, PNG, or GIF file.');
+                event.target.value = ''; // Clear the file input
+                return;
+            }
+
+            if (thumbnailFile.size > fileSizeLimit) {
+                alert("Attention", 'File size exceeds 5 MB limit. Please select a smaller file.');
+                event.target.value = ''; // Clear the file input
+                return;
+            }
+
             const reader = new FileReader();
 
             reader.onload = function(e) {
@@ -463,18 +479,17 @@ if (!$settings_result['shutdown']) {
 
                 // Enable the "Remove Thumbnail" button
                 document.getElementById('remove-thumbnail').removeAttribute('disabled');
+
+                // Add event listener to the "Remove Thumbnail" button
+                document.getElementById('remove-thumbnail').addEventListener('click', function() {
+                    thumbnailPreview.innerHTML = ''; // Clear the thumbnail preview
+                    event.target.value = ''; // Clear the file input
+                    this.setAttribute('disabled', true); // Disable the "Remove Thumbnail" button
+                });
             };
 
             reader.readAsDataURL(thumbnailFile);
         }
-
-        document.getElementById('remove-thumbnail').addEventListener('click', function() {
-            const thumbnailPreview = document.getElementById('thumbnail-preview');
-            thumbnailPreview.innerHTML = ''; // Clear the preview
-            thumbnailFile = null; // Reset the selected file
-            document.getElementById('remove-thumbnail').setAttribute('disabled', 'disabled');
-            document.getElementById('thumbnail').value = ''; // Clear the input value
-        });
     </script>
 
     <script>
@@ -549,12 +564,28 @@ if (!$settings_result['shutdown']) {
 
         function handleFileSelect(event) {
             const files = event.target.files;
+            const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
+            const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
             if (files.length + selectedFiles.length > 5) {
                 alert("Attention", "You can only select up to 5 files.");
                 event.target.value = ""; // Clear the selected files
                 return;
             }
+
             for (let i = 0; i < files.length; i++) {
+                if (!acceptedTypes.includes(files[i].type)) {
+                    alert("Attention", 'Unsupported file type. Please select only JPG, PNG, or GIF files.');
+                    event.target.value = ""; // Clear the selected files
+                    return;
+                }
+
+                if (files[i].size > fileSizeLimit) {
+                    alert("Attention", 'File size exceeds 5 MB limit. Please select a smaller file.');
+                    event.target.value = ""; // Clear the selected files
+                    return;
+                }
+
                 selectedFiles.push(files[i]);
 
                 let container = document.createElement('div');
@@ -568,7 +599,6 @@ if (!$settings_result['shutdown']) {
                 let removeBtn = document.createElement('button');
                 removeBtn.textContent = 'Remove';
                 removeBtn.addEventListener('click', function() {
-
                     let index = selectedFiles.indexOf(files[i]);
                     if (index !== -1) {
                         selectedFiles.splice(index, 1);
@@ -579,11 +609,12 @@ if (!$settings_result['shutdown']) {
                 container.appendChild(img);
                 container.appendChild(removeBtn);
 
-
                 let previewContainer = document.getElementById('image-preview');
                 previewContainer.appendChild(container);
             }
         }
+
+
 
 
         document.addEventListener('DOMContentLoaded', function() {

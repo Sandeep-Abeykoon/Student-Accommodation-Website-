@@ -70,7 +70,7 @@
                         }
 
                         echo '>
-                                <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px;">
+                                <img src="' . $thumbnailPath . '" class="img-thumbnail mt-3" alt="Accommodation Thumbnail" style="width: 250px; height: 200px;">
                                 <div class="card-body text-center">
                                     <h5 class="card-title">' . $accommodation['name'] . '</h5>
                                     <p class="card-text">' . $accommodation['description'] . '</p>
