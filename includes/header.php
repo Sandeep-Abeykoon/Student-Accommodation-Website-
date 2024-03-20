@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link me-2" href="../../sta/index.php">Home</a>
+                    <a class="nav-link me-2" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link me-2" href="accomodations.php">Accomodations</a>
