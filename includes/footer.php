@@ -37,4 +37,4 @@
     </div>
 </footer>
 
-<h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By Chamika & Jayathya</h6>
+<h6 class="text-center bg-dark text-white p-3 m-0">Designed and Developed By Sandeep Abeykoon</h6>
